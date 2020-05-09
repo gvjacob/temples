@@ -1,0 +1,19 @@
+{
+  "name": "temples",
+  "version": "0.0.1",
+  "description": "Generate files from predefined templates",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gvjacob/temples.git"
+  },
+  "author": "Gino Jacob <gvjacob@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gvjacob/temples/issues"
+  },
+  "homepage": "https://github.com/gvjacob/temples#readme"
+}
