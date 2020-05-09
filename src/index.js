@@ -2,7 +2,7 @@ import path from 'path';
 import yaml from 'yaml';
 import fs from 'fs';
 import { argv } from 'yargs';
-import { omit } from 'lodash';
+import { omit, get } from 'lodash';
 
 import runTemples from './temples';
 
@@ -36,9 +36,16 @@ const run = () => {
   const { command, mapping } = getCommandAndMapping();
   const commands = getTempleCommands();
 
-  const { temples, ...context } = commands[command];
+  const runCommand = get(commands, command);
 
-  runTemples(temples, context, mapping);
+  if (!runCommand) {
+    console.error('Command not found');
+  } else {
+    console.log(`Running command: ${command}`);
+
+    const { temples, ...context } = runCommand;
+    runTemples(temples, context, mapping);
+  }
 };
 
 run();
