@@ -1,0 +1,36 @@
+# Command:
+#   temples: Temple[]
+#   List of temples for this command
+#
+#   ...Context
+#   Context for temples
+#
+# Context:
+#   output: String
+#   Base path to output compiled templates.
+#   Defaults to current directory.
+#
+# Temple:
+#   template: String
+#   Path to handlebars template file
+#
+#   output: String
+#   Path to output compiled template, relative to
+#   command configuration output
+#
+#   output: String
+#   Path to output compiled template
+#
+#   defaultMap: [
+#     key -> value: String
+#   ]
+#   Default values for variables on the template
+
+component:
+  temples:
+    - template: .
+      output: .
+      default-map:
+        name: '{{ name }}'
+  output: x
+
