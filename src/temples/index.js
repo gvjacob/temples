@@ -1,4 +1,4 @@
-import { readFile, resolvePaths } from '../utils';
+import { readFile, writeFile, resolvePaths } from '../utils';
 import parse from '../parser';
 
 /**
@@ -33,7 +33,11 @@ const handle = ({ template, output, default: defaultMapping }, mapping) => {
     defaultMapping
   );
 
-  console.log(parsedTemplate);
+
+  writeFile(
+    getParsedTemplate(output, mapping, defaultMapping),
+    parsedTemplate
+  );
 };
 
 /**
