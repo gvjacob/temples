@@ -2,13 +2,12 @@
   "name": "temples",
   "version": "0.0.1",
   "description": "Generate files from predefined templates",
-  "main": "src/index.js",
+  "main": "cli.js",
   "scripts": {
-    "start": "babel-node src/index.js",
     "build": "babel src/ --out-dir dist --ignore **/test.js",
     "test": "jest --watchAll"
   },
-  "bin": "",
+  "bin": "cli.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gvjacob/temples.git"
