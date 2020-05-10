@@ -6,5 +6,5 @@ build:
 	cp README.md dist/README.md
 	cp LICENSE dist/LICENSE
 
-publish:
+publish: build
 	npm publish dist/
