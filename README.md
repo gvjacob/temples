@@ -1,4 +1,4 @@
-# Temples 🕍
+# **Temples** 🕍
 Automatically generate files from predefined templates. 
 
 Creating the same files with the same boilerplate code gets tedious after a while. Temples automates the process by giving you the ability to define [Handlebars](https://handlebarsjs.com/) templates, output paths, and the commands to generate these given your CLI arguments. 
@@ -18,8 +18,8 @@ temples [command] [--[key] [value], ...]
 `command` is the name of a command specified in `.temples.yaml`.
 Each `key` and `value` pair is a mapping for the variables in your templates.
 
-## `.temples.yaml`
-This yaml file is the configuration for Temples. Each key is a specific command, and has a list of “temples”, each one defining which template file to use, where to output the compiled file, and default mapping for key value pairs. You can specify other base configurations for each command.
+## Configuration
+`.temples.yaml` is the configuration file for Temples. Each key is a specific command, and has a list of “temples”, each one defining which template file to use, where to output the compiled file, and default mapping for key value pairs. You can specify other base configurations for each command.
 
 `.temples.yaml`  schema:
 ```yaml
