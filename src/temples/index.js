@@ -2,23 +2,6 @@ import { readFile, writeFile, resolvePaths } from '../utils';
 import parse from '../parser';
 
 /**
- * Parse template with given mapping after overriding the default
- *
- * @params {String} template | handlebars template
- * @params {Object} mapping | handlebars mapping from CLI
- * @params {Object} defaultMapping | default mapping from yaml file
- *
- * @returns {String} parsed template
- */
-export const getParsedTemplate = (
-  template,
-  mapping = {},
-  defaultMapping = {}
-) => {
-  return parse(template, { ...defaultMapping, ...mapping });
-};
-
-/**
  * Process temple given mapping from CLI command.
  *
  * @param {Temple} temple | temple command
@@ -26,18 +9,8 @@ export const getParsedTemplate = (
  */
 const handle = ({ template, output, default: defaultMapping }, mapping) => {
   const templateFile = readFile(template);
-
-  const parsedTemplate = getParsedTemplate(
-    templateFile,
-    mapping,
-    defaultMapping
-  );
-
-
-  writeFile(
-    getParsedTemplate(output, mapping, defaultMapping),
-    parsedTemplate
-  );
+  const parsedTemplate = parse(templateFile, mapping, defaultMapping);
+  writeFile(parse(output, mapping, defaultMapping), parsedTemplate);
 };
 
 /**

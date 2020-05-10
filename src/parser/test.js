@@ -1,11 +1,29 @@
 import parse from '.';
 
 describe('parser', () => {
-  it('replaces keywords in template with mapping', () => {
-    const template = 'Hello, {{ name }}';
+  it('applies mapping if provided', () => {
+    const source = 'Hello, {{ name }}';
     const mapping = { name: 'Temple' };
-    const output = parse(template, mapping);
 
-    expect(output).toBe(`Hello, ${mapping.name}`);
+    expect(parse(source, mapping)).toBe(`Hello, ${mapping.name}`);
+  });
+
+  it('applies defaultMapping if provided', () => {
+    const source = 'Hello, {{ name }}';
+    const defaultMapping = { name: 'Temple' };
+
+    expect(parse(source, {}, defaultMapping)).toBe(
+      `Hello, ${defaultMapping.name}`
+    );
+  });
+
+  it('overrides defaultMapping with mapping', () => {
+    const source = '{{ greeting }}, {{ name }}';
+    const mapping = { name: 'not Temple' };
+    const defaultMapping = { greeting: 'Hello', name: 'Temple' };
+
+    expect(parse(source, mapping, defaultMapping)).toBe(
+      `${defaultMapping.greeting}, ${mapping.name}`
+    );
   });
 });

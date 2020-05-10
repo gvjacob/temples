@@ -1,15 +1,17 @@
 import { compile } from 'handlebars';
 
 /**
- * Parse template with given mapping
+ * Parse source with given mapping, overriding the default
  *
- * @param {String} template | handlebars template
- * @param {Object} mapping | handlebars mapping
+ * @params {String} source | handlebars template
+ * @params {Object} mapping | handlebars mapping from CLI
+ * @params {Object} defaultMapping | default mapping from yaml file
  *
- * @returns {String} parsed template
+ * @returns {String} parsed source
  */
-const parse = (template, mapping = {}) => {
-  return compile(template)(mapping);
+export const parse = (source, mapping = {}, defaultMapping = {}) => {
+  const template = compile(source);
+  return template({ ...defaultMapping, ...mapping });
 };
 
 export default parse;
