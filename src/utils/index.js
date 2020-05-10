@@ -21,7 +21,7 @@ export const readFile = (path) => {
 export const writeFile = (filePath, content) => {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content);
-  console.log(`${path.basename(filePath)} created`)
+  console.log(`${path.basename(filePath)} created`);
 };
 
 /**
@@ -33,6 +33,6 @@ export const writeFile = (filePath, content) => {
  *
  * @returns {String} absolute path
  */
-export const resolvePaths = (base, relative) => {
+export const resolvePaths = (base = '', relative = '') => {
   return path.resolve(path.join(base, relative));
 };

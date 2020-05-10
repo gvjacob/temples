@@ -13,9 +13,9 @@ describe('temples', () => {
     });
 
     it('throws error if output on either temple or context is invalid', () => {
-      expect(() => contextualize({ output: '' }, {})).toThrow();
-      expect(() => contextualize({}, { base: '' })).toThrow();
-      expect(() => contextualize({}, {})).toThrow();
+      expect(() => contextualize({ output: '' }, { base: null })).toThrow();
+      expect(() => contextualize({ output: null }, { base: '' })).toThrow();
+      expect(() => contextualize({ output: null }, { base: null })).toThrow();
     });
   });
 });

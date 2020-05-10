@@ -8,6 +8,7 @@
     "build": "babel src/ --out-dir dist --ignore **/test.js",
     "test": "jest --watchAll"
   },
+  "bin": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gvjacob/temples.git"
