@@ -28,7 +28,7 @@
 
 component:
   temples:
-    - template: component.template.js
+    - template: component.template
       output: 'src/{{ name }}.js'
       default:
         name: Component

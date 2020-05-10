@@ -1,8 +1,21 @@
 import { readFile, resolvePaths } from '../utils';
 import parse from '../parser';
 
-const getParsedTemplate = (template, mapping, defaultMapping) => {
-  return '';
+/**
+ * Parse template with given mapping after overriding the default
+ *
+ * @params {String} template | handlebars template
+ * @params {Object} mapping | handlebars mapping from CLI
+ * @params {Object} defaultMapping | default mapping from yaml file
+ *
+ * @returns {String} parsed template
+ */
+export const getParsedTemplate = (
+  template,
+  mapping = {},
+  defaultMapping = {}
+) => {
+  return parse(template, { ...defaultMapping, ...mapping });
 };
 
 /**
@@ -12,7 +25,15 @@ const getParsedTemplate = (template, mapping, defaultMapping) => {
  * @param {Object} mapping | key to value mapping
  */
 const handle = ({ template, output, default: defaultMapping }, mapping) => {
-  console.log(template, output, defaultMapping, mapping);
+  const templateFile = readFile(template);
+
+  const parsedTemplate = getParsedTemplate(
+    templateFile,
+    mapping,
+    defaultMapping
+  );
+
+  console.log(parsedTemplate);
 };
 
 /**
@@ -20,6 +41,7 @@ const handle = ({ template, output, default: defaultMapping }, mapping) => {
  *
  * @param {Temple} temple | temple to modify
  * @param {Context} context | command context
+ *
  * @returns {Temple} contextualized temple
  */
 export const contextualize = (temple, context) => {
