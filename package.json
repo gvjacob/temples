@@ -31,5 +31,14 @@
     "@babel/preset-env": "^7.9.6",
     "babel-jest": "^26.0.1",
     "jest": "^26.0.1"
-  }
+  },
+  "keywords": [
+    "cli",
+    "handlebars",
+    "template",
+    "templating",
+    "yaml",
+    "temple",
+    "node"
+  ]
 }
