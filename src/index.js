@@ -1,12 +1,21 @@
 import path from 'path';
 import yaml from 'yaml';
-import fs from 'fs';
 import { argv } from 'yargs';
 import { omit, get } from 'lodash';
 
-import runTemples from './temples';
+import { readFile } from './utils';
+import handleTemples from './temples';
 
 const TEMPLES_YAML = '.temples.yaml';
+
+/**
+ * Get absolute path to yaml file.
+ *
+ * @returns {String} absolute path to yaml file
+ */
+const getYamlPath = () => {
+  return path.join(process.cwd(), TEMPLES_YAML);
+};
 
 /**
  * Get the temple commands parsed into object.
@@ -14,9 +23,7 @@ const TEMPLES_YAML = '.temples.yaml';
  * @returns {Command[]} list of commands
  */
 const getTempleCommands = () => {
-  const templeCommandsPath = path.join(__dirname, `../test/${TEMPLES_YAML}`);
-  const yamlFile = fs.readFileSync(templeCommandsPath, 'utf-8');
-
+  const yamlFile = readFile(getYamlPath());
   return yaml.parse(yamlFile);
 };
 
@@ -33,18 +40,16 @@ const getCommandAndMapping = () => {
 };
 
 const run = () => {
-  const { command, mapping } = getCommandAndMapping();
-  const commands = getTempleCommands();
+  const { command: cliCommand, mapping } = getCommandAndMapping();
+  const command = get(getTempleCommands(), cliCommand);
 
-  const runCommand = get(commands, command);
-
-  if (!runCommand) {
+  if (!command) {
     console.error('Command not found');
   } else {
-    console.log(`Running command: ${command}`);
+    console.log(`Running command: ${cliCommand}`);
 
-    const { temples, ...context } = runCommand;
-    runTemples(temples, context, mapping);
+    const { temples, ...context } = command;
+    handleTemples(temples, context, mapping);
   }
 };
 

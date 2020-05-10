@@ -21,16 +21,16 @@
 #   output: String
 #   Path to output compiled template
 #
-#   defaultMap: [
+#   default: [
 #     key -> value: String
 #   ]
 #   Default values for variables on the template
 
 component:
   temples:
-    - template: .
-      output: .
-      default-map:
-        name: '{{ name }}'
-  output: x
+    - template: component.template.js
+      output: 'src/{{ name }}.js'
+      default:
+        name: Component
+  base: ./test
 

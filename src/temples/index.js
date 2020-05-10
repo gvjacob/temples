@@ -1,4 +1,9 @@
-import path from 'path';
+import { readFile, resolvePaths } from '../utils';
+import parse from '../parser';
+
+const getParsedTemplate = (template, mapping, defaultMapping) => {
+  return '';
+};
 
 /**
  * Process temple given mapping from CLI command.
@@ -6,8 +11,8 @@ import path from 'path';
  * @param {Temple} temple | temple command
  * @param {Object} mapping | key to value mapping
  */
-const handle = ({ template, output, defaultMap }, mapping) => {
-  return;
+const handle = ({ template, output, default: defaultMapping }, mapping) => {
+  console.log(template, output, defaultMapping, mapping);
 };
 
 /**
@@ -17,9 +22,19 @@ const handle = ({ template, output, defaultMap }, mapping) => {
  * @param {Context} context | command context
  * @returns {Temple} contextualized temple
  */
-const contextualize = (temple, context) => {
-  const contextualizedOutput = path.join(context.output, temple.output);
-  return { ...temple, output: contextualizedOutput };
+export const contextualize = (temple, context) => {
+  const templePaths = ['output', 'template'];
+
+  try {
+    return templePaths.reduce(
+      (acc, p) => ({ ...acc, [p]: resolvePaths(context.base, temple[p]) }),
+      temple
+    );
+  } catch (e) {
+    throw new Error(
+      `Invalid output path provided in a temple or its context: ${context.command}`
+    );
+  }
 };
 
 /**
