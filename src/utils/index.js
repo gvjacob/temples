@@ -21,6 +21,7 @@ export const readFile = (path) => {
 export const writeFile = (filePath, content) => {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content);
+  console.log(`${path.basename(filePath)} created`)
 };
 
 /**

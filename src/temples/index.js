@@ -8,9 +8,15 @@ import parse from '../parser';
  * @param {Object} mapping | key to value mapping
  */
 const handle = ({ template, output, default: defaultMapping }, mapping) => {
-  const templateFile = readFile(template);
+  const [parsedTemplatePath, parsedOutputPath] = [
+    template,
+    output,
+  ].map((path) => parse(path, mapping, defaultMapping));
+
+  const templateFile = readFile(parsedTemplatePath);
   const parsedTemplate = parse(templateFile, mapping, defaultMapping);
-  writeFile(parse(output, mapping, defaultMapping), parsedTemplate);
+
+  writeFile(parsedOutputPath, parsedTemplate);
 };
 
 /**
