@@ -8,3 +8,4 @@ build:
 
 publish: build
 	npm publish dist/
+	rm -rf dist/
