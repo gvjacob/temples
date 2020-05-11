@@ -42,8 +42,8 @@ const getCliCommandAndMapping = () => {
 };
 
 /**
- * Get command from yaml and CLI template mapping. If command is not
- * specified, run an enquirer prompt.
+ * Get command from yaml and CLI template mapping. If command or
+ * mapping is not specified, run an enquirer prompt.
  *
  * @returns {Object} command object and template mapping
  */
@@ -54,13 +54,12 @@ const getCommandAndMapping = async () => {
   } = getCliCommandAndMapping();
   const commands = getTempleCommands();
 
-  const command = get(
-    commands,
-    cliCommand || (await promptCommand(Object.keys(commands)))
-  );
+  const cmd =
+    cliCommand || cliCommand || (await promptCommand(Object.keys(commands)));
+  const command = get(commands, cmd);
 
   const mapping = isEmpty(cliMapping)
-    ? await promptMapping(command.prompt)
+    ? await promptMapping(cmd, command.prompt)
     : cliMapping;
 
   return { command, mapping };

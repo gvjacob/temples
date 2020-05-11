@@ -1,5 +1,6 @@
 import { isEmpty } from 'lodash';
 import { Select, Input } from 'enquirer';
+import clc from 'cli-color';
 
 /**
  * Prompt for command name.
@@ -11,7 +12,7 @@ import { Select, Input } from 'enquirer';
 export const promptCommand = async (commands) => {
   const prompt = new Select({
     name: 'command',
-    message: 'Select command to run',
+    message: 'Select command to run:',
     choices: commands,
   });
 
@@ -22,22 +23,22 @@ export const promptCommand = async (commands) => {
 /**
  * Prompt for the value for each key.
  *
+ * @params {String} command | name of command
  * @params {String[]} keys | list of keys
  *
  * @returns {Object} key to value mapping
  */
-export const promptMapping = async (keys = []) => {
+export const promptMapping = async (command, keys = []) => {
   if (isEmpty(keys)) {
     return {};
   }
 
-  console.log('Fill in the value for each key');
+  console.log(`Dictionary for ${clc.cyan(command)}:`);
   let mapping = {};
 
   for (const key of keys) {
     const prompt = new Input({
       message: key,
-      initial: 'value',
     });
 
     const value = await prompt.run();

@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/gvjacob/temples#readme",
   "dependencies": {
+    "cli-color": "^2.0.0",
     "enquirer": "^2.3.5",
     "handlebars": "^4.7.6",
     "lodash": "^4.17.15",
