@@ -66,7 +66,7 @@ export default async () => {
   if (isEmpty(command)) {
     console.error('Command not found');
   } else if (!isValid) {
-    console.error(`Configuration for ${cliCommand} is invalid`);
+    console.error(`Configuration is invalid`);
   } else {
     const { temples, ...context } = command;
     handleTemples(temples, context, mapping);
