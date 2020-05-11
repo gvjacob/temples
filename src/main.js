@@ -1,10 +1,12 @@
 import path from 'path';
 import yaml from 'yaml';
 import { argv } from 'yargs';
-import { omit, get } from 'lodash';
+import { omit, get, isEmpty } from 'lodash';
 
-import { readFile } from './utils';
 import handleTemples from './temples';
+import { readFile } from './utils';
+import { Command } from './types';
+import { promptCommand } from './prompts';
 
 const TEMPLES_YAML = '.temples.yaml';
 
@@ -28,26 +30,42 @@ const getTempleCommands = () => {
 };
 
 /**
- * Get command name and template mapping.
+ * Get CLI command name and template mapping.
  *
  * @returns {Object} command name and template mapping
  */
-const getCommandAndMapping = () => {
+const getCliCommandAndMapping = () => {
   const mapping = omit(argv, '_', '$0');
   const command = argv._[0];
 
   return { command, mapping };
 };
 
-export default () => {
-  const { command: cliCommand, mapping } = getCommandAndMapping();
-  const command = get(getTempleCommands(), cliCommand);
+/**
+ * Get command from yaml and CLI template mapping. If command is not
+ * specified, run an enquirer prompt.
+ */
+const getCommandAndMapping = async () => {
+  const { command: cliCommand, mapping } = getCliCommandAndMapping();
+  const commands = getTempleCommands();
 
-  if (!command) {
+  const command = get(
+    commands,
+    cliCommand || (await promptCommand(Object.keys(commands)))
+  );
+
+  return { command, mapping };
+};
+
+export default async () => {
+  const { command, mapping } = await getCommandAndMapping();
+  const isValid = Command.guard(command);
+
+  if (isEmpty(command)) {
     console.error('Command not found');
+  } else if (!isValid) {
+    console.error(`Configuration for ${cliCommand} is invalid`);
   } else {
-    console.log(`Running command: ${cliCommand}`);
-
     const { temples, ...context } = command;
     handleTemples(temples, context, mapping);
   }
