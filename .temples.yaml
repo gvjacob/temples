@@ -1,5 +1,7 @@
 # Generate a new component
 component:
+  prompt:
+    - name
   # All paths are relative to src folder
   temples:
     # Component entry point file

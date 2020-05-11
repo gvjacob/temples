@@ -6,7 +6,7 @@ import { omit, get, isEmpty } from 'lodash';
 import handleTemples from './temples';
 import { readFile } from './utils';
 import { Command } from './types';
-import { promptCommand } from './prompts';
+import { promptCommand, promptMapping } from './prompts';
 
 const TEMPLES_YAML = '.temples.yaml';
 
@@ -48,13 +48,20 @@ const getCliCommandAndMapping = () => {
  * @returns {Object} command object and template mapping
  */
 const getCommandAndMapping = async () => {
-  const { command: cliCommand, mapping } = getCliCommandAndMapping();
+  const {
+    command: cliCommand,
+    mapping: cliMapping,
+  } = getCliCommandAndMapping();
   const commands = getTempleCommands();
 
   const command = get(
     commands,
     cliCommand || (await promptCommand(Object.keys(commands)))
   );
+
+  const mapping = isEmpty(cliMapping)
+    ? await promptMapping(command.prompt)
+    : cliMapping;
 
   return { command, mapping };
 };
