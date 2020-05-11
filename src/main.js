@@ -44,6 +44,8 @@ const getCliCommandAndMapping = () => {
 /**
  * Get command from yaml and CLI template mapping. If command is not
  * specified, run an enquirer prompt.
+ *
+ * @returns {Object} command object and template mapping
  */
 const getCommandAndMapping = async () => {
   const { command: cliCommand, mapping } = getCliCommandAndMapping();
