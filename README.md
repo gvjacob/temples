@@ -83,19 +83,13 @@ Every path (e.g. `template`, `output`) will be relative to the given `base`. Thi
 
 The list of “temples”, or files to generate when running the command. This can take an arbitrary number if you want to generate more than one file from different templates. For example in React, you might want to create a Javascript file, a css stylesheet, and a test file when generating a new component.
 
-#### `template`
+- `template`: Path to template file. A template file can have any extension as long as it has text and abides by Handlebars syntax. You could establish your own template conventions like `file.template` to be explicit.
 
-Path to template file. A template file can have any extension as long as it has text and abides by Handlebars syntax. You could establish your own template conventions like `file.template` to be explicit.
-
-#### `output`
-
-Path to output template file after compiling with provided key value pairs from the CLI. Temples will create any non-existent directories along the given path if needed.
+- `output`: Path to output template file after compiling with provided key value pairs from the CLI. Temples will create any non-existent directories along the given path if needed.
 
 > Note: if you wish to use a key when defining `template` and `output`, you can wrap the values with quotes and use the same Handlebars syntax (e.g. “path/to/{{ module }}.js”).
 
-#### `default`
-
-Default key value pairs if not provided by the CLI command.
+- `default`: Default key value pairs if not provided by the CLI command.
 
 ## **Example**
 
