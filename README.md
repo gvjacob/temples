@@ -87,9 +87,9 @@ The list of “temples”, or files to generate when running the command. This c
 
 - `output`: Path to output template file after compiling with provided key value pairs from the CLI. Temples will create any non-existent directories along the given path if needed.
 
-> Note: if you wish to use a key when defining `template` and `output`, you can wrap the values with quotes and use the same Handlebars syntax (e.g. “path/to/{{ module }}.js”).
-
 - `default`: Default key value pairs if not provided by the CLI command.
+
+> Note: if you wish to use a key when defining `template` and `output`, you can wrap the values with quotes and use the same Handlebars syntax (e.g. “path/to/{{ module }}.js”).
 
 ## **Example**
 
