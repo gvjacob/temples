@@ -1,4 +1,12 @@
-component:
+Gatsby-Template:
+  base: ./test
+  prompt:
+    - name
+  temples:
+    - template: component.template
+      output: "components/{{ name }}/index.js"
+
+React-Component:
   base: ./test
   prompt:
     - name
@@ -13,3 +21,4 @@ component:
     # Component test file
     - template: test.template
       output: "components/{{ name }}/test.js"
+

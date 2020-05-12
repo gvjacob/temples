@@ -4,6 +4,8 @@ Automatically generate files from predefined templates.
 
 Creating the same files with the same boilerplate code gets tedious after a while. Temples automates the process by giving you the ability to define [Handlebars](https://handlebarsjs.com/) templates, output paths, and the commands to generate these given your CLI arguments.
 
+![Temples Demo](https://user-images.githubusercontent.com/23367882/81625727-bacd1980-93c7-11ea-80f0-08af6e1ef855.gif)
+
 ## **Installation**
 
 Temples is a CLI application. The easiest way to use it is to install it globally:
@@ -14,8 +16,15 @@ npm install -g temples
 
 ## **Usage**
 
-Temples reads from a `.temples.yaml` file in the root directory of your project. To run Temples:
+Temples reads from a `.temples.yaml` file in the root directory of your project. 
 
+To run Temples with CLI:
+```bash
+temples
+```
+Running `temples` without any arguments will bring you to a CLI that will prompt for the command, and the values for each key defined under `prompt` for each command in `.temples.yaml`.
+
+To run Temples without the CLI:
 ```bash
 temples [command] [--[key] [value], ...]
 ```
@@ -32,6 +41,9 @@ Each `key` and `value` pair is a mapping for the variables in your templates.
 ```yaml
 [command]:
 	base: [base_path]
+  prompt:
+    - [key]
+      ...
 	temples:
 		- template: [template_path]
 		  output: [output_path]
@@ -45,6 +57,9 @@ Each `key` and `value` pair is a mapping for the variables in your templates.
 ### `base`
 
 Every path (e.g. `template`, `output`) will be relative to the given `base`. This helps avoid redundancy in specifying path values in `temples`.
+
+### `prompt`
+`prompt` takes in a list of keys that the user will be prompted for when key value arguments are not provided when running Temples CLI.
 
 ### `temples`
 
