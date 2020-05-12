@@ -143,3 +143,6 @@ To run the command:
 ```bash
 temples component --name Button
 ```
+
+## **License**
+Copyright © 2020 - present, [Gino Jacob](ginojacob.com). MIT License.
