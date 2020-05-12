@@ -145,4 +145,4 @@ temples component --name Button
 ```
 
 ## **License**
-Copyright © 2020 - present, [Gino Jacob](ginojacob.com). MIT License.
+Copyright © 2020 - present, [Gino Jacob](https://ginojacob.com). MIT License.
