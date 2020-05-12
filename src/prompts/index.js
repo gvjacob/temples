@@ -1,3 +1,4 @@
+import Listr from 'listr';
 import { isEmpty } from 'lodash';
 import { Select, Input } from 'enquirer';
 import clc from 'cli-color';
@@ -18,8 +19,7 @@ export const promptCommand = async (commands) => {
     choices: commands,
   });
 
-  const answer = await prompt.run();
-  return answer;
+  return await prompt.run();
 };
 
 /**
@@ -48,4 +48,20 @@ export const promptMapping = async (command, keys = []) => {
   }
 
   return mapping;
+};
+
+/**
+ * Run and notify given Listr processes.
+ *
+ * @param {String} headline | headline for processes
+ * @param {Object[]} processes | Listr task list
+ * @param {Object} options | options for Listr
+ */
+export const notifyProcesses = (
+  headline,
+  processes,
+  options = { exitOnError: false }
+) => {
+  console.log(headline);
+  new Listr(processes, options).run().catch((err) => console.error(err));
 };

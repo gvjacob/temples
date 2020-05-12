@@ -1,7 +1,6 @@
-import Listr from 'listr';
 import path from 'path';
 
-import { boldCyan } from '../prompts';
+import { boldCyan, notifyProcesses } from '../prompts';
 import { readFile, writeFile, resolvePaths } from '../utils';
 import parse from '../parser';
 
@@ -55,23 +54,18 @@ export const contextualize = (temple, context) => {
  * @param {Object} mapping | key to value mapping
  */
 const temples = (temples, context, mapping) => {
-  console.log(`\nProcessing temples for: ${boldCyan(context.cmd)}`);
-  const processes = new Listr(
-    temples.map(
-      (temple) => {
-        const contextualizedTemple = contextualize(temple, context);
-        const fileName = path.basename(contextualizedTemple.output);
+  notifyProcesses(
+    `\nProcessing temples for: ${boldCyan(context.cmd)}`,
+    temples.map((temple) => {
+      const contextualizedTemple = contextualize(temple, context);
+      const fileName = path.basename(contextualizedTemple.output);
 
-        return {
-          title: `Creating ${boldCyan(fileName)}`,
-          task: () => handle(contextualizedTemple, mapping),
-        };
-      },
-      { exitOnError: false }
-    )
+      return {
+        title: `Creating ${boldCyan(fileName)}`,
+        task: () => handle(contextualizedTemple, mapping),
+      };
+    })
   );
-
-  processes.run().catch((err) => console.error(err));
 };
 
 export default temples;
