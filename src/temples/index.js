@@ -1,3 +1,7 @@
+import Listr from 'listr';
+import path from 'path';
+
+import { boldCyan } from '../prompts';
 import { readFile, writeFile, resolvePaths } from '../utils';
 import parse from '../parser';
 
@@ -37,7 +41,7 @@ export const contextualize = (temple, context) => {
     );
   } catch (e) {
     throw new Error(
-      `Invalid output path provided in a temple or its context: ${context.command}`
+      `Invalid output path provided in a temple or its context: ${context.cmd}`
     );
   }
 };
@@ -51,7 +55,23 @@ export const contextualize = (temple, context) => {
  * @param {Object} mapping | key to value mapping
  */
 const temples = (temples, context, mapping) => {
-  temples.forEach((temple) => handle(contextualize(temple, context), mapping));
+  console.log(`\nProcessing temples for: ${boldCyan(context.cmd)}`);
+  const processes = new Listr(
+    temples.map(
+      (temple) => {
+        const contextualizedTemple = contextualize(temple, context);
+        const fileName = path.basename(contextualizedTemple.output);
+
+        return {
+          title: `Creating ${boldCyan(fileName)}`,
+          task: () => handle(contextualizedTemple, mapping),
+        };
+      },
+      { exitOnError: false }
+    )
+  );
+
+  processes.run().catch((err) => console.error(err));
 };
 
 export default temples;

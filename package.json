@@ -1,6 +1,6 @@
 {
   "name": "temples",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Generate files from predefined templates",
   "main": "cli.js",
   "scripts": {
@@ -22,6 +22,7 @@
     "cli-color": "^2.0.0",
     "enquirer": "^2.3.5",
     "handlebars": "^4.7.6",
+    "listr": "^0.14.3",
     "lodash": "^4.17.15",
     "runtypes": "^4.2.0",
     "yaml": "^1.9.2",

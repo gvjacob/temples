@@ -62,19 +62,19 @@ const getCommandAndMapping = async () => {
     ? await promptMapping(cmd, command.prompt)
     : cliMapping;
 
-  return { command, mapping };
+  return { cmd, command, mapping };
 };
 
 export default async () => {
-  const { command, mapping } = await getCommandAndMapping();
+  const { cmd, command, mapping } = await getCommandAndMapping();
   const isValid = Command.guard(command);
 
   if (isEmpty(command)) {
-    console.error('Command not found');
+    console.error('\nCommand not found');
   } else if (!isValid) {
-    console.error(`Configuration is invalid`);
+    console.error(`\nConfiguration is invalid`);
   } else {
     const { temples, ...context } = command;
-    handleTemples(temples, context, mapping);
+    handleTemples(temples, { ...context, cmd }, mapping);
   }
 };

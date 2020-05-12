@@ -2,6 +2,8 @@ import { isEmpty } from 'lodash';
 import { Select, Input } from 'enquirer';
 import clc from 'cli-color';
 
+export const boldCyan = clc.cyan.bold;
+
 /**
  * Prompt for command name.
  *
@@ -33,7 +35,7 @@ export const promptMapping = async (command, keys = []) => {
     return {};
   }
 
-  console.log(`Dictionary for ${clc.cyan(command)}:`);
+  console.log(`\nDictionary for ${boldCyan(command)}:`);
   let mapping = {};
 
   for (const key of keys) {

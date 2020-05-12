@@ -1,21 +1,15 @@
-# Generate a new component
 component:
+  base: ./test
   prompt:
     - name
-  # All paths are relative to src folder
   temples:
-    # Component entry point file
     - template: component.template
       output: "components/{{ name }}/index.js"
-      default:
-          name: Component
 
     # Component CSS stylesheet
-    - output: "components/{{ name }}/styles.css"
+    - template: styles.template
+      output: "components/{{ name }}/styles.css"
 
     # Component test file
     - template: test.template
       output: "components/{{ name }}/test.js"
-
-container:
-  base: .
