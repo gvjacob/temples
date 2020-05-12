@@ -57,17 +57,17 @@ The schema for `.temples.yaml`:
 
 ```yaml
 [command]:
-	base: [base_path]
-	prompt:
+  base: [base_path]
+  prompt:
     - [key]
       ...
-	temples:
-		- template: [template_path]
-		  output: [output_path]
-		  fault:
-			  [key]: [value]
-			  ...
-		...
+  temples:
+    - template: [template_path]
+      output: [output_path]
+      default:
+        [key]: [value]
+	...
+      ...
 ...
 ```
 
@@ -104,22 +104,22 @@ This is an example `.temples.yaml` file for a React project:
 ```yaml
 # Generate a new component
 component:
-	# All paths are relative to src folder
-	base: ./src
-	temples:
-		# Component entry point file
-		- template: component.template
-		  output: "components/{{ name }}/index.js"
-		  default:
-			  name: Component
+  # All paths are relative to src folder
+  base: ./src
+  temples:
+  # Component entry point file
+    - template: component.template
+      output: "components/{{ name }}/index.js"
+      default:
+        name: Component
 
-		# Component CSS stylesheet
-		- template: styles.template
-		  output: "components/{{ name }}/styles.css"
-
-		# Component test file
-		- template: test.template
-		  output: "components/{{ name }}/test.js"
+  # Component CSS stylesheet
+    - template: styles.template
+      output: "components/{{ name }}/styles.css"
+      
+  # Component test file
+    - template: test.template
+      output: "components/{{ name }}/test.js"
 ```
 
 `component.template`
