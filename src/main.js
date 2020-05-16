@@ -16,7 +16,8 @@ const TEMPLES_YAML = '.temples.yaml';
  * @returns {String} absolute path to yaml file
  */
 const getYamlPath = () => {
-  return path.join(process.cwd(), TEMPLES_YAML);
+  const inputYamlPath = argv['c']
+  return path.join(process.cwd(), inputYamlPath || TEMPLES_YAML);
 };
 
 /**
