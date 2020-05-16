@@ -1,4 +1,5 @@
 import path from 'path';
+import { get, isString } from 'lodash';
 
 import { boldCyan, notifyProcesses } from '../prompts';
 import { readFile, writeFile, resolvePaths } from '../utils';
@@ -23,6 +24,18 @@ const handle = ({ template, output, default: defaultMapping }, mapping) => {
 };
 
 /**
+ * Get directory base for given path type, given base from context.
+ *
+ * @param {String} path | type of path (e.g. template, output)
+ * @param {Object | String} base | base from context
+ *
+ * @returns {String} directory base
+ */
+const getPathBase = (pathType, base) => {
+  return isString(base) ? base : get(base, pathType);
+};
+
+/**
  * Contextualizes temple with given context.
  *
  * @param {Temple} temple | temple to modify
@@ -35,7 +48,10 @@ export const contextualize = (temple, context) => {
 
   try {
     return templePaths.reduce(
-      (acc, p) => ({ ...acc, [p]: resolvePaths(context.base, temple[p]) }),
+      (acc, p) => ({
+        ...acc,
+        [p]: resolvePaths(getPathBase(p, context.base), temple[p]),
+      }),
       temple
     );
   } catch (e) {
