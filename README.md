@@ -77,6 +77,14 @@ Use the `-c` option when invoking `temples` to specify a path to a different yam
 
 Every path (e.g. `template`, `output`) will be relative to the given `base`. This helps avoid redundancy in specifying path values in `temples`.
 
+If you need to differentiate the root directory for all templates and outputs, you can specify `template` and `output` under `base`.
+
+```yaml
+base:
+  template: [template_base_path]
+  output: [output_base_path]
+```
+
 ### `prompt`
 
 `prompt` takes in a list of keys that the user will be prompted for when key value arguments are not provided when running Temples.
