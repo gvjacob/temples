@@ -71,6 +71,8 @@ The schema for `.temples.yaml`:
 ...
 ```
 
+Use the `-c` option when invoking `temples` to specify a path to a different yaml configuration file.
+
 ### `base`
 
 Every path (e.g. `template`, `output`) will be relative to the given `base`. This helps avoid redundancy in specifying path values in `temples`.
