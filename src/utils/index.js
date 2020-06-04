@@ -19,7 +19,12 @@ export const readFile = (path) => {
  * @param {String} content | content of file
  */
 export const writeFile = (filePath, content) => {
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  const directory = path.dirname(filePath);
+
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  }
+
   fs.writeFileSync(filePath, content);
 };
 
