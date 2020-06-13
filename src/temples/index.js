@@ -2,7 +2,7 @@ import path from 'path';
 import { get, isString } from 'lodash';
 
 import { boldCyan, notifyProcesses } from '../prompts';
-import { readFile, writeFile, resolvePaths } from '../utils';
+import { readFile, writeFile, resolvePaths, getParentAndFile } from '../utils';
 import parse from '../parser';
 
 /**
@@ -43,20 +43,23 @@ const getPathBase = (pathType, base) => {
  *
  * @returns {Temple} contextualized temple
  */
-export const contextualize = (temple, context) => {
+export const contextualize = (temple, context, mapping = {}) => {
   const templePaths = ['output', 'template'];
 
   try {
     return templePaths.reduce(
       (acc, p) => ({
         ...acc,
-        [p]: resolvePaths(getPathBase(p, context.base), temple[p]),
+        [p]: parse(
+          resolvePaths(getPathBase(p, context.base), temple[p]),
+          mapping,
+        ),
       }),
-      temple
+      temple,
     );
   } catch (e) {
     throw new Error(
-      `Invalid output path provided in a temple or its context: ${context.cmd}`
+      `Invalid output path provided in a temple or its context: ${context.cmd}`,
     );
   }
 };
@@ -73,14 +76,14 @@ const temples = (temples, context, mapping) => {
   notifyProcesses(
     `\nProcessing temples for: ${boldCyan(context.cmd)}`,
     temples.map((temple) => {
-      const contextualizedTemple = contextualize(temple, context);
-      const fileName = path.basename(contextualizedTemple.output);
+      const contextualizedTemple = contextualize(temple, context, mapping);
+      const parentAndFile = getParentAndFile(contextualizedTemple.output);
 
       return {
-        title: `Creating ${boldCyan(fileName)}`,
+        title: `Creating ${boldCyan(parentAndFile)}`,
         task: () => handle(contextualizedTemple, mapping),
       };
-    })
+    }),
   );
 };
 

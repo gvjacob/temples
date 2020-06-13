@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { takeRight } from 'lodash';
 
 /**
  * Read file from given path.
@@ -39,4 +40,16 @@ export const writeFile = (filePath, content) => {
  */
 export const resolvePaths = (base = '', relative = '') => {
   return path.resolve(path.join(base, relative));
+};
+
+/**
+ * Get the parent directory and file name
+ *
+ * @param {String} filePath | file path
+ *
+ * @returns {String} parent and file name
+ */
+export const getParentAndFile = (filePath = '') => {
+  const sections = filePath.split(path.sep);
+  return takeRight(sections, 2).join(path.sep);
 };
