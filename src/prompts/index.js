@@ -3,7 +3,8 @@ import { isEmpty } from 'lodash';
 import { Select, Input } from 'enquirer';
 import clc from 'cli-color';
 
-export const boldCyan = clc.cyan.bold;
+export const { white, cyan } = clc;
+export const boldCyan = cyan.bold;
 
 /**
  * Prompt for command name.
@@ -39,12 +40,19 @@ export const promptMapping = async (command, keys = []) => {
   let mapping = {};
 
   for (const key of keys) {
+    const promptKey = key.key || key;
+    const promptDoc = key.doc;
+
     const prompt = new Input({
-      message: key,
+      message: promptKey,
     });
 
+    if (promptDoc) {
+      console.log(`\n${white(promptDoc)}`);
+    }
+
     const value = await prompt.run();
-    mapping = { ...mapping, [key]: value };
+    mapping = { ...mapping, [promptKey]: value };
   }
 
   return mapping;
@@ -60,7 +68,7 @@ export const promptMapping = async (command, keys = []) => {
 export const notifyProcesses = (
   headline,
   processes,
-  options = { exitOnError: false }
+  options = { exitOnError: false },
 ) => {
   console.log(headline);
   new Listr(processes, options).run().catch((err) => console.error(err));
