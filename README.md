@@ -101,6 +101,66 @@ The list of “temples”, or files to generate when running the command. This c
 
 > Note: if you wish to use a key when defining `template` and `output`, you can wrap the values with quotes and use the same Handlebars syntax (e.g. “path/to/{{ module }}.js”).
 
+## **Templating**
+
+Temples uses Handlebars syntax for defining file templates and dynamic output paths. We've added a few helpers to provide more flexibility within the templates:
+
+### `camel`
+
+This helper will convert your variable to camelCase.
+
+```sh
+# Template
+{{ camel name }}
+```
+
+```sh
+# Input: { name: "BigButton" }
+bigButton
+```
+
+### `kebab`
+
+This helper will convert your variable to kebab-case.
+
+```sh
+# Template
+{{ kebab name }}
+```
+
+```sh
+# Input: { name: "bigButton" }
+big-button
+```
+
+### `snake`
+
+This helper will convert your variable to snake_case.
+
+```sh
+# Template
+{{ snake name }}
+```
+
+```sh
+# Input: { name: "big-button" }
+big_button
+```
+
+### `title`
+
+This helper will convert your variable to TitleCase.
+
+```sh
+# Template
+{{ snake name }}
+```
+
+```sh
+# Input: { name: "big_button" }
+BigButton
+```
+
 ## **Example**
 
 This is an example `.temples.yaml` file for a React project:
@@ -111,17 +171,17 @@ component:
   # All paths are relative to src folder
   base: ./src
   temples:
-  # Component entry point file
+    # Component entry point file
     - template: component.template
       output: "components/{{ name }}/index.js"
       default:
         name: Component
 
-  # Component CSS stylesheet
+    # Component CSS stylesheet
     - template: styles.template
-      output: "components/{{ name }}/styles.css"
-      
-  # Component test file
+      output: "components/{{ name }}/{{ camel name }}.module.scss"
+
+    # Component test file
     - template: test.template
       output: "components/{{ name }}/test.js"
 ```
@@ -130,13 +190,21 @@ component:
 
 ```
 import React from 'react';
-import styles from './styles.css';
+import styles from './{{ camel name }}.module.scss';
 
 const {{ name }} = () => {
 	return null;
 };
 
 export default {{ name }};
+```
+
+`styles.template`
+
+```
+.{{ kebab name }} {
+
+}
 ```
 
 `test.template`
@@ -155,4 +223,5 @@ temples component --name Button
 ```
 
 ## **License**
+
 Copyright © 2020 - present, [Gino Jacob](https://ginojacob.com). MIT License.
