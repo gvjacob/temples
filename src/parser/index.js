@@ -1,5 +1,5 @@
-import Handlebars from "handlebars";
-import { camelCase, kebabCase, snakeCase, startCase } from "lodash";
+import Handlebars from 'handlebars';
+import { camelCase, kebabCase, snakeCase, startCase } from 'lodash';
 
 /**
  * Registers custom casing helpers to the Handlebars environment.
@@ -8,24 +8,24 @@ import { camelCase, kebabCase, snakeCase, startCase } from "lodash";
  */
 const registerHelpers = () => {
   // Registers a camelCase helper for the template.
-  Handlebars.registerHelper("camel", (string) => {
+  Handlebars.registerHelper('camel', (string) => {
     return camelCase(string);
   });
 
   // Registers a kebab-case helper for the template.
-  Handlebars.registerHelper("kebab", (string) => {
+  Handlebars.registerHelper('kebab', (string) => {
     return kebabCase(string);
   });
 
   // Registers a snake_case helper for the template.
-  Handlebars.registerHelper("snake", (string) => {
+  Handlebars.registerHelper('snake', (string) => {
     return snakeCase(string);
   });
 
   // Registers a TitleCase helper for the template.
-  Handlebars.registerHelper("title", (string) => {
+  Handlebars.registerHelper('title', (string) => {
     const casedString = startCase(string);
-    return casedString.replace(/\s/g, "");
+    return casedString.replace(/\s/g, '');
   });
 };
 
