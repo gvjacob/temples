@@ -7,22 +7,10 @@ import { camelCase, kebabCase, snakeCase, startCase } from 'lodash';
  * @see https://handlebarsjs.com/api-reference/runtime.html#handlebars-registerhelper-name-helper
  */
 const registerHelpers = () => {
-  // Registers a camelCase helper for the template.
-  Handlebars.registerHelper('camel', (string) => {
-    return camelCase(string);
-  });
+  Handlebars.registerHelper('camel', camelCase);
+  Handlebars.registerHelper('kebab', kebabCase);
+  Handlebars.registerHelper('snake', snakeCase);
 
-  // Registers a kebab-case helper for the template.
-  Handlebars.registerHelper('kebab', (string) => {
-    return kebabCase(string);
-  });
-
-  // Registers a snake_case helper for the template.
-  Handlebars.registerHelper('snake', (string) => {
-    return snakeCase(string);
-  });
-
-  // Registers a TitleCase helper for the template.
   Handlebars.registerHelper('title', (string) => {
     const casedString = startCase(string);
     return casedString.replace(/\s/g, '');
@@ -40,6 +28,7 @@ const registerHelpers = () => {
  */
 export const parse = (source, mapping = {}, defaultMapping = {}) => {
   registerHelpers();
+
   const template = Handlebars.compile(source);
   return template({ ...defaultMapping, ...mapping });
 };
