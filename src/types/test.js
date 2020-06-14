@@ -1,9 +1,9 @@
 import { String } from 'runtypes';
-import { Optional, Mapping, Paths, Base, Context, Temple } from '.';
+import { Optional, Mapping, Paths, Base, Context, Prompt, Temple } from '.';
 
 describe('types', () => {
   const testGuard = (type, input, pass = true) => {
-    expect(type.guard(input)).toBe(pass)
+    expect(type.guard(input)).toBe(pass);
   };
 
   describe('Optional', () => {
@@ -71,17 +71,37 @@ describe('types', () => {
     });
   });
 
+  describe('Prompt', () => {
+    it('true for array of strings', () => {
+      testGuard(Prompt, ['']);
+    });
+
+    it('true for array of { key: string, doc: string }', () => {
+      testGuard(Prompt, [{ key: '', doc: '' }]);
+    });
+
+    it('true for array of string or { key: string, doc: string }', () => {
+      testGuard(Prompt, ['', { key: '', doc: '' }]);
+    });
+
+    it('false if prompt object is not complete', () => {
+      testGuard(Prompt, [{ key: '' }], false);
+      testGuard(Prompt, [{ doc: '' }], false);
+      testGuard(Prompt, [{}], false);
+    });
+  });
+
   describe('Context', () => {
     it('true for { base, default }', () => {
       testGuard(Context, { base: '', default: {} });
     });
 
     it('true for { base }', () => {
-      testGuard(Context, { base: ''});
+      testGuard(Context, { base: '' });
     });
 
     it('true for { default }', () => {
-      testGuard(Context, { default: {}})
+      testGuard(Context, { default: {} });
     });
 
     it('false for Any', () => {
@@ -92,11 +112,11 @@ describe('types', () => {
 
   describe('Temple', () => {
     it('true for { output }', () => {
-      testGuard(Temple, { output: ''});
+      testGuard(Temple, { output: '' });
     });
 
     it('false for { }', () => {
-      testGuard(Temple, { }, false);
+      testGuard(Temple, {}, false);
     });
   });
 });

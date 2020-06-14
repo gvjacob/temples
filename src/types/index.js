@@ -7,12 +7,16 @@ export const Base = String.Or(
   Record({
     template: Optional(String),
     output: Optional(String),
-  })
+  }),
+);
+
+export const Prompt = Optional(
+  Array(String.Or(Record({ key: String, doc: String }))),
 );
 
 export const Context = Record({
   base: Optional(Base),
-  prompt: Optional(Array(String)),
+  prompt: Prompt,
   default: Optional(Mapping),
 });
 
