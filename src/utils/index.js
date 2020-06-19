@@ -10,7 +10,11 @@ import { takeRight } from 'lodash';
  * @returns {String} encoded file
  */
 export const readFile = (path) => {
-  return fs.readFileSync(path, 'utf-8');
+  try {
+    return fs.readFileSync(path, 'utf-8');
+  } catch (e) {
+    return null;
+  }
 };
 
 /**

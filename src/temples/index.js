@@ -18,7 +18,9 @@ const handle = ({ template, output, default: defaultMapping }, mapping) => {
   ].map((path) => parse(path, mapping, defaultMapping));
 
   const templateFile = readFile(parsedTemplatePath);
-  const parsedTemplate = parse(templateFile, mapping, defaultMapping);
+  const parsedTemplate = templateFile
+    ? parse(templateFile, mapping, defaultMapping)
+    : '';
 
   writeFile(parsedOutputPath, parsedTemplate);
 };
