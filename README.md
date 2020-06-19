@@ -22,36 +22,29 @@ Creating the same files with the same boilerplate code gets tedious after a whil
 
 ## **Installation**
 
-Temples is a CLI application. The easiest way to use it is to install it globally:
+Install Temples in your repository or globally:
 
 ```bash
-npm install -g temples
+npm install [-g] temples
 ```
 
 ## **Usage**
 
 Temples reads from a `.temples.yaml` file in the root directory of your project.
 
-To run Temples CLI:
-
 ```bash
+# Invokes a CLI
 temples
-```
 
-Running `temples` without any arguments will bring you to a CLI that will prompt for the command, and the values for each key defined under `prompt` in `.temples.yaml`.
-
-To run Temples without the CLI:
-
-```bash
+# Or, directly specify command and value for each key
 temples [command] [--[key] [value], ...]
 ```
 
-`command` is the name of a command specified in `.temples.yaml`.
-Each `key` and `value` pair is a mapping for the variables in your templates.
+Running `temples` without arguments invokes a CLI that will prompt for a command and the values for each key defined under `prompt` in `.temples.yaml`.
 
 ## **Configuration**
 
-`.temples.yaml` is the configuration file for Temples. Each command has a list of “temples”, each one defining which template files to use, where to output the compiled files, and default mapping for the key value pairs. You can further configure each command.
+`.temples.yaml` is the configuration file for Temples. Each command has a list of `temples`, each one defining which template files to use, where to output the compiled files, and default mapping for the key value pairs. You can further configure each command.
 
 The schema for `.temples.yaml`:
 
@@ -66,18 +59,16 @@ The schema for `.temples.yaml`:
       output: [output_path]
       default:
         [key]: [value]
-	...
+        ...
       ...
 ...
 ```
-
-Use the `-c` option when invoking `temples` to specify a path to a different yaml configuration file.
 
 ### `base`
 
 Every path (e.g. `template`, `output`) will be relative to the given `base`. This helps avoid redundancy in specifying path values in `temples`.
 
-If you need to differentiate the root directory for all templates and outputs, you can specify `template` and `output` under `base`.
+If you need to differentiate the base path for all templates and outputs, you can specify `template` and `output` under `base`.
 
 ```yaml
 base:
@@ -87,15 +78,23 @@ base:
 
 ### `prompt`
 
-`prompt` takes in a list of keys that the user will be prompted for when key value arguments are not provided when running Temples.
+`prompt` takes in a list of keys that the user will be prompted for in the CLI.
+
+Follow this syntax to provide documentation for a key:
+
+```yaml
+prompt:
+  - key: [key]
+    doc: [documentation] # displayed when prompted
+```
 
 ### `temples`
 
-The list of “temples”, or files to generate when running the command. This can take an arbitrary number if you want to generate more than one file from different templates. For example in React, you might want to create a Javascript file, a css stylesheet, and a test file when generating a new component.
+The list of files to generate when running the command. This can take an arbitrary number if you want to generate more than one file from different templates. For example in React, you might want to create a Javascript file, a css stylesheet, and a test file when generating a new component.
 
-- `template`: Path to template file. A template file can have any extension as long as it has text and abides by Handlebars syntax. You could establish your own template conventions like `file.template` to be explicit.
+- `template`: Path to template file. A template file can have any extension as long as it has text and abides by Handlebars syntax. You could establish your own template conventions like `file.template` to be explicit. Omitting a template will create an empty file.
 
-- `output`: Path to output template file after compiling with provided key value pairs from the CLI. Temples will create any non-existent directories along the given path if needed.
+- `output`: Path to output file. Temples will create any non-existent directories along the given path if needed.
 
 - `default`: Default key value pairs if not provided by the CLI command.
 
@@ -173,17 +172,17 @@ component:
   temples:
     # Component entry point file
     - template: component.template
-      output: "components/{{ name }}/index.js"
+      output: 'components/{{ name }}/index.js'
       default:
         name: Component
 
     # Component CSS stylesheet
     - template: styles.template
-      output: "components/{{ name }}/{{ camel name }}.module.scss"
+      output: 'components/{{ name }}/{{ camel name }}.module.scss'
 
     # Component test file
     - template: test.template
-      output: "components/{{ name }}/test.js"
+      output: 'components/{{ name }}/test.js'
 ```
 
 `component.template`
@@ -224,4 +223,4 @@ temples component --name Button
 
 ## **License**
 
-Copyright © 2020 - present, [Gino Jacob](https://ginojacob.com). MIT License.
+Copyright © 2020, [Gino Jacob](https://ginojacob.com). MIT License.
