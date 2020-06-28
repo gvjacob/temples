@@ -13,7 +13,7 @@ describe('parser', () => {
     const defaultMapping = { name: 'Temple' };
 
     expect(parse(source, {}, defaultMapping)).toBe(
-      `Hello, ${defaultMapping.name}`
+      `Hello, ${defaultMapping.name}`,
     );
   });
 
@@ -23,7 +23,7 @@ describe('parser', () => {
     const defaultMapping = { greeting: 'Hello', name: 'Temple' };
 
     expect(parse(source, mapping, defaultMapping)).toBe(
-      `${defaultMapping.greeting}, ${mapping.name}`
+      `${defaultMapping.greeting}, ${mapping.name}`,
     );
   });
 
