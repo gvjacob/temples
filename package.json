@@ -1,6 +1,6 @@
 {
   "name": "temples",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Generate files from predefined templates",
   "main": "cli.js",
   "scripts": {
