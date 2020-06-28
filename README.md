@@ -100,7 +100,7 @@ The list of files to generate when running the command. This can take an arbitra
 
 > Note: if you wish to use a key when defining `template` and `output`, you can wrap the values with quotes and use the same Handlebars syntax (e.g. “path/to/{{ module }}.js”).
 
-## **Templating**
+## **Template Helpers**
 
 Temples uses Handlebars syntax for defining file templates and dynamic output paths. We've added a few helpers to provide more flexibility within the templates:
 
@@ -158,6 +158,14 @@ This helper will convert your variable to TitleCase.
 ```sh
 # Input: { name: "big_button" }
 BigButton
+```
+
+### Naming Conflicts
+
+If a variable conflicts with a helper name (e.g. `{{ title }}`), Handlebars will treat it as a helper instead of a variable. You can namespace the variable with `this` or `./` to avoid naming conflicts.
+
+```
+{{ this.title }}
 ```
 
 ## **Example**
