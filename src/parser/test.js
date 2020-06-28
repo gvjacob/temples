@@ -54,4 +54,13 @@ describe('parser', () => {
 
     expect(parse(source, mapping)).toBe(`Hello, BigButton`);
   });
+
+  it('avoids helper and variable name conflicts using "this" or "./"', () => {
+    const sources = ['Hello, {{ this.title }}', 'Hello, {{ ./title }}'];
+    const mapping = { title: 'big-button' };
+
+    sources.forEach((source) => {
+      expect(parse(source, mapping)).toBe(`Hello, big-button`);
+    });
+  });
 });
