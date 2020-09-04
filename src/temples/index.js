@@ -82,7 +82,7 @@ const temples = (temples, context, mapping) => {
       const parentAndFile = getParentAndFile(contextualizedTemple.output);
 
       return {
-        title: `Creating ${boldCyan(parentAndFile)}`,
+        title: `Created ${boldCyan(parentAndFile)}`,
         task: () => handle(contextualizedTemple, mapping),
       };
     }),

@@ -36,7 +36,6 @@ export const promptMapping = async (command, keys = []) => {
     return {};
   }
 
-  console.log(`\nDictionary for ${boldCyan(command)}:`);
   let mapping = {};
 
   for (const key of keys) {
