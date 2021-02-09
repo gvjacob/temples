@@ -1,0 +1,27 @@
+{
+  "name": "temples",
+  "version": "2.0.0",
+  "description": "Generate and insert code automatically",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gvjacob/temples.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gvjacob/temples/issues"
+  },
+  "homepage": "https://github.com/gvjacob/temples#readme",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  }
+}
