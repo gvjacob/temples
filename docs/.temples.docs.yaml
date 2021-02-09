@@ -1,0 +1,63 @@
+# Note: all paths are relative to this configuration file.
+
+# Define base paths to find templates
+# and produce output files.
+base:
+  # Template sources for files and inserts.
+  input:
+    files: .temples/templates/files
+    inserts: .temples/templates/inserts
+
+  # Produced files and inserts.
+  output:
+    files: src/files
+    inserts: src/inserts
+
+# File that overrides handlebars instance.
+handlebars: HandlebarsConfig.js
+
+inserts:
+  # Regex to match temples inserts
+  # based on file extensions.
+  regex:
+    js: '\/\/ temples: (.+)'
+    md: '^# temples: (.+)'
+
+  # Prefix and suffix
+  before: ', '
+  after: '/n'
+
+  # Where to insert relative to regex
+  #   above: above the regex
+  #   below: under the regex
+  #   left: left of the regex
+  #   right: right of the regex
+  position: below
+
+# Default key value mapping.
+default:
+  var_a: 'a'
+  var_b: 'b'
+
+# Log out processes
+verbose: true
+
+temples:
+  component:
+    base: .temples/components
+    prompt: [name, title]
+
+    default:
+      var_c: 'c'
+
+    files:
+      - template: component.hbs
+        output: output.js
+
+    inserts:
+      - template: component-import.hbs
+        output: components/index.js
+        regex: ...
+        before: ...
+        after: ...
+        position: ...

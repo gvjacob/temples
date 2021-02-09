@@ -1,0 +1,40 @@
+base:
+  input:
+    files: .temples/templates/files
+    inserts: .temples/templates/inserts
+  output:
+    files: src/files
+    inserts: src/inserts
+
+handlebars: HandlebarsConfig.js
+
+inserts:
+  regex:
+    js: '\/\/ temples: (.+)'
+    md: '^# temples: (.+)'
+  before: ', '
+  after: '/n'
+  position: below
+
+default:
+  var_a: 'a'
+  var_b: 'b'
+
+verbose: true
+
+temples:
+  component:
+    base: .temples/components
+    prompt: [name, title]
+    default:
+      var_c: 'c'
+    files:
+      - template: component.hbs
+        output: output.js
+    inserts:
+      - template: component-import.hbs
+        output: components/index.js
+        regex: ...
+        before: ...
+        after: ...
+        position: ...
