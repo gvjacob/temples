@@ -7,7 +7,7 @@ import Handlebars from 'handlebars';
  * @param {object} mapping - user defined mapping
  * @param {object} defaultMapping - default or fallback mapping
  *
- * @returns {string} parsed output
+ * @return {string} parsed output
  */
 export function parse(source: string, mapping = {}, defaultMapping = {}) {
   const template = Handlebars.compile(source);
