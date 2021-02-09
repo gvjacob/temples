@@ -4,12 +4,10 @@
 # and produce output files.
 base:
   # Template sources for files and inserts.
-  input:
-    files: .temples/templates/files
-    inserts: .temples/templates/inserts
+  templates: .temples/templates/files
 
   # Produced files and inserts.
-  output:
+  target:
     files: src/files
     inserts: src/inserts
 
@@ -52,11 +50,10 @@ temples:
 
     files:
       - template: component.hbs
-        output: output.js
+        target: target.js
 
     inserts:
-      - template: component-import.hbs
-        output: components/index.js
+      - target: components/index.js
         regex: ...
         before: ...
         after: ...

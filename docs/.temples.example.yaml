@@ -1,12 +1,8 @@
 base:
-  input:
-    files: .temples/templates/files
-    inserts: .temples/templates/inserts
-  output:
+  templates: .temples/templates/files
+  target:
     files: src/files
     inserts: src/inserts
-
-handlebars: HandlebarsConfig.js
 
 inserts:
   regex:
@@ -20,6 +16,7 @@ default:
   var_a: 'a'
   var_b: 'b'
 
+handlebars: HandlebarsConfig.js
 verbose: true
 
 temples:
@@ -30,10 +27,9 @@ temples:
       var_c: 'c'
     files:
       - template: component.hbs
-        output: output.js
+        target: target.js
     inserts:
-      - template: component-import.hbs
-        output: components/index.js
+      - target: components/index.js
         regex: ...
         before: ...
         after: ...
