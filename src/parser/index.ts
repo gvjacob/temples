@@ -1,4 +1,4 @@
-import Handlebars from 'handlebars';
+import Handlebars from '../handlebars';
 
 /**
  * Parse source with given mapping, overriding the default.

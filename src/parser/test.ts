@@ -39,3 +39,22 @@ describe('with default mapping', () => {
     expect(parse('{{ greeting }}, {{ name }}', mapping, defaultMapping)).toBe(`${mapping.greeting}, ${mapping.name}`);
   });
 });
+
+describe('built-in helpers', () => {
+  test('apply case helpers', () => {
+    const name = 'keytar bear';
+
+    const cases = {
+      ['camel-case']: 'keytarBear',
+      ['kebab-case']: 'keytar-bear',
+      ['snake-case']: 'keytar_bear',
+      ['upper-case']: 'KEYTAR BEAR',
+      ['start-case']: 'Keytar Bear',
+      ['title-case']: 'KeytarBear',
+    };
+
+    Object.entries(cases).forEach(([filter, output]) => {
+      expect(parse(`{{ ${filter} name }}`, { name })).toBe(output);
+    });
+  });
+});
