@@ -9,7 +9,9 @@ import Handlebars from '../handlebars';
  *
  * @return {string} parsed output
  */
-export function parse(source: string, mapping = {}, defaultMapping = {}): string {
+function parse(source: string, mapping = {}, defaultMapping = {}): string {
   const template = Handlebars.compile(source);
   return template({ ...defaultMapping, ...mapping });
 }
+
+export default parse;

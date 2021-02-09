@@ -1,4 +1,4 @@
-import { parse } from '.';
+import parse from '.';
 import faker from 'faker';
 
 test('inject variables from mapping', () => {
