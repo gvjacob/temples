@@ -1,4 +1,5 @@
 import Handlebars from '../handlebars';
+import { Mapping } from '../types';
 import { ParseOptions } from './types';
 
 /**
@@ -10,7 +11,7 @@ import { ParseOptions } from './types';
  *
  * @return {string} compiled output
  */
-function compile(source: string, mapping = {}, defaultMapping = {}): string {
+function compile(source: string, mapping: Mapping = {}, defaultMapping: Mapping = {}): string {
   const template = Handlebars.compile(source);
   return template({ ...defaultMapping, ...mapping });
 }
@@ -21,11 +22,16 @@ function compile(source: string, mapping = {}, defaultMapping = {}): string {
  * @param {string} source - template source
  * @param {object} mapping - user defined mapping
  * @param {object} defaultMapping - default or fallback mapping
- * @param {object} options - extra options
+ * @param {ParseOptions} options - parse options
  *
  * @return {string} compiled output
  */
-function parse(source: string, mapping = {}, defaultMapping = {}, options: ParseOptions = {}): string {
+function parse(
+  source: string,
+  mapping: Mapping = {},
+  defaultMapping: Mapping = {},
+  options: ParseOptions = {},
+): string {
   const compiled = compile(source, mapping, defaultMapping);
 
   // Get before and after strings if provided.
