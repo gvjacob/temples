@@ -40,7 +40,7 @@ default:
 # Log out processes
 verbose: true
 
-temples:
+generators:
   component:
     base: .temples/components
     prompt: [name, title]
@@ -53,7 +53,8 @@ temples:
         target: target.js
 
     inserts:
-      - target: components/index.js
+      - template: insert.hbs
+        target: components/index.js
         regex: ...
         before: ...
         after: ...
