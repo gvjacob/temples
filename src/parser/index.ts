@@ -6,8 +6,8 @@ import { ParseOptions } from './types';
  * Compile source with given mapping, overriding the default.
  *
  * @param {string} source - template source
- * @param {object} mapping - user defined mapping
- * @param {object} defaultMapping - default or fallback mapping
+ * @param {Mapping} mapping - user defined mapping
+ * @param {Mapping} defaultMapping - default or fallback mapping
  *
  * @return {string} compiled output
  */
@@ -20,8 +20,8 @@ function compile(source: string, mapping: Mapping = {}, defaultMapping: Mapping 
  * Parse source with mappings.
  *
  * @param {string} source - template source
- * @param {object} mapping - user defined mapping
- * @param {object} defaultMapping - default or fallback mapping
+ * @param {Mapping} mapping - user defined mapping
+ * @param {Mapping} defaultMapping - default or fallback mapping
  * @param {ParseOptions} options - parse options
  *
  * @return {string} compiled output
