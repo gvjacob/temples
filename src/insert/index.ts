@@ -5,9 +5,9 @@ import { InsertOptions } from './types';
  * Insert parsed output into given source.
  *
  * @param {string} source - template source
- * @param {object} mapping - user defined mapping
- * @param {object} defaultMapping - default or fallback mapping
- * @param {ParseOptions} options - parse options
+ * @param {Mapping} mapping - user defined mapping
+ * @param {Mapping} defaultMapping - default or fallback mapping
+ * @param {InsertOptions} options - insert options
  *
  * @return {string} compiled output
  */
