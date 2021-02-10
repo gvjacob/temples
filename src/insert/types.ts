@@ -1,9 +1,5 @@
 import { ParseOptions } from '../parser/types';
 
-type InsertRegex = {
-  [key: string]: string;
-};
-
 enum InsertPosition {
   ABOVE = 'above',
   BELOW = 'below',
@@ -13,6 +9,5 @@ enum InsertPosition {
 
 export interface InsertOptions extends ParseOptions {
   template?: string;
-  regex?: InsertRegex;
   position?: InsertPosition;
 }
