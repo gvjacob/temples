@@ -10,11 +10,9 @@
     "build": "tsc",
     "test": "jest --verbose --watchAll",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "tslint -c tslint.json -p tsconfig.json"
   },
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gvjacob/temples.git"
