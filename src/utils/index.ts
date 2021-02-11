@@ -1,6 +1,39 @@
+import fs from 'fs';
+import path from 'path';
 import { isEmpty } from 'lodash';
 
 import { RegExpMatch } from './types';
+
+/**
+ * Read file from given path.
+ *
+ * @param {string} p - path
+ *
+ * @return {string} encoded file
+ */
+export function readFile(p: string): string | null {
+  try {
+    return fs.readFileSync(p, 'utf-8');
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
+ * Write file to given path.
+ *
+ * @param {string} p - path to file
+ * @param {string} content
+ */
+export const writeFile = (p: string, content: string) => {
+  const directory = path.dirname(p);
+
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true });
+  }
+
+  fs.writeFileSync(p, content);
+};
 
 /**
  * Find all matched regex substrings.
