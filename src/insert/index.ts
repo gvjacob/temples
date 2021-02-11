@@ -23,10 +23,13 @@ function placeRelativeTo(
   switch (position) {
     case InsertPosition.ABOVE:
       return `${str}\n${to}`;
+
     case InsertPosition.LEFT:
       return `${str}${to}`;
+
     case InsertPosition.RIGHT:
       return `${to}${str}`;
+
     default:
       return `${to}\n${str}`;
   }
