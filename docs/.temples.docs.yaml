@@ -53,8 +53,7 @@ generators:
         target: target.js
 
     inserts:
-      - template: insert.hbs
-        target: components/index.js
+      - target: components/index.js
         regex: ...
         before: ...
         after: ...

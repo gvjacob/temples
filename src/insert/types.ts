@@ -8,6 +8,5 @@ enum InsertPosition {
 }
 
 export interface InsertOptions extends ParseOptions {
-  template?: string;
   position?: InsertPosition;
 }

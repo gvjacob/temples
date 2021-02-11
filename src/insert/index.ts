@@ -1,5 +1,6 @@
 import { Mapping } from '../types';
 import { InsertOptions } from './types';
+import { findMatchedRegExp } from '../utils';
 
 /**
  * Insert parsed output into given source.
@@ -19,6 +20,7 @@ function insert(
   defaultMapping: Mapping = {},
   options: InsertOptions = {},
 ): string {
+  const matches = findMatchedRegExp(source, regex);
   return source;
 }
 
