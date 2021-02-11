@@ -19,8 +19,8 @@ import parse from '../parser';
 function replaceWithParse(
   source: string,
   regexMatch: RegExpMatch,
-  mapping: Mapping,
-  defaultMapping: Mapping,
+  mapping: Mapping = {},
+  defaultMapping: Mapping = {},
   options: InsertOptions = {},
 ): string {
   const [match, group] = regexMatch;
@@ -54,7 +54,12 @@ function insert(
   options: InsertOptions = {},
 ): string {
   const matches = findMatchedRegExp(source, regex);
-  const output = matches.reduce((acc, match) => replaceWithParse(acc, match, mapping, defaultMapping, options), source);
+
+  const output = matches.reduce(
+    (acc, match) =>
+      replaceWithParse(acc, match, mapping, defaultMapping, options),
+    source,
+  );
 
   return output;
 }

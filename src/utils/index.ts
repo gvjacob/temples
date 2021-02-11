@@ -10,7 +10,10 @@ import { RegExpMatch } from './types';
  *
  * @return {RegExpMatch[]} matching substrings
  */
-export function findMatchedRegExp(source: string, regex: string): RegExpMatch[] {
+export function findMatchedRegExp(
+  source: string,
+  regex: string,
+): RegExpMatch[] {
   const matches: RegExpMatch[] = [];
 
   if (isEmpty(regex)) {
