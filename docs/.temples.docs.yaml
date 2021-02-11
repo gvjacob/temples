@@ -21,10 +21,6 @@ inserts:
     js: '\/\/ temples: (.+)'
     md: '^# temples: (.+)'
 
-  # Prefix and suffix
-  before: ', '
-  after: '/n'
-
   # Where to insert relative to regex
   #   above: above the regex
   #   below: under the regex
@@ -55,6 +51,4 @@ generators:
     inserts:
       - target: components/index.js
         regex: ...
-        before: ...
-        after: ...
         position: ...
