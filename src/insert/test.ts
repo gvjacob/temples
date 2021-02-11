@@ -24,7 +24,7 @@ Members.
   expect(insert(source, regex)).toBe(expected);
 });
 
-describe('with mapping', () => {
+describe('with insert position', () => {
   const source = `
 # Beatles
 
