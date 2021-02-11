@@ -45,7 +45,7 @@ function placeRelativeTo(
  *
  * @return {string}
  */
-function replaceWithParse(
+function parseAndReplace(
   source: string,
   regexMatch: RegExpMatch,
   mapping: Mapping = {},
@@ -86,7 +86,7 @@ function insert(
 
   const output = matches.reduce(
     (acc, match) =>
-      replaceWithParse(acc, match, mapping, defaultMapping, options),
+      parseAndReplace(acc, match, mapping, defaultMapping, options),
     source,
   );
 
