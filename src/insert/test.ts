@@ -3,6 +3,30 @@ import { InsertPosition } from './types';
 
 const regex = `<!-- temples\\((.+)\\) -->`;
 
+test('preserve original source if no matching regex', () => {
+  const source = `
+# Beatles
+
+Members.
+<!-- temples(- Ringo) -->
+- Paul
+- John`;
+
+  expect(insert(source, 'George')).toBe(source);
+});
+
+test('preserve Handlebars variables if no matching regex but there is mapping', () => {
+  const source = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
+- Paul
+- John`;
+
+  expect(insert(source, 'Ringo', { name: 'George' })).toBe(source);
+});
+
 test('respect hardcoded inserts', () => {
   const source = `
 # Beatles
