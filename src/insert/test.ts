@@ -1,36 +1,51 @@
 import insert from '.';
 
-const source = `
+const regex = `<!-- temples\\((.+)\\) -->`;
+
+test('respect hardcoded inserts', () => {
+  const source = `
 # Beatles
 
 Members.
-<!-- temples(- {{ name }})-->
+<!-- temples(- Ringo) -->
 - Paul
-- John
-`;
+- John`;
 
-const regex = `<!-- temples\((.+)\) -->`;
+  const expected = `
+# Beatles
 
-const mapping = {
-  name: 'George',
-};
+Members.
+<!-- temples(- Ringo) -->
+- Ringo
+- Paul
+- John`;
 
-test('preserve source without configuration', () => {
-  expect(insert(source, regex)).toBe(source);
+  expect(insert(source, regex)).toBe(expected);
 });
 
 describe('with mapping', () => {
-  test('default inserts below comment tag', () => {
-    const output = `
+  const source = `
 # Beatles
 
 Members.
-<!-- temples(- {{ name }})-->
+<!-- temples(- {{ name }}) -->
+- Paul
+- John`;
+
+  const mapping = {
+    name: 'George',
+  };
+
+  test('default inserts below comment tag', () => {
+    const expected = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
 - George
 - Paul
-- John
-    `;
+- John`;
 
-    expect(insert(source, regex, mapping)).toBe(output);
+    expect(insert(source, regex, mapping)).toBe(expected);
   });
 });

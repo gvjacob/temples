@@ -21,7 +21,7 @@ export function findMatchedRegExp(source: string, regex: string): RegExpMatch[] 
 
   let m;
 
-  while ((m = re.exec(source))) {
+  while ((m = re.exec(source)) !== null) {
     if (m.index === re.lastIndex) {
       re.lastIndex++;
     }
