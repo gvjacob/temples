@@ -1,4 +1,5 @@
 import insert from '.';
+import { InsertPosition } from './types';
 
 const regex = `<!-- temples\\((.+)\\) -->`;
 
@@ -36,7 +37,7 @@ Members.
     name: 'George',
   };
 
-  test('default inserts below comment tag', () => {
+  test('insert below by default', () => {
     const expected = `
 # Beatles
 
@@ -47,5 +48,71 @@ Members.
 - John`;
 
     expect(insert(source, regex, mapping)).toBe(expected);
+  });
+
+  test('insert below', () => {
+    const expected = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
+- George
+- Paul
+- John`;
+
+    const options = {
+      position: InsertPosition.BELOW,
+    };
+
+    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+  });
+
+  test('insert above', () => {
+    const expected = `
+# Beatles
+
+Members.
+- George
+<!-- temples(- {{ name }}) -->
+- Paul
+- John`;
+
+    const options = {
+      position: InsertPosition.ABOVE,
+    };
+
+    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+  });
+
+  test('insert left', () => {
+    const expected = `
+# Beatles
+
+Members.
+- George<!-- temples(- {{ name }}) -->
+- Paul
+- John`;
+
+    const options = {
+      position: InsertPosition.LEFT,
+    };
+
+    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+  });
+
+  test('insert right', () => {
+    const expected = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->- George
+- Paul
+- John`;
+
+    const options = {
+      position: InsertPosition.RIGHT,
+    };
+
+    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
   });
 });

@@ -1,10 +1,36 @@
 import { Mapping } from '../types';
-import { InsertOptions } from './types';
+import { InsertOptions, InsertPosition } from './types';
 
 import { findMatchedRegExp } from '../utils';
 import { RegExpMatch } from '../utils/types';
 
 import parse from '../parser';
+
+/**
+ * Place str in the right position relative to.
+ *
+ * @param {string} to - string relative to
+ * @param {string} str - string to place
+ * @param {InsertPosition} position - relative position
+ *
+ * @return {string}
+ */
+function placeRelativeTo(
+  to: string,
+  str: string,
+  position: InsertPosition = InsertPosition.BELOW,
+) {
+  switch (position) {
+    case InsertPosition.ABOVE:
+      return `${str}\n${to}`;
+    case InsertPosition.LEFT:
+      return `${str}${to}`;
+    case InsertPosition.RIGHT:
+      return `${to}${str}`;
+    default:
+      return `${to}\n${str}`;
+  }
+}
 
 /**
  * Replace given match in source with
@@ -30,7 +56,7 @@ function replaceWithParse(
   }
 
   const parsed = parse(group, mapping, defaultMapping, options);
-  const output = `${match}\n${parsed}`;
+  const output = placeRelativeTo(match, parsed, options.position);
 
   return source.replace(match, output);
 }

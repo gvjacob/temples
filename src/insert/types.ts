@@ -1,6 +1,6 @@
 import { ParseOptions } from '../parser/types';
 
-enum InsertPosition {
+export enum InsertPosition {
   ABOVE = 'above',
   BELOW = 'below',
   LEFT = 'left',
