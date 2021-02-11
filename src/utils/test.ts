@@ -1,4 +1,35 @@
-import { findMatchedRegExp } from '.';
+import fs from 'fs';
+import mock from 'mock-fs';
+import { readFile, writeFile, findMatchedRegExp } from '.';
+
+describe('writeFile', () => {
+  const filename = 'hello.md';
+  const content = '# Hello';
+
+  beforeEach(() => {
+    mock();
+  });
+
+  afterEach(() => {
+    mock.restore();
+  });
+
+  test('writes file into path', () => {
+    writeFile(filename, content);
+    const file = readFile(filename);
+
+    expect(file).toBe(content);
+  });
+
+  test('recursively creates missing directories', () => {
+    const filePath = `/dir/subdir/${filename}`;
+
+    writeFile(filePath, content);
+    const file = readFile(filePath);
+
+    expect(file).toBe(content);
+  });
+});
 
 describe('findMatchedRegExp', () => {
   test('empty list for empty source', () => {
