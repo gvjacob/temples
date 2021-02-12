@@ -7,37 +7,14 @@ test('inject variables from mapping', () => {
     name: faker.lorem.word(),
   };
 
-  expect(parse('{{ greeting }}, {{ name }}', mapping)).toBe(`${mapping.greeting}, ${mapping.name}`);
+  expect(parse('{{ greeting }}, {{ name }}', mapping)).toBe(
+    `${mapping.greeting}, ${mapping.name}`,
+  );
 });
 
 test('preserve variables if escaped', () => {
   const source = `\\{{ name }}`;
   expect(parse(source, {})).toBe('{{ name }}');
-});
-
-describe('with default mapping', () => {
-  test('inject variables from default mapping', () => {
-    const mapping = {
-      greeting: 'Hello',
-      name: faker.lorem.word(),
-    };
-
-    expect(parse('{{ greeting }}, {{ name }}', {}, mapping)).toBe(`${mapping.greeting}, ${mapping.name}`);
-  });
-
-  test('override default mapping with variables from mapping', () => {
-    const mapping = {
-      greeting: 'Hi',
-      name: faker.lorem.word(),
-    };
-
-    const defaultMapping = {
-      greeting: 'Hello',
-      name: faker.lorem.word(),
-    };
-
-    expect(parse('{{ greeting }}, {{ name }}', mapping, defaultMapping)).toBe(`${mapping.greeting}, ${mapping.name}`);
-  });
 });
 
 describe('with built-in helpers', () => {
@@ -67,7 +44,7 @@ describe('with parser options', () => {
       before: 'before',
     };
 
-    expect(parse(source, {}, {}, options)).toBe(`${options.before}${source}`);
+    expect(parse(source, {}, options)).toBe(`${options.before}${source}`);
   });
 
   test('append after string', () => {
@@ -75,7 +52,7 @@ describe('with parser options', () => {
       after: 'after',
     };
 
-    expect(parse(source, {}, {}, options)).toBe(`${source}${options.after}`);
+    expect(parse(source, {}, options)).toBe(`${source}${options.after}`);
   });
 
   test('prepend before, and append after', () => {
@@ -84,6 +61,8 @@ describe('with parser options', () => {
       after: 'after',
     };
 
-    expect(parse(source, {}, {}, options)).toBe(`${options.before}${source}${options.after}`);
+    expect(parse(source, {}, options)).toBe(
+      `${options.before}${source}${options.after}`,
+    );
   });
 });

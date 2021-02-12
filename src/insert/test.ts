@@ -88,7 +88,7 @@ Members.
       position: InsertPosition.BELOW,
     };
 
-    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+    expect(insert(source, regex, mapping, options)).toBe(expected);
   });
 
   test('insert above', () => {
@@ -105,7 +105,7 @@ Members.
       position: InsertPosition.ABOVE,
     };
 
-    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+    expect(insert(source, regex, mapping, options)).toBe(expected);
   });
 
   test('insert left', () => {
@@ -121,7 +121,7 @@ Members.
       position: InsertPosition.LEFT,
     };
 
-    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+    expect(insert(source, regex, mapping, options)).toBe(expected);
   });
 
   test('insert right', () => {
@@ -137,6 +137,6 @@ Members.
       position: InsertPosition.RIGHT,
     };
 
-    expect(insert(source, regex, mapping, {}, options)).toBe(expected);
+    expect(insert(source, regex, mapping, options)).toBe(expected);
   });
 });

@@ -3,17 +3,16 @@ import { Mapping } from '../types';
 import { ParseOptions } from './types';
 
 /**
- * Compile source with given mapping, overriding the default.
+ * Compile source with given mapping.
  *
  * @param {string} source - template source
  * @param {Mapping} mapping - user defined mapping
- * @param {Mapping} defaultMapping - default or fallback mapping
  *
  * @return {string} compiled output
  */
-function compile(source: string, mapping: Mapping = {}, defaultMapping: Mapping = {}): string {
+function compile(source: string, mapping: Mapping = {}): string {
   const template = Handlebars.compile(source);
-  return template({ ...defaultMapping, ...mapping });
+  return template(mapping);
 }
 
 /**
@@ -21,7 +20,6 @@ function compile(source: string, mapping: Mapping = {}, defaultMapping: Mapping 
  *
  * @param {string} source - template source
  * @param {Mapping} mapping - user defined mapping
- * @param {Mapping} defaultMapping - default or fallback mapping
  * @param {ParseOptions} options - parse options
  *
  * @return {string} compiled output
@@ -29,10 +27,9 @@ function compile(source: string, mapping: Mapping = {}, defaultMapping: Mapping 
 function parse(
   source: string,
   mapping: Mapping = {},
-  defaultMapping: Mapping = {},
   options: ParseOptions = {},
 ): string {
-  const compiled = compile(source, mapping, defaultMapping);
+  const compiled = compile(source, mapping);
 
   // Get before and after strings if provided.
   const before = options.before || '';

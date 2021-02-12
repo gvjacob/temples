@@ -49,7 +49,6 @@ function parseAndReplace(
   source: string,
   regexMatch: RegExpMatch,
   mapping: Mapping = {},
-  defaultMapping: Mapping = {},
   options: InsertOptions = {},
 ): string {
   const [match, group] = regexMatch;
@@ -58,7 +57,7 @@ function parseAndReplace(
     return source;
   }
 
-  const parsed = parse(group, mapping, defaultMapping, options);
+  const parsed = parse(group, mapping, options);
   const output = placeRelativeTo(match, parsed, options.position);
 
   return source.replace(match, output);
@@ -70,7 +69,6 @@ function parseAndReplace(
  * @param {string} source - template source
  * @param {string} regex - regex pattern for source
  * @param {Mapping} mapping - user defined mapping
- * @param {Mapping} defaultMapping - default or fallback mapping
  * @param {InsertOptions} options - insert options
  *
  * @return {string} compiled output
@@ -79,14 +77,12 @@ function insert(
   source: string,
   regex: string,
   mapping: Mapping = {},
-  defaultMapping: Mapping = {},
   options: InsertOptions = {},
 ): string {
   const matches = findMatchedRegExp(source, regex);
 
   const output = matches.reduce(
-    (acc, match) =>
-      parseAndReplace(acc, match, mapping, defaultMapping, options),
+    (acc, match) => parseAndReplace(acc, match, mapping, options),
     source,
   );
 
