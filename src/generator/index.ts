@@ -1,8 +1,9 @@
 import path from 'path';
-import { get } from 'lodash';
+import { isNull } from 'lodash';
 
-import { Mapping, BasePath, InsertPosition } from '../types';
+import { RegExpConfig, Mapping, BasePath, InsertPosition } from '../types';
 import { writeFile, readFile } from '../utils';
+import insert from '../insert';
 import parse from '../parser';
 
 const defaultBasePath: BasePath = {
@@ -19,7 +20,7 @@ const defaultBasePath: BasePath = {
  * @param {Mapping} mapping
  * @param {BasePath} base - base paths
  */
-export function file(
+export function generateFile(
   target: string,
   template: string,
   mapping: Mapping = {},
@@ -29,7 +30,7 @@ export function file(
   const templateContent = readFile(templateWithBase);
 
   if (!templateContent) {
-    throw new Error(`Template at ${template} does not exist.`);
+    throw new Error(`Template at ${templateWithBase} does not exist.`);
   }
 
   const parsed = parse(templateContent, mapping);
@@ -38,10 +39,47 @@ export function file(
   writeFile(targetWithBase, parsed);
 }
 
-export function insert(
+/**
+ * Get file extension.
+ *
+ * @param {string} file
+ *
+ * @return {string}
+ */
+function getFileExtension(file: string): string {
+  const extname = path.extname(file);
+  return extname.replace('.', '');
+}
+
+/**
+ * Modify target file by inserting mapping.
+ *
+ * @param {string} target - file to modify
+ * @param {RegExpConfig} regex - extensions to regex
+ * @param {Mapping} mapping
+ * @param {InsertPosition} position
+ * @param {BasePath} base - base paths
+ */
+export function generateInsert(
   target: string,
-  regex: string,
-  position: InsertPosition,
+  regex: RegExpConfig,
   mapping: Mapping = {},
+  position: InsertPosition = InsertPosition.BELOW,
   base: BasePath = defaultBasePath,
-) {}
+) {
+  const targetWithBase = path.resolve(base.inserts, target);
+  const targetContent = readFile(targetWithBase);
+  const extension = getFileExtension(target);
+  const extensionRegex = regex[extension];
+
+  if (!extensionRegex) {
+    throw new Error(`Specify regex pattern for ${targetWithBase}.`);
+  }
+
+  if (isNull(targetContent)) {
+    throw new Error(`Target at ${target} does not exist.`);
+  }
+
+  const targetInserted = insert(targetContent, regex.md, mapping, { position });
+  writeFile(targetWithBase, targetInserted);
+}

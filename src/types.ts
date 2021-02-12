@@ -44,3 +44,7 @@ export interface ParseOptions {
 }
 
 export type RegExpMatch = [string, string | null];
+
+export interface RegExpConfig {
+  [key: string]: string;
+}
