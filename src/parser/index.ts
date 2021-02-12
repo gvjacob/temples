@@ -1,6 +1,5 @@
 import Handlebars from '../handlebars';
-import { Mapping } from '../types';
-import { ParseOptions } from './types';
+import { Mapping, ParseOptions } from '../types';
 
 /**
  * Compile source with given mapping.

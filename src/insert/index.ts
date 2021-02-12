@@ -1,9 +1,6 @@
-import { Mapping } from '../types';
-import { InsertOptions, InsertPosition } from './types';
+import { InsertOptions, InsertPosition, RegExpMatch, Mapping } from '../types';
 
 import { findMatchedRegExp } from '../utils';
-import { RegExpMatch } from '../utils/types';
-
 import parse from '../parser';
 
 /**

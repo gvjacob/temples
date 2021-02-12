@@ -1,7 +1,7 @@
 import path from 'path';
 import { get } from 'lodash';
 
-import { Mapping, BasePath } from '../types';
+import { Mapping, BasePath, InsertPosition } from '../types';
 import { writeFile, readFile } from '../utils';
 import parse from '../parser';
 
@@ -37,3 +37,11 @@ export function file(
 
   writeFile(targetWithBase, parsed);
 }
+
+export function insert(
+  target: string,
+  regex: string,
+  position: InsertPosition,
+  mapping: Mapping = {},
+  base: BasePath = defaultBasePath,
+) {}

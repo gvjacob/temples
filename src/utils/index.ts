@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { isEmpty } from 'lodash';
 
-import { RegExpMatch } from './types';
+import { RegExpMatch } from '../types';
 
 /**
  * Read file from given path.

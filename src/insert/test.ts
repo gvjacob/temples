@@ -1,5 +1,5 @@
 import insert from '.';
-import { InsertPosition } from './types';
+import { InsertPosition } from '../types';
 
 const regex = `<!-- temples\\((.+)\\) -->`;
 
