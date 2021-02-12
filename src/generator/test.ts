@@ -20,7 +20,7 @@ describe('file', () => {
     const target = 'output/hello.md';
     const template = 'template.hbs';
     const mapping = {
-      name: faker.name.findName(),
+      name: faker.name.firstName(),
     };
 
     file(target, template, mapping);
@@ -32,14 +32,14 @@ describe('file', () => {
     mock({
       'template.hbs': '# Hello, {{ name }}',
       output: {
-        'hello.md': `# Hello, ${faker.name.findName()}`,
+        'hello.md': `# Hello, ${faker.name.firstName()}`,
       },
     });
 
     const target = 'output/hello.md';
     const template = 'template.hbs';
     const mapping = {
-      name: faker.name.findName(),
+      name: faker.name.firstName(),
     };
 
     file(target, template, mapping);
@@ -51,7 +51,7 @@ describe('file', () => {
     const target = 'output/hello.md';
     const template = 'template.hbs';
     const mapping = {
-      name: faker.name.findName(),
+      name: faker.name.firstName(),
     };
 
     expect(() => file(target, template, mapping)).toThrow(Error);
@@ -68,7 +68,7 @@ describe('file', () => {
       const target = 'output/hello.md';
       const template = 'template.hbs';
       const mapping = {
-        name: faker.name.findName(),
+        name: faker.name.firstName(),
       };
       const base = {
         templates: 'templates',
@@ -89,7 +89,7 @@ describe('file', () => {
       const target = 'output/hello.md';
       const template = 'template.hbs';
       const mapping = {
-        name: faker.name.findName(),
+        name: faker.name.firstName(),
       };
       const base = {
         templates: '',
