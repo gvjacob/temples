@@ -28,6 +28,25 @@ describe('file', () => {
     expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
   });
 
+  test('override existing targeted file', () => {
+    mock({
+      'template.hbs': '# Hello, {{ name }}',
+      output: {
+        'hello.md': `# Hello, ${faker.name.findName()}`,
+      },
+    });
+
+    const target = 'output/hello.md';
+    const template = 'template.hbs';
+    const mapping = {
+      name: faker.name.findName(),
+    };
+
+    file(target, template, mapping);
+
+    expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
+  });
+
   test('bail if template does not exist', () => {
     const target = 'output/hello.md';
     const template = 'template.hbs';
