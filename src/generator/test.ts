@@ -37,4 +37,52 @@ describe('file', () => {
 
     expect(() => file(target, template, mapping)).toThrow(Error);
   });
+
+  describe('with base paths', () => {
+    test('prepend base templates path', () => {
+      mock({
+        templates: {
+          'template.hbs': '# Hello, {{ name }}',
+        },
+      });
+
+      const target = 'output/hello.md';
+      const template = 'template.hbs';
+      const mapping = {
+        name: faker.name.findName(),
+      };
+      const base = {
+        templates: 'templates',
+        files: '',
+        inserts: '',
+      };
+
+      file(target, template, mapping, base);
+
+      expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
+    });
+
+    test('prepend base files path', () => {
+      mock({
+        'template.hbs': '# Hello, {{ name }}',
+      });
+
+      const target = 'output/hello.md';
+      const template = 'template.hbs';
+      const mapping = {
+        name: faker.name.findName(),
+      };
+      const base = {
+        templates: '',
+        files: 'files',
+        inserts: 'inserts',
+      };
+
+      file(target, template, mapping, base);
+
+      expect(readFile(`${base.files}/${target}`)).toBe(
+        `# Hello, ${mapping.name}`,
+      );
+    });
+  });
 });

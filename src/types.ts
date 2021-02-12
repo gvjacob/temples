@@ -2,16 +2,22 @@ export type Mapping = {
   [key: string]: string;
 };
 
-type TargetBasePath =
+type TargetBasePathConfig =
   | string
   | {
       files: string;
       inserts: string;
     };
 
-export type BasePath =
+export type BasePathConfig =
   | string
   | {
       templates: string;
-      target: TargetBasePath;
+      target: TargetBasePathConfig;
     };
+
+export interface BasePath {
+  templates: string;
+  files: string;
+  inserts: string;
+}
