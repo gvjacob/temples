@@ -1,6 +1,77 @@
 import fs from 'fs';
 import mock from 'mock-fs';
-import { readFile, writeFile, findMatchedRegExp } from '.';
+import { extract, readFile, writeFile, findMatchedRegExp } from '.';
+
+describe('extract', () => {
+  test('return first value that matches predicate', () => {
+    const from = {
+      first: {
+        second: 'second',
+        third: 3,
+      },
+    };
+
+    const fallback = 123;
+    const queries = [null, 'first', 'first.second', 'first.third'];
+
+    const isString = (s: any): s is string => typeof s === 'string';
+    const isNumber = (s: any): s is number => typeof s === 'number';
+
+    expect(extract(from, isString, fallback, queries)).toBe(from.first.second);
+    expect(extract(from, isNumber, fallback, queries)).toBe(from.first.third);
+  });
+
+  test('null query checks original from param', () => {
+    const from = 'from';
+    const fallback = 123;
+    const queries = [null, 'length'];
+    const predicate = (s: any): s is string => typeof s === 'string';
+
+    expect(extract(from, predicate, fallback, queries)).toBe(from);
+  });
+
+  test('return fallback if no queries provided', () => {
+    const from = {
+      first: {
+        second: 'third',
+      },
+    };
+
+    const fallback = 123;
+    const queries: string[] = [];
+    const predicate = (s: any): s is string => typeof s === 'string';
+
+    expect(extract(from, predicate, fallback, queries)).toBe(fallback);
+  });
+
+  test('return fallback if no query matches', () => {
+    const from = {
+      first: {
+        second: 'third',
+      },
+    };
+
+    const fallback = 123;
+    const queries = ['fourth'];
+    const predicate = (s: any): s is string => typeof s === 'string';
+
+    expect(extract(from, predicate, fallback, queries)).toBe(fallback);
+  });
+
+  test('return fallback if predicate returns false', () => {
+    const from = {
+      first: {
+        second: 'third',
+      },
+    };
+
+    const fallback = 123;
+    const queries = ['fourth'];
+    const predicate = (s: any): boolean => false;
+
+    expect(extract(from, predicate, fallback, queries)).toBe(fallback);
+  });
+});
 
 describe('writeFile', () => {
   const filename = 'hello.md';

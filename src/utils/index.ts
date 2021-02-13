@@ -1,8 +1,35 @@
 import fs from 'fs';
 import path from 'path';
-import { isEmpty } from 'lodash';
+import { isEmpty, get, isNull } from 'lodash';
 
-import { RegExpMatch } from '../types';
+import { RegExpMatch, BasePath, BasePathConfig } from '../types';
+
+/**
+ * Extract value found from first query
+ * that yields a truthy value.
+ *
+ * @param {any} from
+ * @param {T} fallback
+ * @param {(string | null)[]} queries
+ *
+ * @return {any | T}
+ */
+export function extract<T>(
+  from: any,
+  predicate: (s: any) => boolean,
+  fallback: T,
+  queries: (string | null)[] = [],
+): any | T {
+  for (const query of queries) {
+    const value = isNull(query) ? from : get(from, query);
+
+    if (predicate(value)) {
+      return value;
+    }
+  }
+
+  return fallback;
+}
 
 /**
  * Read file from given path.
