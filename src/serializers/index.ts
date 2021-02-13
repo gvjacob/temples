@@ -8,7 +8,7 @@ import { BasePath, BasePathConfig } from '../types';
  *
  * @return {BasePath} serialized base paths
  */
-export function serializeBasePaths(base: BasePathConfig): BasePath {
+export function serializeBasePathsConfig(base: BasePathConfig): BasePath {
   const isString = (s: any): s is string => typeof s === 'string';
 
   return {

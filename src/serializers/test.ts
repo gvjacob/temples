@@ -1,6 +1,6 @@
-import { serializeBasePaths } from '.';
+import { serializeBasePathsConfig } from '.';
 
-describe('serializeBasePaths', () => {
+describe('serializeBasePathsConfig', () => {
   test('serialize from base', () => {
     const base = 'dir/subdir';
 
@@ -10,7 +10,7 @@ describe('serializeBasePaths', () => {
       inserts: base,
     };
 
-    expect(serializeBasePaths(base)).toEqual(expected);
+    expect(serializeBasePathsConfig(base)).toEqual(expected);
   });
 
   test('serialize from base: { templates, target }', () => {
@@ -25,7 +25,7 @@ describe('serializeBasePaths', () => {
       inserts: base.target,
     };
 
-    expect(serializeBasePaths(base)).toEqual(expected);
+    expect(serializeBasePathsConfig(base)).toEqual(expected);
   });
 
   test('serialize from base: { templates, target: { files, inserts } }', () => {
@@ -43,6 +43,6 @@ describe('serializeBasePaths', () => {
       inserts: base.target.inserts,
     };
 
-    expect(serializeBasePaths(base)).toEqual(expected);
+    expect(serializeBasePathsConfig(base)).toEqual(expected);
   });
 });
