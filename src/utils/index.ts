@@ -5,6 +5,18 @@ import { isEmpty, get, isNull } from 'lodash';
 import { RegExpMatch, BasePath, BasePathConfig } from '../types';
 
 /**
+ * Override keys and values from first
+ * to last object.
+ *
+ * @param {object[]} objects
+ *
+ * @return {object} overridden object
+ */
+export function override(...objects: object[]): object {
+  return objects.reduce((acc, o) => ({ ...acc, ...o }), {});
+}
+
+/**
  * Extract value found from first query
  * that yields a truthy value.
  *
