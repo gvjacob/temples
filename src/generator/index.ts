@@ -6,7 +6,7 @@ import { writeFile, readFile } from '../utils';
 import insert from '../insert';
 import parse from '../parser';
 
-const defaultBasePath: BasePath = {
+const DEFAULT_BASE_PATH: BasePath = {
   templates: '',
   files: '',
   inserts: '',
@@ -24,7 +24,7 @@ export function generateFile(
   target: string,
   template: string,
   mapping: Mapping = {},
-  base: BasePath = defaultBasePath,
+  base: BasePath = DEFAULT_BASE_PATH,
 ) {
   const templateWithBase = path.resolve(base.templates, template);
   const templateContent = readFile(templateWithBase);
@@ -65,7 +65,7 @@ export function generateInsert(
   regex: RegExpConfig,
   mapping: Mapping = {},
   position: InsertPosition = InsertPosition.BELOW,
-  base: BasePath = defaultBasePath,
+  base: BasePath = DEFAULT_BASE_PATH,
 ) {
   const targetWithBase = path.resolve(base.inserts, target);
   const targetContent = readFile(targetWithBase);
