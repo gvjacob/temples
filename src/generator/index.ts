@@ -72,6 +72,8 @@ export function generateInsert(
   const extension = getFileExtension(target);
   const extensionRegex = regex[extension];
 
+  // User did not specify regex pattern for
+  // target's file extension.
   if (!extensionRegex) {
     throw new Error(`Specify regex pattern for ${targetWithBase}.`);
   }
