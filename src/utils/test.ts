@@ -1,6 +1,6 @@
 import fs from 'fs';
 import mock from 'mock-fs';
-import { extract, readFile, writeFile, findMatchedRegExp } from '.';
+import { isString, extract, readFile, writeFile, findMatchedRegExp } from '.';
 
 describe('extract', () => {
   test('return first value that matches predicate', () => {
@@ -14,7 +14,6 @@ describe('extract', () => {
     const fallback = 123;
     const queries = ['', 'first', 'first.second', 'first.third'];
 
-    const isString = (s: any): s is string => typeof s === 'string';
     const isNumber = (s: any): s is number => typeof s === 'number';
 
     expect(extract(from, isString, fallback, queries)).toBe(from.first.second);
@@ -39,7 +38,7 @@ describe('extract', () => {
 
     const fallback = 123;
     const queries: string[] = [];
-    const predicate = (s: any): s is string => typeof s === 'string';
+    const predicate = isString;
 
     expect(extract(from, predicate, fallback, queries)).toBe(fallback);
   });
