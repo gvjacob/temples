@@ -16,4 +16,15 @@ Handlebars.registerHelper('title-case', (s: string): string => {
   return casedString.replace(/\s/g, '');
 });
 
+/**
+ * Customize Handlebars instance through
+ * user defined configuration.
+ *
+ * @param {string} p - path to user defined configuration
+ */
+export async function customize(p: string) {
+  const { default: configure } = await import(p);
+  configure(Handlebars);
+}
+
 export default Handlebars;
