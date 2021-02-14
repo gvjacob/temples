@@ -48,3 +48,34 @@ export type RegExpMatch = [string, string | null];
 export interface RegExpConfig {
   [key: string]: string;
 }
+
+export interface GeneratorFileConfig {
+  template?: string;
+  target: string;
+}
+
+export interface GeneratorInsertConfig {
+  target: string;
+  regex?: RegExpConfig;
+  position?: InsertPosition;
+}
+
+export interface TemplesConfig {
+  base?: BasePathConfig;
+  handlebars?: string;
+  inserts?: {
+    regex: RegExpConfig;
+    position: InsertPosition;
+  };
+  default?: Mapping;
+  verbose?: boolean;
+  generators: {
+    [command: string]: {
+      base?: BasePathConfig;
+      prompt: string[];
+      default?: Mapping;
+      files: GeneratorFileConfig[];
+      inserts: GeneratorInsertConfig[];
+    };
+  };
+}
