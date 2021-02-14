@@ -1,15 +1,34 @@
-import fs from 'fs';
 import path from 'path';
-import mock from 'mock-fs';
 import Handlebars, { customize } from '.';
 
 describe('customize', () => {
-  afterEach(mock.restore);
+  const HANDLEBARS_CONFIGURE_PATH = path.resolve(
+    'tests/handlebars/configure.js',
+  );
+  const EMPTY_HANDLEBARS_CONFIGURE_PATH = path.resolve(
+    'tests/handlebars/empty-configure.js',
+  );
 
   test('pass Handlebars instance to user configuration file', async () => {
-    const HANDLEBARS_CONFIGURE_PATH = 'tests/configureHandlebars.js';
-
-    await customize(path.resolve(HANDLEBARS_CONFIGURE_PATH));
+    await customize(HANDLEBARS_CONFIGURE_PATH);
     expect(Handlebars.helpers.foo).toBeTruthy();
+  });
+
+  test('bail if configuration file is not found', () => {
+    const p = 'notfound.js';
+
+    expect.assertions(1);
+    expect(customize(p)).rejects.toEqual(
+      new Error(`Handlebars configuration file at ${p} not found.`),
+    );
+  });
+
+  test('bail if configuration file does not provid function', () => {
+    expect.assertions(1);
+    expect(customize(EMPTY_HANDLEBARS_CONFIGURE_PATH)).rejects.toEqual(
+      new Error(
+        `Provide a default function in ${EMPTY_HANDLEBARS_CONFIGURE_PATH}.`,
+      ),
+    );
   });
 });

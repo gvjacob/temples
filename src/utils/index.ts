@@ -4,6 +4,10 @@ import { isEmpty, get } from 'lodash';
 
 import { RegExpMatch, BasePath, BasePathConfig } from '../types';
 
+export function isString(s: any): s is string {
+  return typeof s === 'string';
+}
+
 /**
  * Override keys and values from first
  * to last object.
@@ -20,7 +24,7 @@ export function override(...objects: object[]): object {
  * Extract value found from first query
  * that yields a truthy value.
  *
- * If query is null, check original from argument.
+ * If query is empty string, check original from argument.
  *
  * @param {any} from
  * @param {T} fallback

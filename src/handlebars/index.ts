@@ -1,5 +1,13 @@
+import fs from 'fs';
 import Handlebars from 'handlebars';
-import { camelCase, kebabCase, snakeCase, upperCase, startCase } from 'lodash';
+import {
+  isEmpty,
+  camelCase,
+  kebabCase,
+  snakeCase,
+  upperCase,
+  startCase,
+} from 'lodash';
 
 /**
  * Registers custom casing helpers to the Handlebars environment.
@@ -23,7 +31,18 @@ Handlebars.registerHelper('title-case', (s: string): string => {
  * @param {string} p - path to user defined configuration
  */
 export async function customize(p: string) {
+  if (!fs.existsSync(p)) {
+    throw new Error(`Handlebars configuration file at ${p} not found.`);
+  }
+
   const { default: configure } = await import(p);
+
+  // Throw if configuration file does not
+  // provide a default function.
+  if (typeof configure !== 'function') {
+    throw new Error(`Provide a default function in ${p}.`);
+  }
+
   configure(Handlebars);
 }
 
