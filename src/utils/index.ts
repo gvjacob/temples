@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { isEmpty, get, isNull } from 'lodash';
+import { isEmpty, get } from 'lodash';
 
 import { RegExpMatch, BasePath, BasePathConfig } from '../types';
 
@@ -20,6 +20,8 @@ export function override(...objects: object[]): object {
  * Extract value found from first query
  * that yields a truthy value.
  *
+ * If query is null, check original from argument.
+ *
  * @param {any} from
  * @param {T} fallback
  * @param {(string | null)[]} queries
@@ -30,10 +32,10 @@ export function extract<T>(
   from: any,
   predicate: (s: any) => boolean,
   fallback: T,
-  queries: (string | null)[] = [],
+  queries: string[] = [],
 ): any | T {
   for (const query of queries) {
-    const value = isNull(query) ? from : get(from, query);
+    const value = isEmpty(query) ? from : get(from, query);
 
     if (predicate(value)) {
       return value;

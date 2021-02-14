@@ -12,8 +12,8 @@ export function serializeBasePathsConfig(base: BasePathConfig): BasePath {
   const isString = (s: any): s is string => typeof s === 'string';
 
   return {
-    templates: extract(base, isString, '', [null, 'templates']),
-    files: extract(base, isString, '', [null, 'target', 'target.files']),
-    inserts: extract(base, isString, '', [null, 'target', 'target.inserts']),
+    templates: extract(base, isString, '', ['', 'templates']),
+    files: extract(base, isString, '', ['', 'target', 'target.files']),
+    inserts: extract(base, isString, '', ['', 'target', 'target.inserts']),
   };
 }

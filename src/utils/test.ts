@@ -12,7 +12,7 @@ describe('extract', () => {
     };
 
     const fallback = 123;
-    const queries = [null, 'first', 'first.second', 'first.third'];
+    const queries = ['', 'first', 'first.second', 'first.third'];
 
     const isString = (s: any): s is string => typeof s === 'string';
     const isNumber = (s: any): s is number => typeof s === 'number';
@@ -24,7 +24,7 @@ describe('extract', () => {
   test('null query checks original from param', () => {
     const from = 'from';
     const fallback = 123;
-    const queries = [null, 'length'];
+    const queries = ['', 'length'];
     const predicate = (s: any): s is string => typeof s === 'string';
 
     expect(extract(from, predicate, fallback, queries)).toBe(from);

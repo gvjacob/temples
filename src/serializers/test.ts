@@ -32,8 +32,8 @@ describe('serializeBasePathsConfig', () => {
     const base = {
       templates: 'templates/subdir',
       target: {
-        files: 'targets/files'
-        inserts: 'targets/inserts'
+        files: 'targets/files',
+        inserts: 'targets/inserts',
       },
     };
 
