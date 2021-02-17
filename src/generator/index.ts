@@ -22,11 +22,18 @@ const DEFAULT_BASE_PATH: BasePath = {
  */
 export function generateFile(
   target: string,
-  template: string,
+  template: string = '',
   mapping: Mapping = {},
   base: BasePath = DEFAULT_BASE_PATH,
 ) {
   const templateWithBase = path.resolve(base.templates, template);
+  const targetWithBase = path.resolve(base.files, target);
+
+  if (!template) {
+    writeFile(targetWithBase, '');
+    return;
+  }
+
   const templateContent = readFile(templateWithBase);
 
   if (!templateContent) {
@@ -34,8 +41,6 @@ export function generateFile(
   }
 
   const parsed = parse(templateContent, mapping);
-  const targetWithBase = path.resolve(base.files, target);
-
   writeFile(targetWithBase, parsed);
 }
 

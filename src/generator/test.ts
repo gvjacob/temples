@@ -30,6 +30,16 @@ describe('generateFile', () => {
     expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
   });
 
+  test('generate empty new file if template is not provided', () => {
+    mock();
+
+    const target = 'output/hello.md';
+
+    generateFile(target);
+
+    expect(readFile(target)).toBe('');
+  });
+
   test('override existing targeted file', () => {
     mock({
       'template.hbs': '# Hello, {{ name }}',
