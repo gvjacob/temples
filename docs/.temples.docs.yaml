@@ -1,5 +1,3 @@
-# Note: all paths are relative to this configuration file.
-
 # Define base paths to find templates
 # and produce output files.
 base:
@@ -14,19 +12,18 @@ base:
 # File that overrides handlebars instance.
 handlebars: HandlebarsConfig.js
 
-inserts:
-  # Regex to match temples inserts
-  # based on file extensions.
-  regex:
-    js: '\/\/ temples: (.+)'
-    md: '^# temples: (.+)'
+# Regex to match temples inserts
+# based on file extensions.
+regex:
+  js: '\/\/ temples: (.+)'
+  md: '^# temples: (.+)'
 
-  # Where to insert relative to regex
-  #   above: above the regex
-  #   below: under the regex
-  #   left: left of the regex
-  #   right: right of the regex
-  position: below
+# Where to insert relative to regex
+#   above: above the regex
+#   below: under the regex
+#   left: left of the regex
+#   right: right of the regex
+position: below
 
 # Default key value mapping.
 default:
@@ -40,6 +37,8 @@ generators:
   component:
     base: .temples/components
     prompt: [name, title]
+    regex: ...
+    position: ...
 
     default:
       var_c: 'c'

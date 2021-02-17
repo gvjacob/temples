@@ -49,33 +49,34 @@ export interface RegExpConfig {
   [key: string]: string;
 }
 
+export interface InsertsConfig {
+  regex?: RegExpConfig;
+  position?: InsertPosition;
+}
+
 export interface GeneratorFileConfig {
   template?: string;
   target: string;
 }
 
-export interface GeneratorInsertConfig {
+export interface GeneratorInsertConfig extends InsertsConfig {
   target: string;
-  regex?: RegExpConfig;
-  position?: InsertPosition;
 }
 
-export interface TemplesConfig {
+export interface GeneratorCommandConfig extends InsertsConfig {
+  base?: BasePathConfig;
+  prompt: string[];
+  default?: Mapping;
+  files: GeneratorFileConfig[];
+  inserts: GeneratorInsertConfig[];
+}
+
+export interface TemplesConfig extends InsertsConfig {
   base?: BasePathConfig;
   handlebars?: string;
-  inserts?: {
-    regex: RegExpConfig;
-    position: InsertPosition;
-  };
   default?: Mapping;
   verbose?: boolean;
   generators: {
-    [command: string]: {
-      base?: BasePathConfig;
-      prompt: string[];
-      default?: Mapping;
-      files: GeneratorFileConfig[];
-      inserts: GeneratorInsertConfig[];
-    };
+    [command: string]: GeneratorCommandConfig;
   };
 }

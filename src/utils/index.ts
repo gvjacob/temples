@@ -16,8 +16,8 @@ export function isString(s: any): s is string {
  *
  * @return {object} overridden object
  */
-export function override(...objects: object[]): object {
-  return objects.reduce((acc, o) => ({ ...acc, ...o }), {});
+export function override<T>(...objects: T[]): T {
+  return objects.reduce((acc, o) => ({ ...acc, ...o }), objects[0]);
 }
 
 /**

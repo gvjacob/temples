@@ -8,7 +8,7 @@ import { BasePath, BasePathConfig } from '../types';
  *
  * @return {BasePath} serialized base paths
  */
-export function serializeBasePathsConfig(base: BasePathConfig): BasePath {
+export function serializeBasePathsConfig(base?: BasePathConfig): BasePath {
   return {
     templates: extract(base, isString, '', ['', 'templates']),
     files: extract(base, isString, '', ['', 'target', 'target.files']),
