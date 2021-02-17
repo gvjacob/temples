@@ -5,15 +5,15 @@ export type Mapping = {
 type TargetBasePathConfig =
   | string
   | {
-      files: string;
-      inserts: string;
+      files?: string;
+      inserts?: string;
     };
 
 export type BasePathConfig =
   | string
   | {
-      templates: string;
-      target: TargetBasePathConfig;
+      templates?: string;
+      target?: TargetBasePathConfig;
     };
 
 export interface BasePath {
@@ -65,10 +65,10 @@ export interface GeneratorInsertConfig extends InsertsConfig {
 
 export interface GeneratorCommandConfig extends InsertsConfig {
   base?: BasePathConfig;
-  prompt: string[];
+  prompt?: string[];
   default?: Mapping;
-  files: GeneratorFileConfig[];
-  inserts: GeneratorInsertConfig[];
+  files?: GeneratorFileConfig[];
+  inserts?: GeneratorInsertConfig[];
 }
 
 export interface TemplesConfig extends InsertsConfig {
