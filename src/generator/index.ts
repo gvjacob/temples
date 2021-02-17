@@ -67,7 +67,7 @@ function getFileExtension(file: string): string {
  */
 export function generateInsert(
   target: string,
-  regex: RegExpConfig,
+  regex: RegExpConfig = {},
   mapping: Mapping = {},
   position: InsertPosition = InsertPosition.BELOW,
   base: BasePath = DEFAULT_BASE_PATH,
