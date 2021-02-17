@@ -87,6 +87,8 @@ export function generateInsert(
     throw new Error(`Target at ${target} does not exist.`);
   }
 
-  const targetInserted = insert(targetContent, regex.md, mapping, { position });
+  const targetInserted = insert(targetContent, extensionRegex, mapping, {
+    position,
+  });
   writeFile(targetWithBase, targetInserted);
 }

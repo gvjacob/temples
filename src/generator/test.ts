@@ -172,6 +172,63 @@ describe('generateInsert', () => {
     expect(readFile(target)).toBe(result);
   });
 
+  test('Use the right regex patterns for targeted files', () => {
+    mock({
+      output: {
+        'hello.md': `
+# Beatles
+
+## Members
+<!-- - {{ name }} -->
+- John
+
+## Songs
+<!-- - {{ title }} -->
+- Yesterday`,
+        'hello.js': `
+// console.log('{{ name }}')
+console.log('Paul')`,
+      },
+    });
+
+    const mdTarget = 'output/hello.md';
+    const jsTarget = 'output/hello.js';
+
+    const mapping = {
+      name: 'Paul',
+      title: 'Come Together',
+    };
+
+    const regex = {
+      md: '<!-- (.+) -->',
+      js: '// (.+)',
+    };
+
+    const mdResult = `
+# Beatles
+
+## Members
+<!-- - {{ name }} -->
+- Paul
+- John
+
+## Songs
+<!-- - {{ title }} -->
+- Come Together
+- Yesterday`;
+
+    const jsResult = `
+// console.log('{{ name }}')
+console.log('${mapping.name}')
+console.log('Paul')`;
+
+    generateInsert(mdTarget, regex, mapping);
+    expect(readFile(mdTarget)).toBe(mdResult);
+
+    generateInsert(jsTarget, regex, mapping);
+    expect(readFile(jsTarget)).toBe(jsResult);
+  });
+
   test('bail if target does not exist', () => {
     const target = 'output/hello.md';
     const mapping = {
