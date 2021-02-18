@@ -1,5 +1,5 @@
 import Handlebars from '../handlebars';
-import { Props, ParseOptions } from '../types';
+import { Props } from '../types';
 
 /**
  * Parse source with props.

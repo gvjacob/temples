@@ -71,6 +71,38 @@ describe('generateFile', () => {
     );
   });
 
+  test('apply props to templates path', () => {
+    const target = 'output/hello.md';
+    const template = '{{ name }}.hbs';
+    const props = {
+      name: faker.name.firstName(),
+    };
+
+    mock({
+      [`${props.name}.hbs`]: '# Hello, {{ name }}',
+    });
+
+    generateFile(target, template, props);
+
+    expect(readFile(target)).toBe(`# Hello, ${props.name}`);
+  });
+
+  test('apply props to target path', () => {
+    const target = '{{ name }}/hello.md';
+    const template = 'template.hbs';
+    const props = {
+      name: faker.name.firstName(),
+    };
+
+    mock({
+      'template.hbs': '# Hello, {{ name }}',
+    });
+
+    generateFile(target, template, props);
+
+    expect(readFile(`${props.name}/hello.md`)).toBe(`# Hello, ${props.name}`);
+  });
+
   describe('with base paths', () => {
     test('prepend base templates path', () => {
       mock({
@@ -239,7 +271,7 @@ console.log('Paul')`;
     };
 
     expect(() => generateInsert(target, regex, {})).toThrow(
-      new Error(`Target at ${target} does not exist.`),
+      new Error(`Target at ${path.resolve(target)} does not exist.`),
     );
   });
 
@@ -261,6 +293,51 @@ console.log('Paul')`;
     expect(() => generateInsert(target, regex, props)).toThrow(
       new Error(`Specify regex pattern for ${path.resolve(target)}.`),
     );
+  });
+
+  test('apply props to target path', () => {
+    const target = '{{ name }}/{{ title }}.md';
+
+    const props = {
+      name: 'Paul',
+      title: 'Blackbird',
+    };
+
+    const regex = {
+      md: '<!-- (.+) -->',
+    };
+
+    mock({
+      [props.name]: {
+        [`${props.title}.md`]: `
+# Beatles
+
+## Members
+<!-- - {{ name }} -->
+- John
+
+## Songs
+<!-- - {{ title }} -->
+- Yesterday`,
+      },
+    });
+
+    const result = `
+# Beatles
+
+## Members
+<!-- - {{ name }} -->
+- Paul
+- John
+
+## Songs
+<!-- - {{ title }} -->
+- Blackbird
+- Yesterday`;
+
+    generateInsert(target, regex, props);
+
+    expect(readFile(`${props.name}/${props.title}.md`)).toBe(result);
   });
 
   describe('with base paths', () => {
