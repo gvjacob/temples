@@ -23,7 +23,7 @@ describe('customize', () => {
     );
   });
 
-  test('bail if configuration file does not provid function', () => {
+  test('bail if configuration file does not provide function', () => {
     expect.assertions(1);
     expect(customize(EMPTY_HANDLEBARS_CONFIGURE_PATH)).rejects.toEqual(
       new Error(
