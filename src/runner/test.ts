@@ -6,7 +6,7 @@ import { readFile } from '../utils';
 
 test('bail if generator command is not found', () => {
   const generator = 'test';
-  const mapping = {
+  const props = {
     name: faker.name.firstName(),
   };
 
@@ -25,14 +25,14 @@ test('bail if generator command is not found', () => {
     },
   };
 
-  expect(() => run(generator, mapping, temples)).toThrow(
+  expect(() => run(generator, props, temples)).toThrow(
     new Error(`Command ${generator} not found in temples configuration.`),
   );
 });
 
 test('bail if generator has no files or inserts', () => {
   const generator = 'test';
-  const mapping = {
+  const props = {
     name: faker.name.firstName(),
   };
 
@@ -45,14 +45,14 @@ test('bail if generator has no files or inserts', () => {
     },
   };
 
-  expect(() => run(generator, mapping, temples)).toThrow(
+  expect(() => run(generator, props, temples)).toThrow(
     new Error(`Specify files or inserts for ${generator}.`),
   );
 });
 
 describe('generate files', () => {
   const generator = 'test';
-  const mapping = {
+  const props = {
     name: faker.name.firstName(),
   };
   const temples: TemplesConfig = {
@@ -87,21 +87,21 @@ describe('generate files', () => {
   test('create empty file if no template', () => {
     expect(readFile('output/empty.md')).toBeNull();
 
-    run(generator, mapping, temples);
+    run(generator, props, temples);
     expect(readFile('output/empty.md')).toBe('');
   });
 
-  test('create file with template and mapping', () => {
+  test('create file with template and props', () => {
     expect(readFile('output/with-template.md')).toBeNull();
 
-    run(generator, mapping, temples);
-    expect(readFile('output/with-template.md')).toBe(mapping.name);
+    run(generator, props, temples);
+    expect(readFile('output/with-template.md')).toBe(props.name);
   });
 });
 
 describe('with nested base', () => {
   const generator = 'test';
-  const mapping = {
+  const props = {
     name: faker.name.firstName(),
   };
   const temples: TemplesConfig = {
@@ -141,10 +141,10 @@ describe('with nested base', () => {
   afterEach(mock.restore);
 
   test('override top level base', () => {
-    run(generator, mapping, temples);
-    expect(readFile('nested-targets/with-template.md')).toBe(mapping.name);
+    run(generator, props, temples);
+    expect(readFile('nested-targets/with-template.md')).toBe(props.name);
   });
 });
 
 describe('with nested regex', () => {});
-describe('with nested default mapping', () => {});
+describe('with nested default props', () => {});
