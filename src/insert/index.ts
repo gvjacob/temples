@@ -54,7 +54,7 @@ function parseAndReplace(
     return source;
   }
 
-  const parsed = parse(group, mapping, options);
+  const parsed = parse(group, mapping);
   const output = placeRelativeTo(match, parsed, options.position);
 
   return source.replace(match, output);
