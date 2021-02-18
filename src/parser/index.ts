@@ -1,17 +1,17 @@
 import Handlebars from '../handlebars';
-import { Mapping, ParseOptions } from '../types';
+import { Props, ParseOptions } from '../types';
 
 /**
- * Parse source with mappings.
+ * Parse source with props.
  *
  * @param {string} source - template source
- * @param {Mapping} mapping - user defined mapping
+ * @param {Props} props - user defined props
  *
  * @return {string} compiled output
  */
-function parse(source: string, mapping: Mapping = {}): string {
+function parse(source: string, props: Props = {}): string {
   const template = Handlebars.compile(source);
-  return template(mapping);
+  return template(props);
 }
 
 export default parse;

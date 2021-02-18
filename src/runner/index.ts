@@ -4,7 +4,7 @@ import path from 'path';
 import { generateFile, generateInsert } from '../generator';
 import { customize } from '../handlebars';
 import { serializeBasePathsConfig } from '../serializers';
-import { Mapping, TemplesConfig } from '../types';
+import { Props, TemplesConfig } from '../types';
 import { override } from '../utils';
 
 /**
@@ -22,20 +22,20 @@ function customizeHandlebars(temples: TemplesConfig) {
 }
 
 /**
- * Run temples from the generator command, and mapping.
+ * Run temples from the generator command, and props.
  *
  * 1. Configure Handlebars instance
  * 2. Generate files
  * 3. Generate inserts
  *
  * @param {string} generator - generator command name
- * @param {Mapping} mapping
+ * @param {Props} props
  * @param {TemplesConfig} temples
  * @param {boolean} verbose
  */
 export default function run(
   generator: string,
-  mapping: Mapping,
+  props: Props,
   temples: TemplesConfig,
   verbose = false,
 ) {
@@ -62,12 +62,12 @@ export default function run(
   );
   const regex = override(temples.regex, commandConfig.regex);
   const position = temples.position || commandConfig.position;
-  const defaultMapping = override(temples.default, commandConfig.default);
-  const completeMapping = override(defaultMapping, mapping);
+  const defaultProps = override(temples.default, commandConfig.default);
+  const completeProps = override(defaultProps, props);
 
   // Generate files
   commandConfig.files?.forEach((file) =>
-    generateFile(file.target, file.template, completeMapping, base),
+    generateFile(file.target, file.template, completeProps, base),
   );
 
   // Generate inserts
@@ -75,7 +75,7 @@ export default function run(
     generateInsert(
       insert.target,
       override(regex, insert.regex),
-      completeMapping,
+      completeProps,
       position || insert.position,
       base,
     ),

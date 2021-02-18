@@ -1,4 +1,4 @@
-import { InsertOptions, InsertPosition, RegExpMatch, Mapping } from '../types';
+import { InsertOptions, InsertPosition, RegExpMatch, Props } from '../types';
 
 import { findMatchedRegExp } from '../utils';
 import parse from '../parser';
@@ -45,7 +45,7 @@ function placeRelativeTo(
 function parseAndReplace(
   source: string,
   regexMatch: RegExpMatch,
-  mapping: Mapping = {},
+  props: Props = {},
   options: InsertOptions = {},
 ): string {
   const [match, group] = regexMatch;
@@ -54,7 +54,7 @@ function parseAndReplace(
     return source;
   }
 
-  const parsed = parse(group, mapping);
+  const parsed = parse(group, props);
   const output = placeRelativeTo(match, parsed, options.position);
 
   return source.replace(match, output);
@@ -65,7 +65,7 @@ function parseAndReplace(
  *
  * @param {string} source - template source
  * @param {string} regex - regex pattern for source
- * @param {Mapping} mapping - user defined mapping
+ * @param {Props} props - user defined props
  * @param {InsertOptions} options - insert options
  *
  * @return {string} compiled output
@@ -73,13 +73,13 @@ function parseAndReplace(
 function insert(
   source: string,
   regex: string,
-  mapping: Mapping = {},
+  props: Props = {},
   options: InsertOptions = {},
 ): string {
   const matches = findMatchedRegExp(source, regex);
 
   const output = matches.reduce(
-    (acc, match) => parseAndReplace(acc, match, mapping, options),
+    (acc, match) => parseAndReplace(acc, match, props, options),
     source,
   );
 

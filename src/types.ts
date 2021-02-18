@@ -1,4 +1,4 @@
-export type Mapping = {
+export type Props = {
   [key: string]: string;
 };
 
@@ -35,7 +35,7 @@ export interface InsertOptions extends ParseOptions {
 
 interface GenerateFileConfig {
   base: string;
-  defaultMapping: Mapping;
+  defaultProps: Props;
 }
 
 export interface ParseOptions {
@@ -66,7 +66,7 @@ export interface GeneratorInsertConfig extends InsertsConfig {
 export interface GeneratorCommandConfig extends InsertsConfig {
   base?: BasePathConfig;
   prompt?: string[];
-  default?: Mapping;
+  default?: Props;
   files?: GeneratorFileConfig[];
   inserts?: GeneratorInsertConfig[];
 }
@@ -74,7 +74,7 @@ export interface GeneratorCommandConfig extends InsertsConfig {
 export interface TemplesConfig extends InsertsConfig {
   base?: BasePathConfig;
   handlebars?: string;
-  default?: Mapping;
+  default?: Props;
   verbose?: boolean;
   generators: {
     [command: string]: GeneratorCommandConfig;

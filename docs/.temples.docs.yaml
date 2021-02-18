@@ -25,10 +25,10 @@ regex:
 #   right: right of the regex
 position: below
 
-# Default key value mapping.
-default:
-  var_a: 'a'
-  var_b: 'b'
+# Default props.
+props:
+  prop_a: 'a'
+  prop_b: 'b'
 
 # Log out processes
 verbose: true
@@ -40,8 +40,8 @@ generators:
     regex: ...
     position: ...
 
-    default:
-      var_c: 'c'
+    props:
+      prop_c: 'c'
 
     files:
       - template: component.hbs

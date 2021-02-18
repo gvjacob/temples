@@ -1,7 +1,7 @@
 import path from 'path';
 import { isNull } from 'lodash';
 
-import { RegExpConfig, Mapping, BasePath, InsertPosition } from '../types';
+import { RegExpConfig, Props, BasePath, InsertPosition } from '../types';
 import { writeFile, readFile } from '../utils';
 import insert from '../insert';
 import parse from '../parser';
@@ -13,17 +13,17 @@ const DEFAULT_BASE_PATH: BasePath = {
 };
 
 /**
- * Generate a new file from template and mapping.
+ * Generate a new file from template and props.
  *
  * @param {string} target - path to output
  * @param {string} template - path to template file
- * @param {Mapping} mapping
+ * @param {Props} props
  * @param {BasePath} base - base paths
  */
 export function generateFile(
   target: string,
   template: string = '',
-  mapping: Mapping = {},
+  props: Props = {},
   base: BasePath = DEFAULT_BASE_PATH,
 ) {
   const templateWithBase = path.resolve(base.templates || '', template);
@@ -40,7 +40,7 @@ export function generateFile(
     throw new Error(`Template at ${templateWithBase} does not exist.`);
   }
 
-  const parsed = parse(templateContent, mapping);
+  const parsed = parse(templateContent, props);
   writeFile(targetWithBase, parsed);
 }
 
@@ -57,18 +57,18 @@ function getFileExtension(file: string): string {
 }
 
 /**
- * Modify target file by inserting mapping.
+ * Modify target file by inserting props.
  *
  * @param {string} target - file to modify
  * @param {RegExpConfig} regex - extensions to regex
- * @param {Mapping} mapping
+ * @param {Props} props
  * @param {InsertPosition} position
  * @param {BasePath} base - base paths
  */
 export function generateInsert(
   target: string,
   regex: RegExpConfig = {},
-  mapping: Mapping = {},
+  props: Props = {},
   position: InsertPosition = InsertPosition.BELOW,
   base: BasePath = DEFAULT_BASE_PATH,
 ) {
@@ -87,7 +87,7 @@ export function generateInsert(
     throw new Error(`Target at ${target} does not exist.`);
   }
 
-  const targetInserted = insert(targetContent, extensionRegex, mapping, {
+  const targetInserted = insert(targetContent, extensionRegex, props, {
     position,
   });
   writeFile(targetWithBase, targetInserted);

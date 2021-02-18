@@ -15,7 +15,7 @@ Members.
   expect(insert(source, '')).toBe(source);
 });
 
-test('preserve Handlebars variables if no matching regex but there is mapping', () => {
+test('preserve Handlebars variables if no matching regex but there is props', () => {
   const source = `
 # Beatles
 
@@ -89,7 +89,7 @@ Members.
 - Paul
 - John`;
 
-  const mapping = {
+  const props = {
     name: 'George',
   };
 
@@ -103,7 +103,7 @@ Members.
 - Paul
 - John`;
 
-    expect(insert(source, regex, mapping)).toBe(expected);
+    expect(insert(source, regex, props)).toBe(expected);
   });
 
   test('insert below', () => {
@@ -120,7 +120,7 @@ Members.
       position: InsertPosition.BELOW,
     };
 
-    expect(insert(source, regex, mapping, options)).toBe(expected);
+    expect(insert(source, regex, props, options)).toBe(expected);
   });
 
   test('insert above', () => {
@@ -137,7 +137,7 @@ Members.
       position: InsertPosition.ABOVE,
     };
 
-    expect(insert(source, regex, mapping, options)).toBe(expected);
+    expect(insert(source, regex, props, options)).toBe(expected);
   });
 
   test('insert left', () => {
@@ -153,7 +153,7 @@ Members.
       position: InsertPosition.LEFT,
     };
 
-    expect(insert(source, regex, mapping, options)).toBe(expected);
+    expect(insert(source, regex, props, options)).toBe(expected);
   });
 
   test('insert right', () => {
@@ -169,6 +169,6 @@ Members.
       position: InsertPosition.RIGHT,
     };
 
-    expect(insert(source, regex, mapping, options)).toBe(expected);
+    expect(insert(source, regex, props, options)).toBe(expected);
   });
 });

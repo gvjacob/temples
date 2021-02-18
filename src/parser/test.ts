@@ -1,14 +1,14 @@
 import parse from '.';
 import faker from 'faker';
 
-test('inject variables from mapping', () => {
-  const mapping = {
+test('inject variables from props', () => {
+  const props = {
     greeting: 'Hello',
     name: faker.lorem.word(),
   };
 
-  expect(parse('{{ greeting }}, {{ name }}', mapping)).toBe(
-    `${mapping.greeting}, ${mapping.name}`,
+  expect(parse('{{ greeting }}, {{ name }}', props)).toBe(
+    `${props.greeting}, ${props.name}`,
   );
 });
 

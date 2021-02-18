@@ -21,13 +21,13 @@ describe('generateFile', () => {
 
     const target = 'output/hello.md';
     const template = 'template.hbs';
-    const mapping = {
+    const props = {
       name: faker.name.firstName(),
     };
 
-    generateFile(target, template, mapping);
+    generateFile(target, template, props);
 
-    expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
+    expect(readFile(target)).toBe(`# Hello, ${props.name}`);
   });
 
   test('generate empty new file if template is not provided', () => {
@@ -50,23 +50,23 @@ describe('generateFile', () => {
 
     const target = 'output/hello.md';
     const template = 'template.hbs';
-    const mapping = {
+    const props = {
       name: faker.name.firstName(),
     };
 
-    generateFile(target, template, mapping);
+    generateFile(target, template, props);
 
-    expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
+    expect(readFile(target)).toBe(`# Hello, ${props.name}`);
   });
 
   test('bail if template is specified but does not exist', () => {
     const target = 'output/hello.md';
     const template = 'template.hbs';
-    const mapping = {
+    const props = {
       name: faker.name.firstName(),
     };
 
-    expect(() => generateFile(target, template, mapping)).toThrow(
+    expect(() => generateFile(target, template, props)).toThrow(
       new Error(`Template at ${path.resolve(template)} does not exist.`),
     );
   });
@@ -81,7 +81,7 @@ describe('generateFile', () => {
 
       const target = 'output/hello.md';
       const template = 'template.hbs';
-      const mapping = {
+      const props = {
         name: faker.name.firstName(),
       };
       const base = {
@@ -90,9 +90,9 @@ describe('generateFile', () => {
         inserts: '',
       };
 
-      generateFile(target, template, mapping, base);
+      generateFile(target, template, props, base);
 
-      expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
+      expect(readFile(target)).toBe(`# Hello, ${props.name}`);
     });
 
     test('prepend base files path', () => {
@@ -102,7 +102,7 @@ describe('generateFile', () => {
 
       const target = 'output/hello.md';
       const template = 'template.hbs';
-      const mapping = {
+      const props = {
         name: faker.name.firstName(),
       };
       const base = {
@@ -111,10 +111,10 @@ describe('generateFile', () => {
         inserts: 'inserts',
       };
 
-      generateFile(target, template, mapping, base);
+      generateFile(target, template, props, base);
 
       expect(readFile(`${base.files}/${target}`)).toBe(
-        `# Hello, ${mapping.name}`,
+        `# Hello, ${props.name}`,
       );
     });
   });
@@ -158,7 +158,7 @@ describe('generateInsert', () => {
 
     const target = 'output/hello.md';
 
-    const mapping = {
+    const props = {
       name: 'Paul',
       title: 'Come Together',
     };
@@ -167,7 +167,7 @@ describe('generateInsert', () => {
       md: '<!-- (.+) -->',
     };
 
-    generateInsert(target, regex, mapping);
+    generateInsert(target, regex, props);
 
     expect(readFile(target)).toBe(result);
   });
@@ -194,7 +194,7 @@ console.log('Paul')`,
     const mdTarget = 'output/hello.md';
     const jsTarget = 'output/hello.js';
 
-    const mapping = {
+    const props = {
       name: 'Paul',
       title: 'Come Together',
     };
@@ -219,19 +219,19 @@ console.log('Paul')`,
 
     const jsResult = `
 // console.log('{{ name }}')
-console.log('${mapping.name}')
+console.log('${props.name}')
 console.log('Paul')`;
 
-    generateInsert(mdTarget, regex, mapping);
+    generateInsert(mdTarget, regex, props);
     expect(readFile(mdTarget)).toBe(mdResult);
 
-    generateInsert(jsTarget, regex, mapping);
+    generateInsert(jsTarget, regex, props);
     expect(readFile(jsTarget)).toBe(jsResult);
   });
 
   test('bail if target does not exist', () => {
     const target = 'output/hello.md';
-    const mapping = {
+    const props = {
       name: faker.name.firstName(),
     };
     const regex = {
@@ -251,14 +251,14 @@ console.log('Paul')`;
     });
 
     const target = 'output/hello.md';
-    const mapping = {
+    const props = {
       name: faker.name.firstName(),
     };
     const regex = {
       js: '// (.+)',
     };
 
-    expect(() => generateInsert(target, regex, mapping)).toThrow(
+    expect(() => generateInsert(target, regex, props)).toThrow(
       new Error(`Specify regex pattern for ${path.resolve(target)}.`),
     );
   });
@@ -295,7 +295,7 @@ console.log('Paul')`;
 
       const target = 'hello.md';
 
-      const mapping = {
+      const props = {
         name: 'Paul',
         title: 'Come Together',
       };
@@ -310,7 +310,7 @@ console.log('Paul')`;
         inserts: 'output',
       };
 
-      generateInsert(target, regex, mapping, InsertPosition.BELOW, base);
+      generateInsert(target, regex, props, InsertPosition.BELOW, base);
 
       expect(readFile(`${base.inserts}/${target}`)).toBe(result);
     });
