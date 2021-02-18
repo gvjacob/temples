@@ -50,34 +50,25 @@ const GeneratorFileConfig = Record({
   target: String,
 });
 
-const GeneratorInsertConfig = Union(
-  InsertsConfig,
-  Record({
-    target: String,
-  }),
-);
+const GeneratorInsertConfig = Record({
+  target: String,
+}).And(InsertsConfig);
 
-const GeneratorCommandConfig = Union(
-  InsertsConfig,
-  Record({
-    base: BasePathConfig.Or(Undefined),
-    prompt: Array(String).Or(Undefined),
-    default: Props.Or(Undefined),
-    files: Array(GeneratorFileConfig).Or(Undefined),
-    inserts: Array(GeneratorInsertConfig).Or(Undefined),
-  }),
-);
+const GeneratorCommandConfig = Record({
+  base: BasePathConfig.Or(Undefined),
+  prompt: Array(String).Or(Undefined),
+  default: Props.Or(Undefined),
+  files: Array(GeneratorFileConfig).Or(Undefined),
+  inserts: Array(GeneratorInsertConfig).Or(Undefined),
+}).And(InsertsConfig);
 
-export const TemplesConfig = Union(
-  InsertsConfig,
-  Record({
-    base: BasePathConfig.Or(Undefined),
-    handlebars: String.Or(Undefined),
-    default: Props.Or(Undefined),
-    verbose: Boolean.Or(Undefined),
-    generators: Dictionary(GeneratorCommandConfig, 'string'),
-  }),
-);
+export const TemplesConfig = Record({
+  base: BasePathConfig.Or(Undefined),
+  handlebars: String.Or(Undefined),
+  default: Props.Or(Undefined),
+  verbose: Boolean.Or(Undefined),
+  generators: Dictionary(GeneratorCommandConfig, 'string'),
+}).And(InsertsConfig);
 
 export interface InsertOptions {
   position?: string;
