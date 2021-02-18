@@ -35,34 +35,3 @@ describe('with built-in helpers', () => {
     });
   });
 });
-
-describe('with parser options', () => {
-  const source = faker.lorem.word();
-
-  test('prepend before string', () => {
-    const options = {
-      before: 'before',
-    };
-
-    expect(parse(source, {}, options)).toBe(`${options.before}${source}`);
-  });
-
-  test('append after string', () => {
-    const options = {
-      after: 'after',
-    };
-
-    expect(parse(source, {}, options)).toBe(`${source}${options.after}`);
-  });
-
-  test('prepend before, and append after', () => {
-    const options = {
-      before: 'before',
-      after: 'after',
-    };
-
-    expect(parse(source, {}, options)).toBe(
-      `${options.before}${source}${options.after}`,
-    );
-  });
-});
