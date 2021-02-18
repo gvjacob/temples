@@ -12,7 +12,7 @@ Members.
 - Paul
 - John`;
 
-  expect(insert(source, 'George')).toBe(source);
+  expect(insert(source, '')).toBe(source);
 });
 
 test('preserve Handlebars variables if no matching regex but there is mapping', () => {
@@ -24,7 +24,39 @@ Members.
 - Paul
 - John`;
 
-  expect(insert(source, 'Ringo', { name: 'George' })).toBe(source);
+  expect(insert(source, '', { name: 'George' })).toBe(source);
+});
+
+test('insert under all patterns that match regex', () => {
+  const source = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
+- Paul
+- John
+
+Songs
+<!-- temples(- {{ title }}) -->
+- Yesterday`;
+
+  const expected = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
+- George
+- Paul
+- John
+
+Songs
+<!-- temples(- {{ title }}) -->
+- Come Together
+- Yesterday`;
+
+  expect(
+    insert(source, regex, { name: 'George', title: 'Come Together' }),
+  ).toBe(expected);
 });
 
 test('respect hardcoded inserts', () => {
