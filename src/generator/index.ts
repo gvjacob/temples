@@ -26,8 +26,8 @@ export function generateFile(
   mapping: Mapping = {},
   base: BasePath = DEFAULT_BASE_PATH,
 ) {
-  const templateWithBase = path.resolve(base.templates, template);
-  const targetWithBase = path.resolve(base.files, target);
+  const templateWithBase = path.resolve(base.templates || '', template);
+  const targetWithBase = path.resolve(base.files || '', target);
 
   if (!template) {
     writeFile(targetWithBase, '');
@@ -72,7 +72,7 @@ export function generateInsert(
   position: InsertPosition = InsertPosition.BELOW,
   base: BasePath = DEFAULT_BASE_PATH,
 ) {
-  const targetWithBase = path.resolve(base.inserts, target);
+  const targetWithBase = path.resolve(base.inserts || '', target);
   const targetContent = readFile(targetWithBase);
   const extension = getFileExtension(target);
   const extensionRegex = regex[extension];

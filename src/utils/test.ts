@@ -1,6 +1,22 @@
-import fs from 'fs';
 import mock from 'mock-fs';
-import { isString, extract, readFile, writeFile, findMatchedRegExp } from '.';
+import {
+  override,
+  isString,
+  extract,
+  readFile,
+  writeFile,
+  findMatchedRegExp,
+} from '.';
+
+describe('override', () => {
+  test('add new keys', () => {
+    expect(override({ x: 1 }, { y: 2 })).toEqual({ x: 1, y: 2 });
+  });
+
+  test('override exisiting truthy keys', () => {
+    expect(override({ x: 1 }, { x: 2 })).toEqual({ x: 2 });
+  });
+});
 
 describe('extract', () => {
   test('return first value that matches predicate', () => {

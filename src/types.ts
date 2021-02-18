@@ -17,9 +17,9 @@ export type BasePathConfig =
     };
 
 export interface BasePath {
-  templates: string;
-  files: string;
-  inserts: string;
+  templates?: string;
+  files?: string;
+  inserts?: string;
 }
 
 export enum InsertPosition {
