@@ -117,7 +117,7 @@ Members.
 - John`;
 
     const options = {
-      position: InsertPosition.BELOW,
+      position: 'below',
     };
 
     expect(insert(source, regex, props, options)).toBe(expected);
@@ -134,7 +134,7 @@ Members.
 - John`;
 
     const options = {
-      position: InsertPosition.ABOVE,
+      position: 'above',
     };
 
     expect(insert(source, regex, props, options)).toBe(expected);
@@ -150,7 +150,7 @@ Members.
 - John`;
 
     const options = {
-      position: InsertPosition.LEFT,
+      position: 'left',
     };
 
     expect(insert(source, regex, props, options)).toBe(expected);
@@ -166,7 +166,7 @@ Members.
 - John`;
 
     const options = {
-      position: InsertPosition.RIGHT,
+      position: 'right',
     };
 
     expect(insert(source, regex, props, options)).toBe(expected);

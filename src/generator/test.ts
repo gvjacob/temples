@@ -310,7 +310,7 @@ console.log('Paul')`;
         inserts: 'output',
       };
 
-      generateInsert(target, regex, props, InsertPosition.BELOW, base);
+      generateInsert(target, regex, props, 'below', base);
 
       expect(readFile(`${base.inserts}/${target}`)).toBe(result);
     });

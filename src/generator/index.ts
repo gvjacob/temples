@@ -69,7 +69,7 @@ export function generateInsert(
   target: string,
   regex: RegExpConfig = {},
   props: Props = {},
-  position: InsertPosition = InsertPosition.BELOW,
+  position: InsertPosition = 'below',
   base: BasePath = DEFAULT_BASE_PATH,
 ) {
   const targetWithBase = path.resolve(base.inserts || '', target);

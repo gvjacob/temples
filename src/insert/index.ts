@@ -12,19 +12,15 @@ import parse from '../parser';
  *
  * @return {string}
  */
-function placeRelativeTo(
-  to: string,
-  str: string,
-  position: InsertPosition = InsertPosition.BELOW,
-) {
+function placeRelativeTo(to: string, str: string, position = 'below') {
   switch (position) {
-    case InsertPosition.ABOVE:
+    case 'above':
       return `${str}\n${to}`;
 
-    case InsertPosition.LEFT:
+    case 'left':
       return `${str}${to}`;
 
-    case InsertPosition.RIGHT:
+    case 'right':
       return `${to}${str}`;
 
     default:

@@ -43,35 +43,35 @@ export default function run(
 
   // Get config for generator command
   const { generators } = temples;
-  const commandConfig = generators[generator];
+  const generatorConfig = generators[generator];
 
   // Check that generator command exists in temples
-  if (!commandConfig) {
+  if (!generatorConfig) {
     throw new Error(`Command ${generator} not found in temples configuration.`);
   }
 
   // Only run if there are files or inserts specified
-  if (isEmpty(commandConfig.files) && isEmpty(commandConfig.inserts)) {
+  if (isEmpty(generatorConfig.files) && isEmpty(generatorConfig.inserts)) {
     throw new Error(`Specify files or inserts for ${generator}.`);
   }
 
   // Assign properties that can be overridden
   const base = override(
     serializeBasePathsConfig(temples.base),
-    serializeBasePathsConfig(commandConfig.base),
+    serializeBasePathsConfig(generatorConfig.base),
   );
-  const regex = override(temples.regex, commandConfig.regex);
-  const position = temples.position || commandConfig.position;
-  const defaultProps = override(temples.default, commandConfig.default);
+  const regex = override(temples.regex, generatorConfig.regex);
+  const position = temples.position || generatorConfig.position;
+  const defaultProps = override(temples.default, generatorConfig.default);
   const completeProps = override(defaultProps, props);
 
   // Generate files
-  commandConfig.files?.forEach((file) =>
+  generatorConfig.files?.forEach((file) =>
     generateFile(file.target, file.template, completeProps, base),
   );
 
   // Generate inserts
-  commandConfig.inserts?.forEach((insert) =>
+  generatorConfig.inserts?.forEach((insert) =>
     generateInsert(
       insert.target,
       override(regex, insert.regex),

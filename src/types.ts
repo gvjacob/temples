@@ -1,82 +1,104 @@
-export type Props = {
-  [key: string]: string;
-};
+import {
+  Static,
+  Boolean,
+  Record,
+  Undefined,
+  Dictionary,
+  String,
+  Array,
+  Union,
+  Literal,
+} from 'runtypes';
 
-type TargetBasePathConfig =
-  | string
-  | {
-      files?: string;
-      inserts?: string;
-    };
+const Props = Dictionary(String, 'string');
 
-export type BasePathConfig =
-  | string
-  | {
-      templates?: string;
-      target?: TargetBasePathConfig;
-    };
+const TargetBasePathConfig = String.Or(
+  Record({
+    files: String.Or(Undefined),
+    inserts: String.Or(Undefined),
+  }),
+);
 
-export interface BasePath {
+const BasePathConfig = String.Or(
+  Record({
+    templates: String.Or(Undefined),
+    target: TargetBasePathConfig,
+  }),
+);
+
+export type BasePath = {
   templates?: string;
   files?: string;
   inserts?: string;
+};
+
+const InsertPosition = Union(
+  Literal('above'),
+  Literal('below'),
+  Literal('left'),
+  Literal('right'),
+);
+
+export interface InsertOptions {
+  position?: string;
 }
 
-export enum InsertPosition {
-  ABOVE = 'above',
-  BELOW = 'below',
-  LEFT = 'left',
-  RIGHT = 'right',
-}
-
-export interface InsertOptions extends ParseOptions {
-  position?: InsertPosition;
-}
-
-interface GenerateFileConfig {
-  base: string;
-  defaultProps: Props;
-}
-
-export interface ParseOptions {
-  before?: string;
-  after?: string;
-}
+const GenerateFileConfig = Record({
+  base: String,
+  defaultProps: Props,
+});
 
 export type RegExpMatch = [string, string | null];
 
-export interface RegExpConfig {
-  [key: string]: string;
-}
+const RegExpConfig = Dictionary(String, 'string');
 
-export interface InsertsConfig {
-  regex?: RegExpConfig;
-  position?: InsertPosition;
-}
+const InsertsConfig = Record({
+  regex: RegExpConfig.Or(Undefined),
+  position: InsertPosition.Or(Undefined),
+});
 
-export interface GeneratorFileConfig {
-  template?: string;
-  target: string;
-}
+const GeneratorFileConfig = Record({
+  template: String.Or(Undefined),
+  target: String,
+});
 
-export interface GeneratorInsertConfig extends InsertsConfig {
-  target: string;
-}
+const GeneratorInsertConfig = Union(
+  InsertsConfig,
+  Record({
+    target: String,
+  }),
+);
 
-export interface GeneratorCommandConfig extends InsertsConfig {
-  base?: BasePathConfig;
-  prompt?: string[];
-  default?: Props;
-  files?: GeneratorFileConfig[];
-  inserts?: GeneratorInsertConfig[];
-}
+const GeneratorCommandConfig = Union(
+  InsertsConfig,
+  Record({
+    base: BasePathConfig.Or(Undefined),
+    prompt: Array(String).Or(Undefined),
+    default: Props.Or(Undefined),
+    files: Array(GeneratorFileConfig).Or(Undefined),
+    inserts: Array(GeneratorInsertConfig).Or(Undefined),
+  }),
+);
 
-export interface TemplesConfig extends InsertsConfig {
-  base?: BasePathConfig;
-  handlebars?: string;
-  default?: Props;
-  verbose?: boolean;
-  generators: {
-    [command: string]: GeneratorCommandConfig;
-  };
-}
+export const TemplesConfig = Union(
+  InsertsConfig,
+  Record({
+    base: BasePathConfig.Or(Undefined),
+    handlebars: String.Or(Undefined),
+    default: Props.Or(Undefined),
+    verbose: Boolean.Or(Undefined),
+    generators: Dictionary(GeneratorCommandConfig, 'string'),
+  }),
+);
+
+export type TemplesConfig = Static<typeof TemplesConfig>;
+export type Props = Static<typeof Props>;
+export type TargetBasePathConfig = Static<typeof TargetBasePathConfig>;
+export type GeneratorCommandConfig = Static<typeof GeneratorCommandConfig>;
+export type GeneratorInsertConfig = Static<typeof GeneratorInsertConfig>;
+export type GeneratorFileConfig = Static<typeof GeneratorFileConfig>;
+export type InsertsConfig = Static<typeof InsertsConfig>;
+export type RegExpConfig = Static<typeof RegExpConfig>;
+export type BasePathConfig = Static<typeof BasePathConfig>;
+export type InsertPosition = Static<typeof InsertPosition>;
+export type GenerateFileConfig = Static<typeof GenerateFileConfig>;
