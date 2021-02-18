@@ -26,12 +26,6 @@ const BasePathConfig = String.Or(
   }),
 );
 
-export type BasePath = {
-  templates?: string;
-  files?: string;
-  inserts?: string;
-};
-
 const InsertPosition = Union(
   Literal('above'),
   Literal('below'),
@@ -39,16 +33,10 @@ const InsertPosition = Union(
   Literal('right'),
 );
 
-export interface InsertOptions {
-  position?: string;
-}
-
 const GenerateFileConfig = Record({
   base: String,
   defaultProps: Props,
 });
-
-export type RegExpMatch = [string, string | null];
 
 const RegExpConfig = Dictionary(String, 'string');
 
@@ -90,6 +78,18 @@ export const TemplesConfig = Union(
     generators: Dictionary(GeneratorCommandConfig, 'string'),
   }),
 );
+
+export interface InsertOptions {
+  position?: string;
+}
+
+export type BasePath = {
+  templates?: string;
+  files?: string;
+  inserts?: string;
+};
+
+export type RegExpMatch = [string, string | null];
 
 export type TemplesConfig = Static<typeof TemplesConfig>;
 export type Props = Static<typeof Props>;
