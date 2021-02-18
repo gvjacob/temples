@@ -59,7 +59,7 @@ describe('generateFile', () => {
     expect(readFile(target)).toBe(`# Hello, ${mapping.name}`);
   });
 
-  test('bail if template does not exist', () => {
+  test('bail if template is specified but does not exist', () => {
     const target = 'output/hello.md';
     const template = 'template.hbs';
     const mapping = {
