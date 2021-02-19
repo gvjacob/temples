@@ -30,7 +30,7 @@ Boilerplate coding is tedious. Temples automates the process by giving you the a
 - [Configuration](#configuration)
 - [Handlebars Helpers](#handlebars-helpers)
 - [Customizing Handlebars](#customizing-handlebars)
-- [Caveat](#caveat)
+- [Caveats](#caveats)
 
 <br />
 <br />
