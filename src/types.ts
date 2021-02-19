@@ -63,7 +63,7 @@ const GeneratorInsertConfig = Record({
 
 const GeneratorCommandConfig = Record({
   base: BasePathConfig.Or(Undefined),
-  prompt: Array(PromptConfig).Or(Undefined),
+  props: Array(PromptConfig).Or(Undefined),
   default: Props.Or(Undefined),
   files: Array(GeneratorFileConfig).Or(Undefined),
   inserts: Array(GeneratorInsertConfig).Or(Undefined),
