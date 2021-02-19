@@ -61,6 +61,9 @@
     "boilerplate",
     "yaml",
     "temple",
-    "node"
+    "node",
+    "console",
+    "prompt",
+    "command-line"
   ]
 }
