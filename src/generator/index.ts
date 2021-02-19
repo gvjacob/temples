@@ -43,6 +43,7 @@ export function generateFile(
   const templateWithBase = path.resolve(base.templates || '', template);
   const parsedTemplateWithBase = parse(templateWithBase, props);
 
+  // If template is not provided, create empty file
   if (!template) {
     writeFile(target, '');
     return;

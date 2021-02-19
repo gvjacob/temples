@@ -13,7 +13,7 @@ const TEMPLES_YAML = '.temples.yaml';
 
 export default class Temples extends Command {
   static description =
-    'Automatically generate files from predefined templates. No more boilerplate.';
+    'Automatically generate code from predefined templates. No more boilerplate.';
 
   static flags = {
     version: flags.version({ char: 'v' }),
@@ -23,6 +23,13 @@ export default class Temples extends Command {
   };
 
   static args = [{ name: 'generator' }];
+
+  static usage = '[generator] --[prop]=[value] ...';
+
+  static examples = [
+    '$ temples',
+    '$ temples component --name=Button --directory=containers',
+  ];
 
   /**
    * Set to false to manually parse
