@@ -10,6 +10,6 @@ if (isDev) {
   require('ts-node').register({ project });
 }
 
-require(`../${isDev ? 'src' : 'lib'}/cli`)
+require(`../${isDev ? 'src' : 'lib'}/main`)
   .default.run()
   .catch(require('@oclif/errors/handle'));
