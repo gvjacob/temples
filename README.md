@@ -23,7 +23,19 @@ Boilerplate coding is tedious. Temples automates the process by giving you the a
 </p>
 <br />
 
-# **Installation**
+# Getting Started
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Handlebars Helpers](#handlebars-helpers)
+- [Customizing Handlebars](#customizing-handlebars)
+- [Caveat](#caveat)
+
+<br />
+<br />
+
+# Installation
 
 ```bash
 # Install globally
@@ -34,8 +46,9 @@ npm install --save-dev temples
 ```
 
 <br />
+<br />
 
-# **Usage**
+# Usage
 
 > Temples reads from a `.temples.yaml` configuration file. Refer to [Configuration](#configuration) below to create your own configuration file before running temples.
 
@@ -53,8 +66,9 @@ temples -h
 ```
 
 <br />
+<br />
 
-# **Configuration**
+# Configuration
 
 ### generators
 
