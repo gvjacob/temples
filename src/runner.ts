@@ -39,7 +39,7 @@ export default async function run(
   generator: string,
   props: Props,
   temples: TemplesConfig,
-  verbose = false,
+  verbose: boolean = false,
 ) {
   customizeHandlebars(temples);
 

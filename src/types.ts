@@ -2,28 +2,31 @@ import {
   Static,
   Boolean,
   Record,
-  Undefined,
   Dictionary,
   String,
   Array,
   Union,
   Literal,
+  Partial,
 } from 'runtypes';
 
 const Props = Dictionary(String, 'string');
 
 const TargetBasePathConfig = String.Or(
-  Record({
-    files: String.Or(Undefined),
-    inserts: String.Or(Undefined),
+  Partial({
+    files: String,
+    inserts: String,
   }),
 );
 
 const BasePathConfig = String.Or(
   Record({
-    templates: String.Or(Undefined),
     target: TargetBasePathConfig,
-  }),
+  }).And(
+    Partial({
+      templates: String,
+    }),
+  ),
 );
 
 const InsertPosition = Union(
@@ -33,49 +36,53 @@ const InsertPosition = Union(
   Literal('right'),
 );
 
-const GenerateFileConfig = Record({
-  base: String,
-  defaultProps: Props,
-});
-
 const RegExpConfig = Dictionary(String, 'string');
 
-const InsertsConfig = Record({
-  regex: RegExpConfig.Or(Undefined),
-  position: InsertPosition.Or(Undefined),
+const InsertsConfig = Partial({
+  regex: RegExpConfig,
+  position: InsertPosition,
 });
 
 const PromptConfig = String.Or(
   Record({
     name: String,
-    doc: String.Or(Undefined),
-  }),
+  }).And(
+    Partial({
+      doc: String,
+    }),
+  ),
 );
 
 const GeneratorFileConfig = Record({
-  template: String.Or(Undefined),
   target: String,
-});
+}).And(
+  Partial({
+    template: String,
+  }),
+);
 
 const GeneratorInsertConfig = Record({
   target: String,
 }).And(InsertsConfig);
 
-const GeneratorCommandConfig = Record({
-  base: BasePathConfig.Or(Undefined),
-  props: Array(PromptConfig).Or(Undefined),
-  default: Props.Or(Undefined),
-  files: Array(GeneratorFileConfig).Or(Undefined),
-  inserts: Array(GeneratorInsertConfig).Or(Undefined),
+const GeneratorCommandConfig = Partial({
+  base: BasePathConfig,
+  props: Array(PromptConfig),
+  default: Props,
+  files: Array(GeneratorFileConfig),
+  inserts: Array(GeneratorInsertConfig),
 }).And(InsertsConfig);
 
 export const TemplesConfig = Record({
-  base: BasePathConfig.Or(Undefined),
-  handlebars: String.Or(Undefined),
-  default: Props.Or(Undefined),
-  verbose: Boolean.Or(Undefined),
   generators: Dictionary(GeneratorCommandConfig, 'string'),
-}).And(InsertsConfig);
+}).And(
+  Partial({
+    base: BasePathConfig,
+    handlebars: String,
+    default: Props,
+    verbose: Boolean,
+  }).And(InsertsConfig),
+);
 
 export interface InsertOptions {
   position?: string;
@@ -100,4 +107,3 @@ export type InsertsConfig = Static<typeof InsertsConfig>;
 export type RegExpConfig = Static<typeof RegExpConfig>;
 export type BasePathConfig = Static<typeof BasePathConfig>;
 export type InsertPosition = Static<typeof InsertPosition>;
-export type GenerateFileConfig = Static<typeof GenerateFileConfig>;
