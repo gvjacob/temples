@@ -72,7 +72,7 @@ export default async function run(
   // Generate files
   if (files) {
     await logProcesses(
-      `\nGenerating ${cyan(files.length)} files`,
+      `\nGenerating ${cyan(files.length)} file(s)`,
       files.map((file) =>
         ListrGenerateFile(file.target, file.template, completeProps, base),
       ),
@@ -81,7 +81,7 @@ export default async function run(
 
   if (inserts) {
     await logProcesses(
-      `\nInserting into ${cyan(inserts.length)} files`,
+      `\nInserting into ${cyan(inserts.length)} file(s)`,
       inserts.map((insert) =>
         ListrGenerateInsert(
           insert.target,

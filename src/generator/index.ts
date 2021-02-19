@@ -64,7 +64,7 @@ export function ListrGenerateFile(
   const parsed = parse(templateContent, props);
 
   return {
-    title: `Creating ${cyan(truncate(parsedTargetWithBase))}`,
+    title: cyan(truncate(parsedTargetWithBase)),
     task: () => writeFile(parsedTargetWithBase, parsed),
   };
 }
@@ -107,7 +107,7 @@ export function ListrGenerateInsert(
   });
 
   return {
-    title: `Inserting into ${cyan(truncate(parsedTargetWithBase))}`,
+    title: cyan(truncate(parsedTargetWithBase)),
     task: () => writeFile(parsedTargetWithBase, targetInserted),
   };
 }
