@@ -91,6 +91,11 @@ export default class Temples extends Command {
     await run(generator, props, temples, verbose);
   }
 
+  /**
+   * Primary runner for temples. This will parse user
+   * CLI input, pull the config file, and run the CLI
+   * guide if no generator comamnd is provided.
+   */
   async run() {
     const { args, flags } = this.parse(Temples);
     const { generator } = args;
