@@ -131,15 +131,12 @@ describe('findMatchedRegExp', () => {
     expect(findMatchedRegExp('Hello, World', '^World')).toEqual([]);
   });
 
-  test('find all matched substrings', () => {
+  test('ignores duplicate matched substrings', () => {
     const source = `# Hello
     # Hello`;
     const regex = '# Hello';
 
-    const matches = [
-      ['# Hello', null],
-      ['# Hello', null],
-    ];
+    const matches = [['# Hello', null]];
 
     expect(findMatchedRegExp(source, regex)).toEqual(matches);
   });
