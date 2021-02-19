@@ -78,7 +78,5 @@ export async function logProcesses(
 
   try {
     await new Listr(processes, options).run();
-  } catch (e) {
-    console.error(e);
-  }
+  } catch (e) {}
 }
