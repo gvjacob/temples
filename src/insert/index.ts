@@ -53,7 +53,8 @@ function parseAndReplace(
   const parsed = parse(group, props);
   const output = placeRelativeTo(match, parsed, options.position);
 
-  return source.replace(match, output);
+  // Splitting and joining replaces all occurences
+  return source.split(match).join(output);
 }
 
 /**
@@ -66,7 +67,7 @@ function parseAndReplace(
  *
  * @return {string} compiled output
  */
-function insert(
+export default function insert(
   source: string,
   regex: string,
   props: Props = {},
@@ -81,5 +82,3 @@ function insert(
 
   return output;
 }
-
-export default insert;

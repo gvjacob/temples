@@ -93,6 +93,7 @@ export function findMatchedRegExp(
   regex: string,
 ): RegExpMatch[] {
   const matches: RegExpMatch[] = [];
+  const matchesSet = new Set();
 
   if (isEmpty(regex)) {
     return matches;
@@ -108,6 +109,12 @@ export function findMatchedRegExp(
     }
 
     const [match, group = null] = m;
+
+    if (matchesSet.has(match)) {
+      continue;
+    }
+
+    matchesSet.add(match);
     matches.push([match, group]);
   }
 

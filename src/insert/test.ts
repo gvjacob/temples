@@ -80,6 +80,38 @@ Members.
   expect(insert(source, regex)).toBe(expected);
 });
 
+test('insert into multiple tags with same regex', () => {
+  const source = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
+- Paul
+- John
+
+Members.
+<!-- temples(- {{ name }}) -->
+- Paul
+- John`;
+
+  const expected = `
+# Beatles
+
+Members.
+<!-- temples(- {{ name }}) -->
+- George
+- Paul
+- John
+
+Members.
+<!-- temples(- {{ name }}) -->
+- George
+- Paul
+- John`;
+
+  expect(insert(source, regex, { name: 'George' })).toBe(expected);
+});
+
 describe('with insert position', () => {
   const source = `
 # Beatles
