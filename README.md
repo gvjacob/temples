@@ -364,6 +364,6 @@ You can leave it as it is by escaping:
 <br/>
 <br/>
 
-## **License**
+# License
 
-Copyright © 2020, [Gino Jacob](https://ginojacob.com). MIT License.
+Copyright © 2021, [Gino Jacob](https://ginojacob.com). MIT License.
