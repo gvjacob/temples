@@ -10,11 +10,6 @@ if (isDev) {
   require('ts-node').register({ project });
 }
 
-process.on('unhandledRejection', function () {
-  console.error('Goodbye!');
-  process.exit(1);
-});
-
 require(`../${isDev ? 'src' : 'lib'}/main`)
   .default.run()
   .catch(require('@oclif/errors/handle'));

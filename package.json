@@ -2,9 +2,11 @@
   "name": "temples",
   "version": "2.0.0",
   "description": "Generate and insert code automatically",
-  "main": "index.js",
   "directories": {
     "doc": "docs"
+  },
+  "bin": {
+    "temples": "./bin/run"
   },
   "scripts": {
     "build": "tsc",
@@ -12,9 +14,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -c tslint.json -p tsconfig.json"
   },
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["/bin", "/lib"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gvjacob/temples.git"
