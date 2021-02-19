@@ -45,6 +45,7 @@ export function generateFile(
 
   if (!template) {
     writeFile(target, '');
+    return;
   }
 
   const templateContent = readFile(parsedTemplateWithBase);
