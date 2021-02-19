@@ -14,7 +14,7 @@ Boilerplate coding is tedious. Temples automates the process by giving you the a
 <br />
 
 <p align="center">
-<img  src="https://user-images.githubusercontent.com/23367882/81625727-bacd1980-93c7-11ea-80f0-08af6e1ef855.gif"/>
+<img src="https://user-images.githubusercontent.com/23367882/108562618-22f14a00-72ce-11eb-8e2f-1a3f0893db95.gif" width="80%"/>
 
 </p>
 
