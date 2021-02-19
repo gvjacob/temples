@@ -86,7 +86,6 @@ generators:
     inserts: ...
 ```
 
-<hr />
 <br />
 <br />
 
@@ -112,7 +111,6 @@ generators:
       - target: '{{ name }}/index.js'
 ```
 
-<hr />
 <br />
 <br />
 
@@ -149,7 +147,6 @@ generators:
 
 Here's a great [playground tool](https://regex101.com/) for finding the right regex pattern.
 
-<hr />
 <br />
 <br />
 
@@ -185,7 +182,6 @@ generators:
         inserts: dir/targets/inserts
 ```
 
-<hr />
 <br />
 <br />
 
@@ -209,7 +205,6 @@ generators:
     ...
 ```
 
-<hr />
 <br />
 <br />
 
@@ -239,7 +234,6 @@ generators:
       doc: Directory to place component in
 ```
 
-<hr />
 <br />
 <br />
 
@@ -261,7 +255,6 @@ generators:
         position: above | below | right | left
 ```
 
-<hr />
 <br />
 <br />
 
