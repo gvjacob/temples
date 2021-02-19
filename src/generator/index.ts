@@ -50,7 +50,7 @@ export function ListrGenerateFile(
     writeFile(parsedTargetWithBase, '');
 
     return {
-      title: `Creating ${cyan(truncate(parsedTargetWithBase))}`,
+      title: cyan(truncate(parsedTargetWithBase)),
       task: () => writeFile(parsedTargetWithBase, ''),
     };
   }
