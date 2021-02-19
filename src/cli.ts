@@ -60,9 +60,13 @@ export default class Temples extends Command {
     }
 
     const templesConfig = YAML.parse(templesConfigFile);
-    TemplesConfig.check(templesConfig);
 
-    return templesConfig;
+    try {
+      TemplesConfig.check(templesConfig);
+      return templesConfig;
+    } catch (e) {
+      this.error(`Configuration file is invalid.\n\n${e}`);
+    }
   }
 
   async run() {
@@ -70,12 +74,9 @@ export default class Temples extends Command {
     const { generator } = args;
     const props = this.getUserProps();
     const temples = this.getTemplesConfig();
-    console.log(temples);
 
-    //if (generator) {
-    //run(generator, props, temples, flags.verbose);
-    //}
-
-    this.log('Welcome to temples');
+    if (generator) {
+      run(generator, props, temples, flags.verbose);
+    }
   }
 }
