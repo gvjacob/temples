@@ -81,8 +81,10 @@ export default class Temples extends Command {
     const generators = Object.keys(temples.generators);
     const generator = await promptGeneratorCommand(generators);
 
-    const { prompt } = temples.generators[generator];
-    const props = prompt ? await promptProps(generator, prompt) : {};
+    const { prompt, default: defaultProps } = temples.generators[generator];
+    const props = prompt
+      ? await promptProps(generator, prompt, defaultProps)
+      : {};
 
     run(generator, props, temples, verbose);
   }

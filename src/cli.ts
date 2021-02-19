@@ -40,6 +40,7 @@ export async function promptGeneratorCommand<T>(
 export async function promptProps(
   generator: string,
   prompts: PromptConfig[],
+  defaultProps: Props = {},
 ): Promise<Props> {
   const props: Props = {};
 
@@ -50,6 +51,7 @@ export async function promptProps(
 
     const input = new Input({
       message,
+      initial: defaultProps[name],
     });
 
     const value = await input.run();
