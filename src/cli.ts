@@ -1,3 +1,4 @@
+import Listr, { ListrTask } from 'listr';
 import { Props, PromptConfig } from './types';
 import { bold, dim } from 'chalk';
 import { isString } from './utils';
@@ -59,4 +60,25 @@ export async function promptProps(
   }
 
   return props;
+}
+
+/**
+ * Run and notify given Listr processes.
+ *
+ * @param {string} title - title for set of processes
+ * @param {ListrTask[]} processes - Listr processes to run
+ * @param {object} options - Listr options
+ */
+export async function logProcesses(
+  title: string,
+  processes: ListrTask[],
+  options = { exitOnError: false },
+) {
+  console.log(title);
+
+  try {
+    await new Listr(processes, options).run();
+  } catch (e) {
+    console.error(e);
+  }
 }

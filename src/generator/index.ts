@@ -1,51 +1,18 @@
 import path from 'path';
 import { isNull } from 'lodash';
+import { cyan } from 'chalk';
 
 import { RegExpConfig, Props, BasePath, InsertPosition } from '../types';
-import { writeFile, readFile } from '../utils';
+import { writeFile, readFile, truncate } from '../utils';
 import insert from '../insert';
 import parse from '../parser';
+import { ListrTask } from 'listr';
 
 const DEFAULT_BASE_PATH: BasePath = {
   templates: '',
   files: '',
   inserts: '',
 };
-
-/**
- * Generate a new file from template and props.
- *
- * @param {string} target - path to output
- * @param {string} template - path to template file
- * @param {Props} props
- * @param {BasePath} base - base paths
- */
-export function generateFile(
-  target: string,
-  template: string = '',
-  props: Props = {},
-  base: BasePath = DEFAULT_BASE_PATH,
-) {
-  const templateWithBase = path.resolve(base.templates || '', template);
-  const parsedTemplateWithBase = parse(templateWithBase, props);
-
-  const targetWithBase = path.resolve(base.files || '', target);
-  const parsedTargetWithBase = parse(targetWithBase, props);
-
-  if (!template) {
-    writeFile(parsedTargetWithBase, '');
-    return;
-  }
-
-  const templateContent = readFile(parsedTemplateWithBase);
-
-  if (!templateContent) {
-    throw new Error(`Template at ${parsedTemplateWithBase} does not exist.`);
-  }
-
-  const parsed = parse(templateContent, props);
-  writeFile(parsedTargetWithBase, parsed);
-}
 
 /**
  * Get file extension.
@@ -60,6 +27,49 @@ function getFileExtension(file: string): string {
 }
 
 /**
+ * Generate a new file from template and props.
+ *
+ * @param {string} target - path to output
+ * @param {string} template - path to template file
+ * @param {Props} props
+ * @param {BasePath} base - base paths
+ */
+export function ListrGenerateFile(
+  target: string,
+  template: string = '',
+  props: Props = {},
+  base: BasePath = DEFAULT_BASE_PATH,
+): ListrTask {
+  const templateWithBase = path.resolve(base.templates || '', template);
+  const parsedTemplateWithBase = parse(templateWithBase, props);
+
+  const targetWithBase = path.resolve(base.files || '', target);
+  const parsedTargetWithBase = parse(targetWithBase, props);
+
+  if (!template) {
+    writeFile(parsedTargetWithBase, '');
+
+    return {
+      title: `Creating ${cyan(truncate(parsedTargetWithBase))}`,
+      task: () => writeFile(parsedTargetWithBase, ''),
+    };
+  }
+
+  const templateContent = readFile(parsedTemplateWithBase);
+
+  if (!templateContent) {
+    throw new Error(`Template at ${parsedTemplateWithBase} does not exist.`);
+  }
+
+  const parsed = parse(templateContent, props);
+
+  return {
+    title: `Creating ${cyan(truncate(parsedTargetWithBase))}`,
+    task: () => writeFile(parsedTargetWithBase, parsed),
+  };
+}
+
+/**
  * Modify target file by inserting props.
  *
  * @param {string} target - file to modify
@@ -68,13 +78,13 @@ function getFileExtension(file: string): string {
  * @param {InsertPosition} position
  * @param {BasePath} base - base paths
  */
-export function generateInsert(
+export function ListrGenerateInsert(
   target: string,
   regex: RegExpConfig = {},
   props: Props = {},
   position: InsertPosition = 'below',
   base: BasePath = DEFAULT_BASE_PATH,
-) {
+): ListrTask {
   const targetWithBase = path.resolve(base.inserts || '', target);
   const parsedTargetWithBase = parse(targetWithBase, props);
   const targetContent = readFile(parsedTargetWithBase);
@@ -95,5 +105,9 @@ export function generateInsert(
   const targetInserted = insert(targetContent, extensionRegex, props, {
     position,
   });
-  writeFile(parsedTargetWithBase, targetInserted);
+
+  return {
+    title: `Inserting into ${cyan(truncate(parsedTargetWithBase))}`,
+    task: () => writeFile(parsedTargetWithBase, targetInserted),
+  };
 }

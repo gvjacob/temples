@@ -6,6 +6,7 @@ import {
   readFile,
   writeFile,
   findMatchedRegExp,
+  truncate,
 } from '.';
 
 describe('override', () => {
@@ -176,5 +177,20 @@ describe('findMatchedRegExp', () => {
     ];
 
     expect(findMatchedRegExp(source, regex)).toEqual(matches);
+  });
+});
+
+describe('truncate', () => {
+  it('empty string given empty file path', () => {
+    expect(truncate('')).toBe('');
+  });
+
+  it('parent directory and file name', () => {
+    expect(truncate('parent/file.txt')).toBe('parent/file.txt');
+    expect(truncate('grandparent/parent/file.txt')).toBe('parent/file.txt');
+  });
+
+  it('only file name when there is no parent', () => {
+    expect(truncate('file.txt')).toBe('file.txt');
   });
 });

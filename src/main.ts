@@ -86,7 +86,7 @@ export default class Temples extends Command {
       ? await promptProps(generator, prompt, defaultProps)
       : {};
 
-    run(generator, props, temples, verbose);
+    await run(generator, props, temples, verbose);
   }
 
   async run() {
@@ -97,7 +97,7 @@ export default class Temples extends Command {
     const props = this.getUserProps();
 
     if (generator) {
-      run(generator, props, temples, flags.verbose);
+      await run(generator, props, temples, flags.verbose);
     } else {
       this.cli(temples, flags.verbose);
     }

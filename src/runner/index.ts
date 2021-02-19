@@ -1,7 +1,9 @@
 import { isEmpty } from 'lodash';
 import path from 'path';
+import { cyan } from 'chalk';
 
-import { generateFile, generateInsert } from '../generator';
+import { logProcesses } from '../cli';
+import { ListrGenerateFile, ListrGenerateInsert } from '../generator';
 import { customize } from '../handlebars';
 import { serializeBasePathsConfig } from '../serializers';
 import { Props, TemplesConfig } from '../types';
@@ -33,7 +35,7 @@ function customizeHandlebars(temples: TemplesConfig) {
  * @param {TemplesConfig} temples
  * @param {boolean} verbose
  */
-export default function run(
+export default async function run(
   generator: string,
   props: Props,
   temples: TemplesConfig,
@@ -65,19 +67,30 @@ export default function run(
   const defaultProps = override(temples.default, generatorConfig.default);
   const completeProps = override(defaultProps, props);
 
-  // Generate files
-  generatorConfig.files?.forEach((file) =>
-    generateFile(file.target, file.template, completeProps, base),
-  );
+  const { files, inserts } = generatorConfig;
 
-  // Generate inserts
-  generatorConfig.inserts?.forEach((insert) =>
-    generateInsert(
-      insert.target,
-      override(regex, insert.regex),
-      completeProps,
-      position || insert.position,
-      base,
-    ),
-  );
+  // Generate files
+  if (files) {
+    await logProcesses(
+      `\nGenerating ${cyan(files.length)} files`,
+      files.map((file) =>
+        ListrGenerateFile(file.target, file.template, completeProps, base),
+      ),
+    );
+  }
+
+  if (inserts) {
+    await logProcesses(
+      `\nInserting into ${cyan(inserts.length)} files`,
+      inserts.map((insert) =>
+        ListrGenerateInsert(
+          insert.target,
+          override(regex, insert.regex),
+          completeProps,
+          position || insert.position,
+          base,
+        ),
+      ),
+    );
+  }
 }

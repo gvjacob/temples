@@ -3,11 +3,12 @@ import fs from 'fs';
 import faker from 'faker';
 import mock from 'mock-fs';
 
-import { generateFile, generateInsert } from '.';
+import { ListrGenerateFile, ListrGenerateInsert } from '.';
 import { InsertPosition } from '../types';
 import { readFile } from '../utils';
+import { ListrTaskWrapper } from 'listr';
 
-describe('generateFile', () => {
+describe('ListrGenerateFile', () => {
   beforeEach(() => {
     mock();
   });
@@ -25,7 +26,10 @@ describe('generateFile', () => {
       name: faker.name.firstName(),
     };
 
-    generateFile(target, template, props);
+    ListrGenerateFile(target, template, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
 
     expect(readFile(target)).toBe(`# Hello, ${props.name}`);
   });
@@ -35,7 +39,7 @@ describe('generateFile', () => {
 
     const target = 'output/hello.md';
 
-    generateFile(target);
+    ListrGenerateFile(target).task({}, {} as ListrTaskWrapper<any>);
 
     expect(readFile(target)).toBe('');
   });
@@ -54,7 +58,10 @@ describe('generateFile', () => {
       name: faker.name.firstName(),
     };
 
-    generateFile(target, template, props);
+    ListrGenerateFile(target, template, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
 
     expect(readFile(target)).toBe(`# Hello, ${props.name}`);
   });
@@ -66,7 +73,12 @@ describe('generateFile', () => {
       name: faker.name.firstName(),
     };
 
-    expect(() => generateFile(target, template, props)).toThrow(
+    expect(() =>
+      ListrGenerateFile(target, template, props).task(
+        {},
+        {} as ListrTaskWrapper<any>,
+      ),
+    ).toThrow(
       new Error(`Template at ${path.resolve(template)} does not exist.`),
     );
   });
@@ -82,7 +94,10 @@ describe('generateFile', () => {
       [`${props.name}.hbs`]: '# Hello, {{ name }}',
     });
 
-    generateFile(target, template, props);
+    ListrGenerateFile(target, template, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
 
     expect(readFile(target)).toBe(`# Hello, ${props.name}`);
   });
@@ -98,7 +113,10 @@ describe('generateFile', () => {
       'template.hbs': '# Hello, {{ name }}',
     });
 
-    generateFile(target, template, props);
+    ListrGenerateFile(target, template, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
 
     expect(readFile(`${props.name}/hello.md`)).toBe(`# Hello, ${props.name}`);
   });
@@ -122,7 +140,10 @@ describe('generateFile', () => {
         inserts: '',
       };
 
-      generateFile(target, template, props, base);
+      ListrGenerateFile(target, template, props, base).task(
+        {},
+        {} as ListrTaskWrapper<any>,
+      );
 
       expect(readFile(target)).toBe(`# Hello, ${props.name}`);
     });
@@ -143,7 +164,10 @@ describe('generateFile', () => {
         inserts: 'inserts',
       };
 
-      generateFile(target, template, props, base);
+      ListrGenerateFile(target, template, props, base).task(
+        {},
+        {} as ListrTaskWrapper<any>,
+      );
 
       expect(readFile(`${base.files}/${target}`)).toBe(
         `# Hello, ${props.name}`,
@@ -152,7 +176,7 @@ describe('generateFile', () => {
   });
 });
 
-describe('generateInsert', () => {
+describe('ListrGenerateInsert', () => {
   beforeEach(() => {
     mock();
   });
@@ -199,7 +223,10 @@ describe('generateInsert', () => {
       md: '<!-- (.+) -->',
     };
 
-    generateInsert(target, regex, props);
+    ListrGenerateInsert(target, regex, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
 
     expect(readFile(target)).toBe(result);
   });
@@ -254,10 +281,16 @@ console.log('Paul')`,
 console.log('${props.name}')
 console.log('Paul')`;
 
-    generateInsert(mdTarget, regex, props);
+    ListrGenerateInsert(mdTarget, regex, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
     expect(readFile(mdTarget)).toBe(mdResult);
 
-    generateInsert(jsTarget, regex, props);
+    ListrGenerateInsert(jsTarget, regex, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
     expect(readFile(jsTarget)).toBe(jsResult);
   });
 
@@ -270,9 +303,12 @@ console.log('Paul')`;
       md: '# (.+)',
     };
 
-    expect(() => generateInsert(target, regex, {})).toThrow(
-      new Error(`Target at ${path.resolve(target)} does not exist.`),
-    );
+    expect(() =>
+      ListrGenerateInsert(target, regex, {}).task(
+        {},
+        {} as ListrTaskWrapper<any>,
+      ),
+    ).toThrow(new Error(`Target at ${path.resolve(target)} does not exist.`));
   });
 
   test('bail if matching regex does not exist', () => {
@@ -290,9 +326,12 @@ console.log('Paul')`;
       js: '// (.+)',
     };
 
-    expect(() => generateInsert(target, regex, props)).toThrow(
-      new Error(`Specify regex pattern for ${path.resolve(target)}.`),
-    );
+    expect(() =>
+      ListrGenerateInsert(target, regex, props).task(
+        {},
+        {} as ListrTaskWrapper<any>,
+      ),
+    ).toThrow(new Error(`Specify regex pattern for ${path.resolve(target)}.`));
   });
 
   test('apply props to target path', () => {
@@ -335,7 +374,10 @@ console.log('Paul')`;
 - Blackbird
 - Yesterday`;
 
-    generateInsert(target, regex, props);
+    ListrGenerateInsert(target, regex, props).task(
+      {},
+      {} as ListrTaskWrapper<any>,
+    );
 
     expect(readFile(`${props.name}/${props.title}.md`)).toBe(result);
   });
@@ -387,7 +429,10 @@ console.log('Paul')`;
         inserts: 'output',
       };
 
-      generateInsert(target, regex, props, 'below', base);
+      ListrGenerateInsert(target, regex, props, 'below', base).task(
+        {},
+        {} as ListrTaskWrapper<any>,
+      );
 
       expect(readFile(`${base.inserts}/${target}`)).toBe(result);
     });

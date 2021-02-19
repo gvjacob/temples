@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { isEmpty, get } from 'lodash';
+import { isEmpty, get, takeRight } from 'lodash';
 
 import { RegExpMatch, BasePath, BasePathConfig } from '../types';
 
@@ -112,4 +112,16 @@ export function findMatchedRegExp(
   }
 
   return matches;
+}
+
+/**
+ * Truncate path to its parent directory and file name.
+ *
+ * @param {string} p
+ *
+ * @return {string} parent and file name
+ */
+export function truncate(p: string): string {
+  const sections = p.split(path.sep);
+  return takeRight(sections, 2).join(path.sep);
 }
