@@ -5,9 +5,7 @@
   "directories": {
     "doc": "docs"
   },
-  "bin": {
-    "temples": "./bin/run"
-  },
+  "bin": "./bin/run",
   "scripts": {
     "build": "tsc",
     "test": "jest --verbose --watchAll",
@@ -20,7 +18,7 @@
     "url": "git+https://github.com/gvjacob/temples.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gino Jacob <gvjacob@outlook.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/gvjacob/temples/issues"
@@ -54,5 +52,15 @@
     "tslib": "^2.1.0",
     "yaml": "^1.10.0",
     "yargs": "^16.2.0"
-  }
+  },
+  "keywords": [
+    "cli",
+    "handlebars",
+    "template",
+    "generator",
+    "boilerplate",
+    "yaml",
+    "temple",
+    "node"
+  ]
 }
