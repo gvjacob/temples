@@ -54,192 +54,301 @@ temples -h
 
 <br />
 
-## **Configuration**
+# **Configuration**
 
-`.temples.yaml` is the configuration file for Temples. Each command has a list of `temples`, each one defining which template files to use, where to output the compiled files, and default mapping for the key value pairs. You can further configure each command.
+### generators
 
-The schema for `.temples.yaml`:
+> Required. Temples will throw error if undefined.
 
-```yaml
-[command]:
-  base: [base_path]
-  prompt:
-    - [key]
-      ...
-  temples:
-    - template: [template_path]
-      output: [output_path]
-      default:
-        [key]: [value]
-        ...
-      ...
-...
-```
-
-### `base`
-
-Every path (e.g. `template`, `output`) will be relative to the given `base`. This helps avoid redundancy in specifying path values in `temples`.
-
-If you need to differentiate the base path for all templates and outputs, you can specify `template` and `output` under `base`.
+In your `.temples.yaml` file, specify the `generators` object. This lists all available generators and what each does, either creating new files or inserting code into existing files.
 
 ```yaml
-base:
-  template: [template_base_path]
-  output: [output_base_path]
+# .temples.yaml
+
+generators:
+  # Give your command a name
+  [command]:
+    files: ...
+    inserts: ...
 ```
 
-### `prompt`
+<hr />
+<br />
+<br />
 
-`prompt` takes in a list of keys that the user will be prompted for in the CLI.
+### files
 
-Follow this syntax to provide documentation for a key:
+Generate new files given a target path, and an optional template path. If template is given, temples will use the contents of that template, compile it with given props, and output to target path.
 
 ```yaml
-prompt:
-  - key: [key]
-    doc: [documentation] # displayed when prompted
+# .temples.yaml
+
+generators:
+  new-component:
+    files:
+      # Use `component.hbs` and create `index.js`
+      - template: component.hbs
+        target: index.js
+
+      # Create empty file at `index.js`
+      - target: index.js
+
+      # Compile with `name` and create
+      # file at `[component_name]/index.js`
+      - target: '{{ name }}/index.js'
 ```
 
-### `temples`
+<hr />
+<br />
+<br />
 
-The list of files to generate when running the command. This can take an arbitrary number if you want to generate more than one file from different templates. For example in React, you might want to create a Javascript file, a css stylesheet, and a test file when generating a new component.
+### inserts
 
-- `template`: Path to template file. A template file can have any extension as long as it has text and abides by Handlebars syntax. You could establish your own template conventions like `file.template` to be explicit. Omitting a template will create an empty file.
+Insert code into targeted files. Temples uses user defined regex to find tags in targeted files and replace them with the parsed content. File comments are the best ways to do this:
 
-- `output`: Path to output file. Temples will create any non-existent directories along the given path if needed.
+```js
+/* components/index.js */
 
-- `default`: Default key value pairs if not provided by the CLI command.
+// temples(import {{ name }} from './{{ name }}';)
+import Button from './Button';
+```
 
-> Note: if you wish to use a key when defining `template` and `output`, you can wrap the values with quotes and use the same Handlebars syntax (e.g. “path/to/{{ module }}.js”).
+```yaml
+# .temples.yaml
 
-## **Template Helpers**
+# File extension to ECMAScript regex pattern
+#
+# The first regex capture group is the
+# template for the insert
+regex:
+  js: '\/\/ temples\((.+)\)'
 
-Temples uses Handlebars syntax for defining file templates and dynamic output paths. We've added a few helpers to provide more flexibility within the templates:
+generators:
+  new-component:
+    inserts:
+      # Insert into `components/index.js`
+      - target: components/index.js
 
-### `camel`
+      # Insert into `components/[component_name]/index.js`
+      - target: 'components/{{ name }}/index.js'
+```
 
-This helper will convert your variable to camelCase.
+Here's a great [playground tool](https://regex101.com/) for finding the right regex pattern.
 
-```sh
-# Template
+<hr />
+<br />
+<br />
+
+### base
+
+Specify the base paths for templates, files, or inserts. `base` can be specified and overridden in the root configuration file or the generator command's configuration.
+
+```yaml
+# .temples.yaml
+
+# Find templates, files, and inserts
+# under `dir/`
+base: dir
+
+generators:
+  new-component:
+    # Override to be `dir/subdir/`
+    base: dir/subdir
+
+    # Find templates in `dir/templates`
+    # Target files and inserts in `dir/targets`
+    base:
+      templates: dir/templates
+      target: dir/targets
+
+    # Find templates in `dir/templates`
+    # Target files in `dir/targets/files`
+    # Target inserts in `dir/targets/inserts`
+    base:
+      templates: dir/templates
+      target:
+        files: dir/targets/files
+        inserts: dir/targets/inserts
+```
+
+<hr />
+<br />
+<br />
+
+### default
+
+Default prop values if not provided in CLI.
+
+> If there is no default provided and user doesn't specify value, Handlebars compiles undefined props to empty string.
+
+```yaml
+# .temples.yaml
+
+default:
+  name: 'NewComponent'
+
+generators:
+  new-component:
+    # Override default in root level
+    default:
+      name: 'NewestComponent'
+    ...
+```
+
+<hr />
+<br />
+<br />
+
+### props
+
+Specify props that should be prompted for in the CLI guide. It's not optimal for temples to search through all props available in templates. You can specify which props to prompt for with this key.
+
+```yaml
+# .temples.yaml
+
+generators:
+  new-component:
+    # Ask user for `name` and `directory`
+    props: [name, directory]
+
+    # In YAML, this is the same
+    props:
+    - name
+    - directory
+
+    # Provide documentation for each prop
+    # during CLI guide
+    props:
+    - name: name
+      doc: Name of component
+    - name: directory
+      doc: Directory to place component in
+```
+
+<hr />
+<br />
+<br />
+
+### position
+
+Position to insert output to. This is relative to the regex tag in the target file. Default position is `below`. The most specific position will be used.
+
+```yaml
+# .temples.yaml
+
+position: above | below | right | left
+
+generators:
+  new-component:
+    position: above | below | right | left
+
+    inserts:
+      - target: components/index.js
+        position: above | below | right | left
+```
+
+<hr />
+<br />
+<br />
+
+# Handlebars Helpers
+
+Temples uses Handlebars templating engine, and temples has some built-in [helpers](https://handlebarsjs.com/api-reference/helpers.html#helpers).
+
+### camel-case
+
+Convert into camelCase.
+
+```hbs
 {{ camel name }}
-```
 
-```sh
 # Input: { name: "BigButton" }
 bigButton
 ```
 
-### `kebab`
+### kebab-case
 
-This helper will convert your variable to kebab-case.
+Convert into kebab-case
 
-```sh
-# Template
-{{ kebab name }}
-```
+```hbs
+{{ kebab-case name }}
 
-```sh
 # Input: { name: "bigButton" }
 big-button
 ```
 
-### `snake`
+### snake-case
 
-This helper will convert your variable to snake_case.
+Convert into snake_case
 
-```sh
-# Template
-{{ snake name }}
-```
+```hbs
+{{ snake-case name }}
 
-```sh
 # Input: { name: "big-button" }
 big_button
 ```
 
-### `title`
+### title-case
 
-This helper will convert your variable to TitleCase.
+Convert into TitleCase
 
-```sh
-# Template
-{{ snake name }}
-```
+```hbs
+{{ title-case name }}
 
-```sh
 # Input: { name: "big_button" }
 BigButton
 ```
+
+<br />
+<br />
+
+# Customizing Handlebars
+
+The built-in helpers might not be enough for your use case. You can customize the Handlebars instance temples uses by specifying a path to a JavaScript file that configures Handlebars.
+
+See the [Handlebars runtime documentation](https://handlebarsjs.com/api-reference/runtime.html).
+
+```yaml
+# .temples.yaml
+
+handlebars: configureHandlebars.js
+```
+
+```js
+// configureHandlebars.js
+
+module.exports = (handlebars) => {
+  handlebars.registerHelper('replace', (v) => {
+    return v.replace(' ', '-');
+  });
+};
+```
+
+<br/>
+<br/>
+
+# Caveats
 
 ### Naming Conflicts
 
 If a variable conflicts with a helper name (e.g. `{{ title }}`), Handlebars will treat it as a helper instead of a variable. You can namespace the variable with `this` or `./` to avoid naming conflicts.
 
-```
+```hbs
 {{ this.title }}
 ```
 
-## **Example**
+### Escaping Handlebars Syntax
 
-This is an example `.temples.yaml` file for a React project:
+Sometimes you need Handlebars to ignore parsing a prop. For example, if you're generating a file from a twig template, Handlebars might parse `{{ example }}` unintentionally.
 
-```yaml
-# Generate a new component
-component:
-  # All paths are relative to src folder
-  base: ./src
-  temples:
-    # Component entry point file
-    - template: component.template
-      output: 'components/{{ name }}/index.js'
-      default:
-        name: Component
+You can leave it as it is by escaping:
 
-    # Component CSS stylesheet
-    - template: styles.template
-      output: 'components/{{ name }}/{{ camel name }}.module.scss'
-
-    # Component test file
-    - template: test.template
-      output: 'components/{{ name }}/test.js'
+```hbs
+\{{ example }}
 ```
 
-`component.template`
-
-```
-import React from 'react';
-import styles from './{{ camel name }}.module.scss';
-
-const {{ name }} = () => {
-	return null;
-};
-
-export default {{ name }};
-```
-
-`styles.template`
-
-```
-.{{ kebab name }} {
-
-}
-```
-
-`test.template`
-
-```
-import React from 'react';
-import { render } from '@testing-library/react'
-
-describe('{{ name }}', () => {})
-```
-
-To run the command:
-
-```bash
-temples component --name Button
-```
+<br/>
+<br/>
 
 ## **License**
 
