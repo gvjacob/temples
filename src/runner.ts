@@ -2,12 +2,12 @@ import { isEmpty } from 'lodash';
 import path from 'path';
 import { cyan } from 'chalk';
 
-import { logProcesses } from '../cli';
-import { ListrGenerateFile, ListrGenerateInsert } from '../generator';
-import { customize } from '../handlebars';
-import { serializeBasePathsConfig } from '../serializers';
-import { Props, TemplesConfig } from '../types';
-import { override } from '../utils';
+import { logProcesses } from './cli';
+import { ListrGenerateFile, ListrGenerateInsert } from './generator';
+import { customize } from './handlebars';
+import { serializeBasePathsConfig } from './serializers';
+import { Props, TemplesConfig } from './types';
+import { override } from './utils';
 
 /**
  * Customize Handlebars instance from
