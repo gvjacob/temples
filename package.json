@@ -57,6 +57,7 @@
     "cli",
     "handlebars",
     "template",
+    "generate",
     "generator",
     "boilerplate",
     "yaml",

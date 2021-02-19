@@ -52,10 +52,10 @@ npm install --save-dev temples
 
 > Temples reads from a `.temples.yaml` configuration file. Refer to [Configuration](#configuration) below to create your own configuration file before running temples.
 
-You can run temples by specifying the generator command and props, or invoke a CLI step by step guide where you can input these parameters.
+You can run temples by specifying the generator command and props, or invoke a CLI step by step interface where you can input these parameters.
 
 ```bash
-# Invoke CLI guide
+# Invoke CLI interface
 temples
 
 # Or, directly specify generator and value for each prop
@@ -210,7 +210,7 @@ generators:
 
 ### props
 
-Specify props that should be prompted for in the CLI guide. It's not optimal for temples to search through all props available in templates. You can specify which props to prompt for with this key.
+Specify props that should be prompted for in the CLI interface. It's not optimal for temples to search through all props available in templates. You can specify which props to prompt for with this key.
 
 ```yaml
 # .temples.yaml
@@ -226,7 +226,7 @@ generators:
     - directory
 
     # Provide documentation for each prop
-    # during CLI guide
+    # during CLI interface
     props:
     - name: name
       doc: Name of component
