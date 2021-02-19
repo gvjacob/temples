@@ -45,6 +45,13 @@ const InsertsConfig = Record({
   position: InsertPosition.Or(Undefined),
 });
 
+const PromptConfig = String.Or(
+  Record({
+    name: String,
+    doc: String.Or(Undefined),
+  }),
+);
+
 const GeneratorFileConfig = Record({
   template: String.Or(Undefined),
   target: String,
@@ -56,7 +63,7 @@ const GeneratorInsertConfig = Record({
 
 const GeneratorCommandConfig = Record({
   base: BasePathConfig.Or(Undefined),
-  prompt: Array(String).Or(Undefined),
+  prompt: Array(PromptConfig).Or(Undefined),
   default: Props.Or(Undefined),
   files: Array(GeneratorFileConfig).Or(Undefined),
   inserts: Array(GeneratorInsertConfig).Or(Undefined),
@@ -85,6 +92,7 @@ export type RegExpMatch = [string, string | null];
 export type TemplesConfig = Static<typeof TemplesConfig>;
 export type Props = Static<typeof Props>;
 export type TargetBasePathConfig = Static<typeof TargetBasePathConfig>;
+export type PromptConfig = Static<typeof PromptConfig>;
 export type GeneratorCommandConfig = Static<typeof GeneratorCommandConfig>;
 export type GeneratorInsertConfig = Static<typeof GeneratorInsertConfig>;
 export type GeneratorFileConfig = Static<typeof GeneratorFileConfig>;

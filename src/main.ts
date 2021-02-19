@@ -1,9 +1,10 @@
 import path from 'path';
 import YAML from 'yaml';
 import yargs from 'yargs/yargs';
-import { omit } from 'lodash';
+import { isEmpty, omit } from 'lodash';
 import { Command, flags } from '@oclif/command';
 
+import { promptGeneratorCommand, promptProps } from './cli';
 import { readFile } from './utils';
 import { Props, TemplesConfig } from './types';
 import run from './runner';
@@ -70,15 +71,33 @@ export default class Temples extends Command {
     }
   }
 
+  /**
+   * Run temples CLI guide.
+   *
+   * @param {TemplesConfig} temples
+   * @param {boolean} verbose
+   */
+  async cli(temples: TemplesConfig, verbose: boolean) {
+    const generators = Object.keys(temples.generators);
+    const generator = await promptGeneratorCommand(generators);
+
+    const { prompt } = temples.generators[generator];
+    const props = prompt ? await promptProps(generator, prompt) : {};
+
+    run(generator, props, temples, verbose);
+  }
+
   async run() {
     const { args, flags } = this.parse(Temples);
     const { generator } = args;
 
-    const props = this.getUserProps();
     const temples = this.getTemplesConfig(flags.config);
+    const props = this.getUserProps();
 
     if (generator) {
       run(generator, props, temples, flags.verbose);
+    } else {
+      this.cli(temples, flags.verbose);
     }
   }
 }

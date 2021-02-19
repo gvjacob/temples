@@ -44,6 +44,8 @@
   },
   "dependencies": {
     "@oclif/command": "^1.8.0",
+    "chalk": "^4.1.0",
+    "enquirer": "^2.3.6",
     "handlebars": "^4.7.6",
     "lodash": "^4.17.20",
     "runtypes": "^5.0.1",
