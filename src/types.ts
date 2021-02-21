@@ -67,14 +67,20 @@ const GeneratorInsertConfig = Record({
 
 const GeneratorCommandConfig = Partial({
   base: BasePathConfig,
+  doc: String,
   props: Array(PromptConfig),
   default: Props,
   files: Array(GeneratorFileConfig),
   inserts: Array(GeneratorInsertConfig),
 }).And(InsertsConfig);
 
+export const DictionaryGeneratorCommandConfig = Dictionary(
+  GeneratorCommandConfig,
+  'string',
+);
+
 export const TemplesConfig = Record({
-  generators: Dictionary(GeneratorCommandConfig, 'string'),
+  generators: DictionaryGeneratorCommandConfig,
 }).And(
   Partial({
     base: BasePathConfig,
@@ -96,14 +102,17 @@ export type BasePath = {
 
 export type RegExpMatch = [string, string | null];
 
-export type TemplesConfig = Static<typeof TemplesConfig>;
 export type Props = Static<typeof Props>;
 export type TargetBasePathConfig = Static<typeof TargetBasePathConfig>;
 export type PromptConfig = Static<typeof PromptConfig>;
 export type GeneratorCommandConfig = Static<typeof GeneratorCommandConfig>;
+export type DictionaryGeneratorCommandConfig = Static<
+  typeof DictionaryGeneratorCommandConfig
+>;
 export type GeneratorInsertConfig = Static<typeof GeneratorInsertConfig>;
 export type GeneratorFileConfig = Static<typeof GeneratorFileConfig>;
 export type InsertsConfig = Static<typeof InsertsConfig>;
 export type RegExpConfig = Static<typeof RegExpConfig>;
 export type BasePathConfig = Static<typeof BasePathConfig>;
 export type InsertPosition = Static<typeof InsertPosition>;
+export type TemplesConfig = Static<typeof TemplesConfig>;

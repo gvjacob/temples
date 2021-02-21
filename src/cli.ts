@@ -1,5 +1,5 @@
 import Listr, { ListrTask } from 'listr';
-import { Props, PromptConfig } from './types';
+import { Props, PromptConfig, DictionaryGeneratorCommandConfig } from './types';
 import { bold, dim } from 'chalk';
 import { isString } from './utils';
 
@@ -12,6 +12,20 @@ import { isString } from './utils';
 const { Select, Input } = require('enquirer');
 
 /**
+ * Name with or without documentation
+ *
+ * @param {string} name
+ * @param {string | null} doc
+ * @param {boolean} isBold - should name be bolded?
+ *
+ * @return {string}
+ */
+function withDocumentation(name: string, doc?: string | null, isBold = true) {
+  const outName = isBold ? bold(name) : name;
+  return doc ? `${outName}: ${dim(doc)}` : outName;
+}
+
+/**
  * Prompt for generator command.
  *
  * @param {string[]} generators - list of available generators
@@ -19,15 +33,21 @@ const { Select, Input } = require('enquirer');
  * @return {string} chosen generator
  */
 export async function promptGeneratorCommand<T>(
-  generators: string[],
+  generators: DictionaryGeneratorCommandConfig,
 ): Promise<string> {
+  const choices = Object.entries(generators).map(([name, { doc }]) => ({
+    name,
+    message: withDocumentation(name, doc, false),
+  }));
+
   const prompt = new Select({
     name: 'generator',
     message: 'Select generator to run:',
-    choices: generators,
+    choices,
   });
 
-  return await prompt.run();
+  const decision: string = await prompt.run();
+  return decision;
 }
 
 /**
@@ -48,7 +68,7 @@ export async function promptProps(
   for (const p of prompts) {
     const name = isString(p) ? p : p.name;
     const doc = isString(p) ? null : p.doc;
-    const message = doc ? `${bold(name)}: ${dim(doc)}` : bold(name);
+    const message = withDocumentation(name, doc);
 
     const input = new Input({
       message,

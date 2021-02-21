@@ -85,7 +85,7 @@ export default class Temples extends Command {
    * @param {boolean} verbose
    */
   async cli(temples: TemplesConfig, verbose: boolean) {
-    const generators = Object.keys(temples.generators);
+    const { generators } = temples;
     const generator = await promptGeneratorCommand(generators);
 
     const { props: propsToPrompt, default: defaultProps } = temples.generators[
