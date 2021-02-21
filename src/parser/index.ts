@@ -1,4 +1,4 @@
-import Handlebars from '../handlebars';
+import Handlebars, { compileOptions } from '../handlebars';
 import { Props } from '../types';
 
 /**
@@ -10,7 +10,7 @@ import { Props } from '../types';
  * @return {string} compiled output
  */
 function parse(source: string, props: Props = {}): string {
-  const template = Handlebars.compile(source);
+  const template = Handlebars.compile(source, compileOptions);
   return template(props);
 }
 

@@ -342,7 +342,13 @@ BigButton
 
 The built-in helpers might not be enough for your use case. You can customize the Handlebars instance temples uses by specifying a path to a JavaScript file that configures Handlebars.
 
-See the [Handlebars runtime documentation](https://handlebarsjs.com/api-reference/runtime.html).
+#### Runtime Options
+
+Use the given handlebars instance to change its settings. See the [Handlebars runtime documentation](https://handlebarsjs.com/api-reference/runtime.html).
+
+#### Compile Options
+
+Return an object to customize the compile options for Handlebars. See the [Handlebars compile options](https://handlebarsjs.com/api-reference/compilation.html#handlebars-compile-template-options).
 
 ```yaml
 # .temples.yaml
@@ -357,6 +363,10 @@ module.exports = (handlebars) => {
   handlebars.registerHelper('replace', (v) => {
     return v.replace(' ', '-');
   });
+
+  return {
+    noEscape: false,
+  };
 };
 ```
 
