@@ -295,6 +295,28 @@ Convert into snake_case
 big_button
 ```
 
+### upper-case
+
+Convert into UPPER CASE
+
+```hbs
+{{ upper-case name }}
+
+# Input: { name: "big-button" }
+BIG BUTTON
+```
+
+### lower-case
+
+Convert into lower case
+
+```hbs
+{{ lower-case name }}
+
+# Input: { name: "big-button" }
+big button
+```
+
 ### title-case
 
 Convert into TitleCase
