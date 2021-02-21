@@ -388,4 +388,4 @@ You can leave it as it is by escaping:
 
 # License
 
-Copyright © 2021, [Gino Jacob](https://ginojacob.com). MIT License.
+Copyright © 2020 - Present, [Gino Jacob](https://ginojacob.com). MIT License.
