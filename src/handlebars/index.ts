@@ -26,6 +26,8 @@ Handlebars.registerHelper('title-case', (s: string): string => {
   return casedString.replace(/\s/g, '');
 });
 
+export let compileOptions = {};
+
 /**
  * Customize Handlebars instance through
  * user defined configuration.
@@ -45,7 +47,7 @@ export async function customize(p: string) {
     throw new Error(`Provide a default function in ${p}.`);
   }
 
-  configure(Handlebars);
+  compileOptions = configure(Handlebars) || compileOptions;
 }
 
 export default Handlebars;

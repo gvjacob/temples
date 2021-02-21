@@ -1,10 +1,11 @@
 import path from 'path';
-import Handlebars, { customize } from '.';
+import Handlebars, { customize, compileOptions } from '.';
 
 describe('customize', () => {
   const HANDLEBARS_CONFIGURE_PATH = path.resolve(
     'tests/handlebars/configure.js',
   );
+
   const EMPTY_HANDLEBARS_CONFIGURE_PATH = path.resolve(
     'tests/handlebars/empty-configure.js',
   );
@@ -12,6 +13,12 @@ describe('customize', () => {
   test('pass Handlebars instance to user configuration file', async () => {
     await customize(HANDLEBARS_CONFIGURE_PATH);
     expect(Handlebars.helpers.foo).toBeTruthy();
+  });
+
+  test('set compileOptions given from configuration file', async () => {
+    expect(compileOptions).toEqual({
+      noEscape: true,
+    });
   });
 
   test('bail if configuration file is not found', () => {
