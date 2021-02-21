@@ -20,6 +20,9 @@ Boilerplate coding is tedious. Temples automates the process by giving you the a
 
 <p align="center">
 <sub>Example of Temples CLI</sub>
+<br />
+<br />
+<b>Feedback and stars welcomed! :)</b>
 </p>
 <br />
 
