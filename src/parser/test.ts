@@ -26,6 +26,7 @@ describe('with built-in helpers', () => {
       ['kebab-case']: 'keytar-bear',
       ['snake-case']: 'keytar_bear',
       ['upper-case']: 'KEYTAR BEAR',
+      ['lower-case']: 'keytar bear',
       ['start-case']: 'Keytar Bear',
       ['title-case']: 'KeytarBear',
     };

@@ -6,6 +6,7 @@ import {
   kebabCase,
   snakeCase,
   upperCase,
+  lowerCase,
   startCase,
 } from 'lodash';
 
@@ -18,6 +19,7 @@ Handlebars.registerHelper('camel-case', camelCase);
 Handlebars.registerHelper('kebab-case', kebabCase);
 Handlebars.registerHelper('snake-case', snakeCase);
 Handlebars.registerHelper('upper-case', upperCase);
+Handlebars.registerHelper('lower-case', lowerCase);
 Handlebars.registerHelper('start-case', startCase);
 Handlebars.registerHelper('title-case', (s: string): string => {
   const casedString = startCase(s);
