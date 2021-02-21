@@ -82,6 +82,10 @@ In your `.temples.yaml` file, specify the `generators` object. This lists all av
 generators:
   # Give your command a name
   [command]:
+    # Documentation for this command will
+    # be shown during CLI interface
+    doc: ...
+
     files: ...
     inserts: ...
 ```
