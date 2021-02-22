@@ -399,7 +399,7 @@ You can leave it as it is by escaping:
 
 # Example
 
-Check out a documented example [here](./docs).
+Check out a documented example [here](https://github.com/gvjacob/temples/tree/main/docs).
 
 <br/>
 <br/>
