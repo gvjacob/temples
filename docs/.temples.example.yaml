@@ -1,0 +1,44 @@
+# An example .temples.yaml configuration file for
+# a Gatsby codebase.
+
+base:
+  templates: .temples
+  target: src
+
+regex:
+  js: '\/\/ temples: (.+)'
+
+handlebars: .temples/configureHandlebars.js
+
+generators:
+  component:
+    doc: Create a new React component
+
+    props:
+      - name: name
+        doc: component name (e.g. BigButton)
+
+    # Create a new component under its own directory
+    # with an index file and css stylesheet
+    files:
+      - template: component.hbs
+        target: 'components/{{ title-case name }}/index.js'
+
+      # Create an empty css stylesheet
+      - target: 'components/{{ title-case name }}/styles.css'
+
+    # Insert into components index file where
+    # each component is imported and exported out
+    inserts:
+      - target: components/index.js
+
+  page:
+    doc: Gatsby page component
+
+    props:
+      - name: name
+        doc: page component name (e.g. HomePage)
+
+    files:
+      - template: component.hbs
+        target: 'pages/{{ kebab-case name }}.js'

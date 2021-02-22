@@ -34,6 +34,7 @@ Boilerplate coding is tedious. Temples automates the process by giving you the a
 - [Handlebars Helpers](#handlebars-helpers)
 - [Customizing Handlebars](#customizing-handlebars)
 - [Caveats](#caveats)
+- [Example](#example)
 
 <br />
 <br />
@@ -392,6 +393,13 @@ You can leave it as it is by escaping:
 ```hbs
 \{{ example }}
 ```
+
+<br/>
+<br/>
+
+# Example
+
+Check out a documented example [here](./docs).
 
 <br/>
 <br/>
