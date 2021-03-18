@@ -15,11 +15,11 @@ import { override } from './utils';
  *
  * @param {TemplesConfig} temples
  */
-function customizeHandlebars(temples: TemplesConfig) {
+async function customizeHandlebars(temples: TemplesConfig) {
   const { handlebars } = temples;
 
   if (handlebars) {
-    customize(path.resolve(handlebars));
+    await customize(path.resolve(handlebars));
   }
 }
 
@@ -41,7 +41,7 @@ export default async function run(
   temples: TemplesConfig,
   verbose: boolean = false,
 ) {
-  customizeHandlebars(temples);
+  await customizeHandlebars(temples);
 
   // Get config for generator command
   const { generators } = temples;
